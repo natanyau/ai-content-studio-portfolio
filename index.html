@@ -343,7 +343,7 @@
 
 <div class="chrome">
   <div class="mark">AI Content Studio</div>
-  <div class="count"><b id="cnum">01</b> / 10</div>
+  <div class="count"><b id="cnum">01</b> / <b id="ctot">11</b></div>
 </div>
 
 <nav class="dots" id="dots"></nav>
@@ -363,7 +363,6 @@
     </div>
     <div class="veil"></div>
     <div class="cover-top">
-      <div class="eyebrow">AI Content Studio</div>
       <div class="eyebrow">Est. MMXXV</div>
     </div>
     <div class="cover-inner">
@@ -718,7 +717,7 @@ rgba(6,8,12,.52) 100%
         <a class="ch" href="https://youtube.com/@AIContentStudioUS" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="#fff" stroke="none"/></svg><span class="lbl">YouTube</span><span class="val">@AIContentStudioUS</span></a>
         <a class="ch" href="https://www.linkedin.com/in/antonio-timas-09232740a/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 10.5V17M7 7v.02M11 17v-3.5a2 2 0 0 1 4 0V17" stroke-linecap="round"/></svg><span class="lbl">LinkedIn</span><span class="val">Antonio Timas</span></a>
         <div class="ch"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg><span class="lbl">Location</span><span class="val">Greater Boston · USA</span></div>
-        <div class="ch"><svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span class="lbl">Website</span><span class="val" style="color:var(--gray)">Coming soon</span></div>
+        <a class="ch" href="https://natanyau.github.io/ai-content-studio-portfolio/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span class="lbl">Website</span><span class="val">Online Portfolio</span></a>
       </div>
     </div>
     <div class="c-right">
@@ -761,6 +760,7 @@ rgba(6,8,12,.52) 100%
 
   const deck = document.getElementById('deck');
   const slides = [...document.querySelectorAll('.slide')];
+  const ctot=document.getElementById('ctot'); if(ctot) ctot.textContent=String(slides.length).padStart(2,'0');
   const dotsWrap = document.getElementById('dots');
   const cnum = document.getElementById('cnum');
   let current = 0;
