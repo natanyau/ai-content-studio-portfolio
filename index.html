@@ -762,40 +762,23 @@ rgba(6,8,12,.52) 100%
 </main>
 
 <script>
-  // ---- media loader ----
-  // 1) instant image poster under every media panel (also the fallback if a video can't play)
-  // 2) the video is created/played only while its slide is on-screen, then torn down when it
-  //    leaves — so at most one video decodes at a time (browsers cap concurrent video decoders).
-  const mediaBoxes=[...document.querySelectorAll('.media[data-video],.media[data-img]')];
-  mediaBoxes.forEach(box=>{
-    const iSrc=box.dataset.img;
-    if(iSrc){
-      const probe=new Image();
-      probe.onload=()=>{ const el=document.createElement('img'); el.src=iSrc; el.alt=''; box.insertBefore(el,box.firstChild); };
-      probe.src=iSrc;
-    }
+  // ---- media loader: try video (.mp4) → image (.jpg) → keep placeholder ----
+  document.querySelectorAll('.media[data-video],.media[data-img]').forEach(box=>{
+    const vSrc=box.dataset.video, iSrc=box.dataset.img;
+    const showImage=()=>{
+      if(!iSrc) return;
+      const img=new Image();
+      img.onload=()=>{ const el=document.createElement('img'); el.src=iSrc; el.alt=''; box.insertBefore(el,box.firstChild); };
+      img.src=iSrc;
+    };
+    if(vSrc){
+      const v=document.createElement('video');
+      v.muted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.preload='auto';
+      v.addEventListener('loadeddata',()=>{ box.insertBefore(v,box.firstChild); v.play().catch(()=>{}); });
+      v.addEventListener('error',showImage);
+      v.src=vSrc;
+    } else { showImage(); }
   });
-
-  const vObs=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      const box=e.target;
-      if(e.isIntersecting){
-        if(!box._video){
-          const v=document.createElement('video');
-          v.muted=true;v.loop=true;v.playsInline=true;v.preload='auto';
-          v.addEventListener('loadeddata',()=>v.play().catch(()=>{}));
-          v.src=box.dataset.video;
-          box.appendChild(v);            // appended last → sits above the poster image
-          box._video=v;
-        } else { box._video.play().catch(()=>{}); }
-      } else if(box._video){
-        box._video.pause();
-        box._video.remove();             // free the decoder; poster image stays visible
-        box._video=null;
-      }
-    });
-  },{rootMargin:'150px 0px'});
-  mediaBoxes.filter(b=>b.dataset.video).forEach(b=>vObs.observe(b));
 
   const deck = document.getElementById('deck');
   const slides = [...document.querySelectorAll('.slide')];
