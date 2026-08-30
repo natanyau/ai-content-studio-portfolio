@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Content Studio — Selected Works · Volume 01</title>
+<meta name="description" content="AI Content Studio — cinematic AI storytelling for small businesses. Premium presence, selected works Volume 01." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AI Content Studio — Selected Works · Volume 01" />
+<meta property="og:description" content="Cinematic AI storytelling for small businesses. Small Business. Premium Presence." />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AI Content Studio — Selected Works · Volume 01" />
+<meta name="twitter:description" content="Cinematic AI storytelling for small businesses. Small Business. Premium Presence." />
+<meta property="og:url" content="https://natanyau.github.io/ai-content-studio-portfolio/" />
+<meta property="og:image" content="https://natanyau.github.io/ai-content-studio-portfolio/preview.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AI Content Studio — Selected Works, Volume 01" />
+<meta name="twitter:image" content="https://natanyau.github.io/ai-content-studio-portfolio/preview.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --white:#ffffff;
+    --black:#0a0a0b;
+    --ink:#111113;
+    --graphite:#17171a;
+    --graphite-2:#1f1f23;
+    --line:#2a2a2e;
+    --gray:#8b8b90;
+    --gray-soft:#b7b7bc;
+    --paper:#f6f5f3;
+    --paper-line:#e2e0dc;
+    --paper-ink:#141416;
+    --paper-gray:#7c7c80;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    background:var(--black);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  .deck{
+    height:100vh;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+  }
+  .deck::-webkit-scrollbar{width:0;background:transparent}
+
+  .slide{
+    position:relative;
+    height:100vh;
+    width:100%;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    display:flex;
+    flex-direction:column;
+    padding:clamp(48px,6vh,88px) clamp(40px,6vw,120px);
+    overflow:hidden;
+  }
+  .slide.light{background:var(--paper);color:var(--paper-ink)}
+  .slide.dark{background:var(--black);color:var(--white)}
+  .slide.ink{background:var(--ink);color:var(--white)}
+
+  /* ---------- shared type ---------- */
+  .eyebrow{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--gray);
+  }
+  .light .eyebrow{color:var(--paper-gray)}
+  h1,h2,h3{font-weight:800;letter-spacing:-.035em;line-height:.98}
+  .display{
+    font-size:clamp(3rem,8.5vw,8.5rem);
+    font-weight:800;
+    letter-spacing:-.045em;
+    line-height:.92;
+  }
+  .headline{
+    font-size:clamp(2.4rem,5.4vw,5.2rem);
+    font-weight:800;
+    letter-spacing:-.04em;
+    line-height:.98;
+  }
+  .body{
+    font-size:clamp(1rem,1.15vw,1.22rem);
+    line-height:1.7;
+    font-weight:400;
+    color:var(--gray-soft);
+    max-width:46ch;
+  }
+  .light .body{color:#4a4a4e}
+
+  /* ---------- header / chrome ---------- */
+  .chrome{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:26px clamp(40px,6vw,120px);
+    mix-blend-mode:difference;
+    pointer-events:none;
+  }
+  .chrome .mark{
+    font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#fff;
+  }
+  .chrome .count{font-size:.78rem;font-weight:600;letter-spacing:.18em;color:#fff}
+  .chrome .count b{font-weight:700}
+
+  /* nav dots */
+  .dots{
+    position:fixed;right:clamp(20px,2.4vw,40px);top:50%;transform:translateY(-50%);
+    z-index:50;display:flex;flex-direction:column;gap:14px;
+  }
+  .dots button{
+    width:8px;height:8px;border-radius:50%;border:0;padding:0;cursor:pointer;
+    background:var(--gray);opacity:.4;transition:all .4s var(--ease);
+    mix-blend-mode:difference;
+  }
+  .dots button.active{opacity:1;transform:scale(1.35);background:#fff}
+
+  .hint{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:50;
+    font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gray);
+    mix-blend-mode:difference;animation:float 2.6s var(--ease) infinite;
+  }
+  @keyframes float{0%,100%{transform:translate(-50%,0);opacity:.5}50%{transform:translate(-50%,6px);opacity:1}}
+
+  /* ---------- cinematic media panel ---------- */
+  .media{
+    position:relative;background:var(--graphite);overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .media::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.14) 3px 4px);
+    opacity:.35;mix-blend-mode:multiply;pointer-events:none;
+  }
+  .media img,.media video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:2;}
+    
+    #crown-intro .slide-bg.media{
+  left:auto;
+  right:0;
+  width:44%;
+  height:100%;
+}
+
+#crown-intro .media video,
+#crown-intro .media img{
+ object-position:60% center;
+}
+
+  
+  .media img.missing,.media video.missing{display:none}
+  .media .ph{
+    position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px;color:#3d3d42;
+  }
+  .media .ph svg{width:40px;height:40px;stroke:#3d3d42;fill:none;stroke-width:1.2}
+  .media .ph span{font-size:.6rem;letter-spacing:.34em;text-transform:uppercase}
+  .media .frameline{position:absolute;inset:16px;border:1px solid rgba(255,255,255,.06);z-index:3;pointer-events:none}
+
+  /* full-slide background media (optional slots) */
+  .slide-bg{position:absolute;inset:0;z-index:0;background:transparent}
+  .slide-veil{position:absolute;inset:0;z-index:1}
+  #philosophy .slide-veil{background:rgba(10,10,11,.74)}
+  #contact .slide-veil{background:rgba(17,17,19,.80)}
+  #philosophy > .eyebrow,#philosophy > .quote,#philosophy > .pillars{position:relative;z-index:2}
+  #contact > .c-left,#contact > .c-right{position:relative;z-index:2}
+
+  /* ================= 01 · COVER ================= */
+  #cover{padding:0;justify-content:flex-end}
+  #cover .cover-media{position:absolute;inset:0}
+  #cover .media{position:absolute;inset:0}
+  #cover .veil{position:absolute;inset:0;background:rgba(6,6,7,.42);z-index:4}
+  #cover .cover-inner{position:relative;z-index:5;padding:clamp(48px,6vw,120px);width:100%}
+  #cover .cover-top{
+    position:absolute;top:clamp(40px,6vh,80px);left:clamp(48px,6vw,120px);right:clamp(48px,6vw,120px);
+    display:flex;justify-content:space-between;z-index:5;
+  }
+  #cover .cover-sub{display:flex;gap:40px;margin-bottom:26px}
+  #cover .cover-sub .col .eyebrow{color:#c9c9cd}
+  #cover .cover-sub .col p{font-size:.95rem;font-weight:500;color:#fff;margin-top:8px}
+  #cover .cover-slogan{
+    margin-top:30px;font-size:clamp(1rem,1.5vw,1.35rem);font-weight:600;letter-spacing:-.01em;color:#fff;line-height:1.35;
+  }
+  #cover .cover-slogan span{color:var(--gray-soft);display:block}
+  .rule{height:1px;background:rgba(255,255,255,.18);width:100%;margin:0}
+
+  /* ================= 02 · WHO WE ARE ================= */
+  #who{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,5vw,96px);align-items:center}
+  #who .txt{max-width:min(46ch,90%)}
+  #who .headline{margin:18px 0 30px}
+  #who .who-media{height:min(72vh,760px)}
+  #who .stats{display:flex;gap:40px;margin-top:44px}
+  #who .stats .n{font-size:2.4rem;font-weight:800;letter-spacing:-.04em}
+  #who .stats .l{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-gray);margin-top:4px}
+
+  /* ================= 03 · PHILOSOPHY ================= */
+  #philosophy{justify-content:center;align-items:center;text-align:center}
+  #philosophy .quote{
+    font-size:clamp(1.9rem,4.4vw,4rem);font-weight:700;letter-spacing:-.035em;line-height:1.12;
+    max-width:20ch;margin:0 auto;
+  }
+  #philosophy .quote em{font-style:normal;color:var(--gray)}
+  #philosophy .pillars{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    margin-top:clamp(48px,7vh,96px);width:100%;max-width:1100px;border:1px solid var(--line);
+  }
+  #philosophy .pillar{background:var(--black);padding:34px 28px;text-align:left}
+  #philosophy .pillar .idx{font-size:.7rem;letter-spacing:.2em;color:var(--gray);margin-bottom:16px}
+  #philosophy .pillar p{font-size:clamp(1rem,1.3vw,1.28rem);font-weight:700;letter-spacing:-.02em;line-height:1.15}
+
+  /* ================= 04 · METHOD ================= */
+  #method .m-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(30px,5vh,60px)}
+  #method .flow{
+    display:grid;grid-template-columns:repeat(7,1fr);gap:0;align-items:stretch;flex:1;
+    border-top:1px solid var(--line);
+  }
+  #method .step{
+    position:relative;padding:30px 20px;display:flex;flex-direction:column;justify-content:space-between;
+    border-right:1px solid var(--line);min-height:0;
+  }
+  #method .step:last-child{border-right:0}
+  #method .step .ico{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:1.3}
+  #method .step .num{font-size:.68rem;letter-spacing:.2em;color:var(--gray)}
+  #method .step .name{font-size:clamp(.95rem,1.15vw,1.15rem);font-weight:700;letter-spacing:-.02em;margin-top:auto}
+  #method .step .desc{
+  margin-top:8px;
+  max-width:16ch;
+  font-size:clamp(.58rem,.68vw,.74rem);
+  line-height:1.45;
+  font-weight:400;
+  color:var(--gray);
+}
+  #method .step::after{
+    content:"";position:absolute;right:-4.5px;top:44px;width:8px;height:8px;
+    border-top:1px solid var(--gray);border-right:1px solid var(--gray);transform:rotate(45deg);z-index:2;
+  }
+  #method .step:last-child::after{display:none}
+
+  /* ================= CASE STUDIES ================= */
+  .case{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,5vw,90px);align-items:stretch}
+  .case .case-media{height:100%;min-height:min(74vh,780px)}
+  .case .case-media video,.case .case-media img{object-fit:cover}
+  .case .case-info{display:flex;flex-direction:column;justify-content:center}
+  .case .proj{display:flex;align-items:center;gap:14px;color:var(--gray)}
+  .case .proj .tag{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase}
+  .case .proj .ln{flex:1;height:1px;background:var(--line)}
+  .case h2{font-size:clamp(2.4rem,4.6vw,4.4rem);margin:22px 0 6px}
+  .case .lede{font-size:clamp(1.1rem,1.5vw,1.5rem);font-weight:500;color:var(--gray-soft);letter-spacing:-.02em}
+  .case .blocks{margin-top:clamp(28px,4vh,52px);display:flex;flex-direction:column;gap:26px;max-width:52ch}
+  .case .blk .k{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+  .case .blk p{font-size:1rem;line-height:1.65;color:var(--gray-soft)}
+  .case .foot{margin-top:clamp(28px,4vh,48px);display:flex;align-items:center;gap:20px}
+
+  .qr{width:88px;height:88px;flex:none;background:#fff;padding:9px;display:grid;
+      grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:2px}
+  .qr i{background:var(--black)}
+  .qr i.o{background:#fff}
+  .qr-note{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);line-height:1.7}
+  .qr-img{width:88px;height:88px;flex:none;background:#fff;padding:7px;display:block;border-radius:2px}
+
+  /* ================= 07 · SERVICES ================= */
+  #services .s-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:1px;background:var(--paper-line);
+    border:1px solid var(--paper-line);flex:1;margin-top:clamp(28px,4vh,48px);
+  }
+  #services .card{background:var(--paper);padding:clamp(26px,3vw,44px);display:flex;flex-direction:column;justify-content:space-between}
+  #services .card .ico{width:34px;height:34px;stroke:var(--paper-ink);fill:none;stroke-width:1.3}
+  #services .card .cn{font-size:clamp(1.1rem,1.5vw,1.5rem);font-weight:700;letter-spacing:-.025em;margin-top:auto}
+  #services .card .cd{font-size:.82rem;color:var(--paper-gray);margin-top:8px;line-height:1.5}
+
+  /* ================= 08 · WHY ================= */
+  #why .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);flex:1;margin-top:clamp(28px,4vh,48px)}
+  #why .wcard{background:var(--black);padding:clamp(28px,2.6vw,44px);display:flex;flex-direction:column;justify-content:center;}
+  #why .wcard .idx{font-size:.72rem;letter-spacing:.24em;color:var(--gray)}
+  #why .wcard .ico{width:40px;height:40px;stroke:#fff;fill:none;stroke-width:1.2;margin:auto 0 26px}
+  #why .wcard .wt{font-size:clamp(1.15rem,1.5vw,1.6rem);font-weight:700;letter-spacing:-.03em;line-height:1.05}
+  #why .wcard .wd{font-size:.85rem;color:var(--gray-soft);margin-top:14px;line-height:1.6}
+
+  /* ================= 09 · CONTACT ================= */
+  #contact{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,110px);align-items:center}
+  #contact .c-left .headline{margin:22px 0 0;max-width:14ch}
+  #contact .channels{margin-top:clamp(30px,4vh,52px);display:flex;flex-direction:column}
+  #contact .ch{display:flex;align-items:center;gap:22px;padding:22px 0;border-top:1px solid var(--line)}
+  #contact .ch:last-child{border-bottom:1px solid var(--line)}
+  #contact .ch .ico{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.4;flex:none}
+  #contact .ch .lbl{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gray);width:110px;flex:none}
+  #contact .ch .val{font-size:clamp(1rem,1.4vw,1.35rem);font-weight:600;letter-spacing:-.02em;color:#fff}
+  #contact .c-right{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+  #contact .qr-lg{width:200px;height:200px;padding:16px}
+  #contact .qr-lg i{border-radius:1px}
+  #contact .qr-cards{display:flex;gap:clamp(20px,2.4vw,40px)}
+  #contact .qr-card{display:flex;flex-direction:column;align-items:center;gap:16px}
+  #contact .qr-card img{width:clamp(130px,12vw,168px);height:clamp(130px,12vw,168px);background:#fff;padding:12px;border-radius:3px;display:block}
+  #contact .qr-card .lbl{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gray)}
+
+  /* ================= 10 · CLOSING ================= */
+  #closing{align-items:center;justify-content:center;text-align:center;background:var(--black)}
+  #closing .logo{font-size:.8rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:#fff;margin-bottom:clamp(36px,7vh,90px)}
+  #closing .logo .dot{display:inline-block;width:6px;height:6px;background:#fff;border-radius:50%;margin:0 2px 2px}
+  #closing .end-slogan{font-size:clamp(2.6rem,7vw,6.6rem);font-weight:800;letter-spacing:-.05em;line-height:.95}
+  #closing .end-slogan span{display:block}
+  #closing .end-slogan span:last-child{color:var(--gray)}
+  #closing .end-note{margin-top:clamp(40px,7vh,84px);font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    #who,#contact,.case{grid-template-columns:1fr}
+    #who .who-media,.case .case-media{min-height:38vh;height:38vh;order:-1}
+    #method .flow{grid-template-columns:1fr;border-top:0}
+    #method .step{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;gap:20px;padding:18px 0}
+    #method .step .name{margin:0}
+    #method .step::after{display:none}
+    #philosophy .pillars,#services .s-grid,#why .why-grid{grid-template-columns:repeat(2,1fr)}
+    .slide{height:auto;min-height:100vh}
+  }
+
+  /* ---------- print / PDF ---------- */
+  @page{size:1280px 720px;margin:0}
+  @media print{
+    .chrome,.dots,.hint{display:none}
+    html,body{height:auto;overflow:visible}
+    .deck{height:auto;overflow:visible;display:block}
+    .slide{height:720px;width:1280px;page-break-after:always;break-after:page;scroll-snap-align:none}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body>
+
+<div class="chrome">
+  <div class="mark">AI Content Studio</div>
+  <div class="count"><b id="cnum">01</b> / <b id="ctot">11</b></div>
+</div>
+
+<nav class="dots" id="dots"></nav>
+<div class="hint">Scroll ↓</div>
+
+<main class="deck" id="deck">
+
+  <!-- 01 · COVER -->
+  <section class="slide dark" id="cover">
+    <div class="cover-media">
+      <div class="media" data-video="assets/media/cover.mp4" data-img="assets/media/cover.jpg">
+        <div class="ph">
+          <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Cinematic Cover Image</span>
+        </div>
+      </div>
+    </div>
+    <div class="veil"></div>
+    <div class="cover-top">
+      <div class="eyebrow">Est. MMXXV</div>
+    </div>
+    <div class="cover-inner">
+      <div class="rule"></div>
+      <div style="height:26px"></div>
+      <div class="cover-sub">
+        <div class="col"><div class="eyebrow">Selected Works</div><p>Curated Portfolio</p></div>
+        <div class="col"><div class="eyebrow">Volume</div><p>01</p></div>
+      </div>
+      <h1 class="display">AI Content<br/>Studio</h1>
+      <div class="cover-slogan">Small Business.<span>Premium Presence.</span></div>
+    </div>
+  </section>
+
+  <!-- 02 · WHO WE ARE -->
+  <section class="slide light" id="who">
+    <div class="txt">
+      <div class="eyebrow">Who We Are</div>
+      <h2 class="headline">A studio for<br/>cinematic AI<br/>storytelling.</h2>
+      <p class="body">AI Content Studio is a creative agency built for ambitious small businesses. We turn everyday brands into cinematic experiences — combining strategic direction with AI-driven production to craft films that feel expensive, intentional, and unmistakably premium.</p>
+      <p class="body" style="margin-top:18px">We believe a small business deserves the same visual language as the world's most admired brands. That belief shapes every frame we deliver.</p>
+      <div class="stats">
+        <div><div class="n">100%</div><div class="l">Made in-house</div></div>
+        <div><div class="n">48h</div><div class="l">Concept to cut</div></div>
+        <div><div class="n">4K</div><div class="l">Cinematic finish</div></div>
+      </div>
+    </div>
+    <div class="who-media media" data-video="assets/media/who.mp4" data-img="assets/media/who.jpg">
+      <div class="frameline"></div>
+      <div class="ph">
+        <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9h18M8 5v14"/></svg>
+        <span>Studio Portrait</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 
+  03 · PHILOSOP
+   HY -->
+  <section class="slide dark" id="philosophy">
+    <div class="slide-bg media" data-video="assets/media/philosophy.mp4" data-img="assets/media/philosophy.jpg"></div>
+    <div class="slide-veil"></div>
+    <div class="eyebrow" style="margin-bottom:clamp(30px,5vh,56px)">Our Philosophy</div>
+    <blockquote class="quote">We don't just create videos.<br/><em>We create the first impression your customers remember.</em></blockquote>
+    <div class="pillars">
+      <div class="pillar"><div class="idx">01</div><p>Strategy before Production</p></div>
+      <div class="pillar"><div class="idx">02</div><p>Story before Technology</p></div>
+      <div class="pillar"><div class="idx">03</div><p>Quality before Quantity</p></div>
+      <div class="pillar"><div class="idx">04</div><p>Every Frame Has Purpose</p></div>
+    </div>
+  </section>
+
+  <!-- 04 · METHOD -->
+  <section class="slide ink" id="method">
+    <div class="m-head">
+      <div>
+        <div class="eyebrow">The Process</div>
+        <h2 class="headline" style="margin-top:16px">The ACS Method</h2>
+      </div>
+      <p class="body" style="max-width:32ch;text-align:right">A disciplined path from insight to launch — seven deliberate stages, no wasted motion.</p>
+    </div>
+    <div class="flow">
+      <div class="step"><svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><div class="num" style="margin-top:16px">01</div><div class="name">Discovery</div><div class="desc">Understand the brand, the audience, and the opportunity.</div></div>
+      <div class="step"><svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/><circle cx="12" cy="12" r="0.6" fill="#fff"/></svg><div class="num" style="margin-top:16px">02</div><div class="name">Strategy</div><div class="desc">Set the objective, positioning, and content plan.</div></div>
+      <div class="step"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 3l2 6 6 .2-4.8 3.8L17 19l-5-3.4L7 19l1.8-6L4 9.2 10 9z"/></svg><div class="num" style="margin-top:16px">03</div><div class="name">Creative Direction</div><div class="desc">Craft the concept, mood, and visual language.</div></div>
+      <div class="step"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="8" height="6"/><rect x="13" y="5" width="8" height="6"/><rect x="3" y="14" width="8" height="5"/><rect x="13" y="14" width="8" height="5"/></svg><div class="num" style="margin-top:16px">04</div><div class="name">Storyboarding</div><div class="desc">Translate the idea into structured scenes and flow.</div></div>
+      <div class="step"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><circle cx="12" cy="12" r="2.4"/></svg><div class="num" style="margin-top:16px">05</div><div class="name">AI Production</div><div class="desc">Produce high-quality assets with intelligent speed.</div></div>
+      <div class="step"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.2" fill="#111"/><circle cx="15" cy="16" r="2.2" fill="#111"/></svg><div class="num" style="margin-top:16px">06</div><div class="name">Editing</div><div class="desc">Shape the final piece through pacing, polish, and precision.</div></div>
+      <div class="step"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 21V6"/><path d="M6 12l6-6 6 6"/><path d="M6 21h12" opacity=".4"/></svg><div class="num" style="margin-top:16px">07</div><div class="name">Launch</div><div class="desc">Prepare the content for release, reach, and results.</div></div>
+    </div>
+  </section>
+
+  <!-- 05 · CASE ACS-001 -->
+   <!-- CROWN FEATURED CASE · INTRODUCTION -->
+<section class="slide dark" id="crown-intro">
+
+  <!-- Background visual -->
+  <div
+    class="slide-bg media"
+    data-video="assets/media/crown.mp4"
+    data-img="assets/media/crown.jpg">
+  </div>
+
+  <!-- Dark overlay for text readability -->
+  <div
+    class="slide-veil"
+    style="
+      background:
+        linear-gradient(
+          90deg,
+rgba(6,8,12,.96) 0%,
+rgba(6,8,12,.90) 38%,
+rgba(6,8,12,.72) 68%,
+rgba(6,8,12,.52) 100%
+        );
+    ">
+  </div>
+
+  <!-- Main content -->
+  <div
+    style="
+      position:relative;
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      width:100%;
+      height:100%;
+      max-width:760px;
+    ">
+
+    <!-- Case identification -->
+    <div
+      style="
+        display:flex;
+        align-items:center;
+        gap:18px;
+        margin-bottom:20px;
+      ">
+
+      <div class="eyebrow">
+        FEATURED INDUSTRY CASE
+      </div>
+
+      <div
+        style="
+          width:54px;
+          height:1px;
+          background:rgba(255,255,255,.30);
+        ">
+      </div>
+
+      <div
+        style="
+          padding:8px 12px;
+          border:1px solid rgba(255,255,255,.22);
+          font-size:.62rem;
+          font-weight:600;
+          letter-spacing:.18em;
+          text-transform:uppercase;
+          color:#d5d5d8;
+        ">
+        Independent Creative Study
+      </div>
+
+    </div>
+
+    <!-- Main title -->
+    <h2
+      class="headline"
+      style="
+        font-size:clamp(2.6rem,5.6vw,5.6rem);
+        max-width:14ch;
+        margin:0;
+        line-height:1.0;
+        letter-spacing:-.03em;
+        padding:.04em .04em 0 .02em;
+        overflow:visible;
+      ">
+      Crown<br/>
+      Automotive<br/>
+      Sales
+    </h2>
+
+    <!-- Positioning statement -->
+    <p
+      style="
+        margin-top:20px;
+        max-width:38ch;
+        font-size:clamp(1rem,1.4vw,1.3rem);
+        line-height:1.5;
+        font-weight:500;
+        letter-spacing:-.02em;
+        color:#d4d4d8;
+      ">
+      Exploring how cinematic storytelling and AI-assisted production can elevate the digital presence of an established automotive brand.
+    
+    </p>
+
+    <!-- Key fact -->
+    <div
+      style="
+        display:flex;
+        align-items:flex-end;
+        gap:22px;
+        margin-top:clamp(22px,3.4vh,40px);
+      ">
+
+      <div
+        style="
+          font-size:clamp(2.8rem,5.6vw,6rem);
+          font-weight:800;
+          letter-spacing:-.06em;
+          line-height:.82;
+          color:#ffffff;
+        ">
+        10,000+
+      </div>
+
+      <div
+        style="
+          padding-bottom:4px;
+          font-size:.74rem;
+          font-weight:600;
+          letter-spacing:.24em;
+          line-height:1.6;
+          text-transform:uppercase;
+          color:#a8a8ad;
+        ">
+        Jeep Parts<br/>
+        Catalog
+      </div>
+
+    </div>
+
+    <!-- Context -->
+    <p
+      style="
+        margin-top:18px;
+        max-width:60ch;
+        font-size:.92rem;
+        line-height:1.6;
+        color:#adadb2;
+      ">
+      This independent strategic case study explores how premium visual storytelling can translate the company's product depth, industry expertise, and connection to the wider Jeep ecosystem into a stronger digital brand presence.
+    </p>
+
+    <!-- Closing message -->
+    <div
+      style="
+        margin-top:20px;
+        padding-top:16px;
+        border-top:1px solid rgba(255,255,255,.18);
+        font-size:clamp(1.1rem,1.6vw,1.55rem);
+        font-weight:700;
+        letter-spacing:-.025em;
+        color:#ffffff;
+      ">
+      Great products deserve unforgettable stories.
+    </div>
+   <!-- CTA to full Crown case -->
+<a
+  href="crown-featured-case.html"
+  style="
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:24px;
+    padding:14px 26px;
+    border:1px solid #e1262f;
+    border-radius:999px;
+    color:#ffffff;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  "
+>
+  Explore the Full Case
+</a> 
+
+  </div>
+
+  <!-- Page metadata -->
+  <div
+    style="
+      position:absolute;
+      z-index:3;
+      right:clamp(40px,6vw,120px);
+      bottom:clamp(42px,6vh,78px);
+      text-align:right;
+    ">
+
+    <div class="eyebrow">Industry</div>
+
+    <div
+      style="
+        margin-top:8px;
+        font-size:.92rem;
+        font-weight:600;
+        color:#ffffff;
+      ">
+      Jeep Aftermarket Parts
+    </div>
+
+  </div>
+
+</section>
+  <section class="slide dark case" id="case1">
+    <div class="case-media media" data-video="assets/media/case1.mp4" data-img="assets/media/case1.jpg">
+      <div class="frameline"></div>
+      <div class="ph">
+        <svg viewBox="0 0 24 24"><path d="M3 12l2-5h14l2 5v5H3zM3 12h18"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/></svg>
+        <span>Cinematic Case Image</span>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="proj"><span class="tag">Case ACS-001</span><span class="ln"></span></div>
+      <h2>Wrangler</h2>
+      <div class="lede">Built for More</div>
+      <div class="blocks">
+        <div class="blk"><div class="k">Objective</div><p>Reframe a rugged off-road vehicle as an aspirational lifestyle icon — positioning it for a premium audience without losing its raw capability.</p></div>
+        <div class="blk"><div class="k">Creative Direction</div><p>Golden-hour cinematography, anamorphic framing and a restrained monochrome grade. Every shot engineered to feel like a feature-film title sequence.</p></div>
+
+      </div>
+      <div class="foot">
+        <img class="qr-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMzAiIGhlaWdodD0iMzMwIiBjbGFzcz0ic2Vnbm8iPjxnIHRyYW5zZm9ybT0ic2NhbGUoMTApIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDMzdjMzaC0zM3oiLz48cGF0aCBjbGFzcz0icXJsaW5lIiBzdHJva2U9IiMwYTBhMGIiIGQ9Ik0yIDIuNWg3bTIgMGgybTQgMGgxbTEgMGgzbTIgMGg3bS0yOSAxaDFtNSAwaDFtMSAwaDNtMiAwaDNtMSAwaDRtMSAwaDFtNSAwaDFtLTI5IDFoMW0xIDBoM20xIDBoMW00IDBoMW03IDBoMW0yIDBoMW0xIDBoM20xIDBoMW0tMjkgMWgxbTEgMGgzbTEgMGgxbTIgMGg0bTEgMGgzbTUgMGgxbTEgMGgzbTEgMGgxbS0yOSAxaDFtMSAwaDNtMSAwaDFtMSAwaDRtMiAwaDJtMSAwaDNtMiAwaDFtMSAwaDNtMSAwaDFtLTI5IDFoMW01IDBoMW0yIDBoMW0yIDBoNW0xIDBoM20xIDBoMW01IDBoMW0tMjkgMWg3bTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGg3bS0yMCAxaDFtMyAwaDFtMyAwaDJtLTE5IDFoMW0xIDBoMW0xIDBoMW0xIDBoMW0yIDBoNW02IDBoMW0zIDBoMW0yIDBoMW0tMjYgMWgxbTEgMGgxbTIgMGgybTIgMGgxbTMgMGgzbTIgMGgxbTEgMGgxbTIgMGgxbTIgMGgxbS0yOCAxaDFtMyAwaDJtMiAwaDFtMSAwaDFtMiAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtNSAwaDNtLTI4IDFoMW0yIDBoMW0yIDBoNW0xIDBoNW0yIDBoMW0zIDBoMW0yIDBoMW0tMjcgMWgzbTEgMGgzbTEgMGgybTEgMGgybTUgMGg0bTIgMGgxbTEgMGgybS0yNyAxaDFtMSAwaDJtNCAwaDFtNSAwaDJtMyAwaDNtMSAwaDFtMiAwaDFtLTI3IDFoOG0xIDBoMW0xIDBoMW0yIDBoMW0xIDBoMW0yIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0tMjggMWgybTEgMGgybTEgMGgxbTEgMGgxbTMgMGgybTEgMGg1bTEgMGgxbTIgMGgxbTEgMGgxbS0yOCAxaDJtMSAwaDFtMSAwaDRtMSAwaDNtMiAwaDJtMyAwaDRtMSAwaDFtMSAwaDJtLTI4IDFoMW0xIDBoMW0zIDBoMW0yIDBoMW0yIDBoMm0xIDBoMW0zIDBoMW0xIDBoMW0yIDBoMm0xIDBoMW0tMjkgMWgxbTEgMGgxbTEgMGgzbTQgMGgybTUgMGgxbTEgMGg0bTMgMGgybS0yOCAxaDRtMiAwaDJtMiAwaDhtNiAwaDFtMSAwaDFtLTI4IDFoMW0xIDBoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0zIDBoMW0zIDBoNW0tMTcgMWg0bTEgMGgybTEgMGgybTEgMGgybTMgMGgxbTEgMGgzbS0yOSAxaDdtMiAwaDJtMiAwaDJtMSAwaDVtMSAwaDFtMSAwaDJtMSAwaDJtLTI5IDFoMW01IDBoMW0yIDBoMW0zIDBoNm0xIDBoMW0zIDBoMm0xIDBoMm0tMjkgMWgxbTEgMGgzbTEgMGgxbTEgMGgxbTIgMGgybTEgMGgxbTIgMGgxbTIgMGg1bS0yNSAxaDFtMSAwaDNtMSAwaDFtMiAwaDFtMyAwaDFtMiAwaDFtNyAwaDFtMSAwaDNtLTI5IDFoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0yIDBoMm0xIDBoM20xIDBoM20yIDBoMW0tMjkgMWgxbTUgMGgxbTIgMGgybTUgMGgzbTEgMGgxbTMgMGgxbTIgMGgxbS0yOCAxaDdtMSAwaDFtMSAwaDNtMSAwaDRtMSAwaDJtMSAwaDRtMSAwaDIiLz48L2c+PC9zdmc+Cg==" alt="QR — watch on YouTube" />
+        <div class="qr-note">Scan to watch<br/>on YouTube</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · CASE ACS-002 -->
+  <section class="slide dark case" id="case2">
+    <div class="case-info">
+      <div class="proj"><span class="tag">Case ACS-002</span><span class="ln"></span></div>
+      <h2>Premium Jeep<br/>Workshop</h2>
+      <div class="lede">Craftsmanship, on screen</div>
+      <div class="blocks">
+        <div class="blk"><div class="k">Challenge</div><p>A specialist workshop with world-class work but an invisible brand — indistinguishable online from ordinary garages.</p></div>
+        <div class="blk"><div class="k">Strategy</div><p>Build an identity around craftsmanship. Slow, deliberate detail shots and dramatic low-key lighting to make precision feel luxurious.</p></div>
+        <div class="blk"><div class="k">Result</div><p>A signature campaign that filled the booking calendar for two months and lifted average order value across the board.</p></div>
+      </div>
+      <div class="foot">
+        <img class="qr-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMzAiIGhlaWdodD0iMzMwIiBjbGFzcz0ic2Vnbm8iPjxnIHRyYW5zZm9ybT0ic2NhbGUoMTApIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDMzdjMzaC0zM3oiLz48cGF0aCBjbGFzcz0icXJsaW5lIiBzdHJva2U9IiMwYTBhMGIiIGQ9Ik0yIDIuNWg3bTIgMGgybTQgMGgxbTEgMGgzbTIgMGg3bS0yOSAxaDFtNSAwaDFtMSAwaDNtMiAwaDNtMSAwaDRtMSAwaDFtNSAwaDFtLTI5IDFoMW0xIDBoM20xIDBoMW00IDBoMW03IDBoMW0yIDBoMW0xIDBoM20xIDBoMW0tMjkgMWgxbTEgMGgzbTEgMGgxbTIgMGg0bTEgMGgzbTUgMGgxbTEgMGgzbTEgMGgxbS0yOSAxaDFtMSAwaDNtMSAwaDFtMSAwaDRtMiAwaDJtMSAwaDNtMiAwaDFtMSAwaDNtMSAwaDFtLTI5IDFoMW01IDBoMW0yIDBoMW0yIDBoNW0xIDBoM20xIDBoMW01IDBoMW0tMjkgMWg3bTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGg3bS0yMCAxaDFtMyAwaDFtMyAwaDJtLTE5IDFoMW0xIDBoMW0xIDBoMW0xIDBoMW0yIDBoNW02IDBoMW0zIDBoMW0yIDBoMW0tMjYgMWgxbTEgMGgxbTIgMGgybTIgMGgxbTMgMGgzbTIgMGgxbTEgMGgxbTIgMGgxbTIgMGgxbS0yOCAxaDFtMyAwaDJtMiAwaDFtMSAwaDFtMiAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtNSAwaDNtLTI4IDFoMW0yIDBoMW0yIDBoNW0xIDBoNW0yIDBoMW0zIDBoMW0yIDBoMW0tMjcgMWgzbTEgMGgzbTEgMGgybTEgMGgybTUgMGg0bTIgMGgxbTEgMGgybS0yNyAxaDFtMSAwaDJtNCAwaDFtNSAwaDJtMyAwaDNtMSAwaDFtMiAwaDFtLTI3IDFoOG0xIDBoMW0xIDBoMW0yIDBoMW0xIDBoMW0yIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0tMjggMWgybTEgMGgybTEgMGgxbTEgMGgxbTMgMGgybTEgMGg1bTEgMGgxbTIgMGgxbTEgMGgxbS0yOCAxaDJtMSAwaDFtMSAwaDRtMSAwaDNtMiAwaDJtMyAwaDRtMSAwaDFtMSAwaDJtLTI4IDFoMW0xIDBoMW0zIDBoMW0yIDBoMW0yIDBoMm0xIDBoMW0zIDBoMW0xIDBoMW0yIDBoMm0xIDBoMW0tMjkgMWgxbTEgMGgxbTEgMGgzbTQgMGgybTUgMGgxbTEgMGg0bTMgMGgybS0yOCAxaDRtMiAwaDJtMiAwaDhtNiAwaDFtMSAwaDFtLTI4IDFoMW0xIDBoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0zIDBoMW0zIDBoNW0tMTcgMWg0bTEgMGgybTEgMGgybTEgMGgybTMgMGgxbTEgMGgzbS0yOSAxaDdtMiAwaDJtMiAwaDJtMSAwaDVtMSAwaDFtMSAwaDJtMSAwaDJtLTI5IDFoMW01IDBoMW0yIDBoMW0zIDBoNm0xIDBoMW0zIDBoMm0xIDBoMm0tMjkgMWgxbTEgMGgzbTEgMGgxbTEgMGgxbTIgMGgybTEgMGgxbTIgMGgxbTIgMGg1bS0yNSAxaDFtMSAwaDNtMSAwaDFtMiAwaDFtMyAwaDFtMiAwaDFtNyAwaDFtMSAwaDNtLTI5IDFoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0yIDBoMm0xIDBoM20xIDBoM20yIDBoMW0tMjkgMWgxbTUgMGgxbTIgMGgybTUgMGgzbTEgMGgxbTMgMGgxbTIgMGgxbS0yOCAxaDdtMSAwaDFtMSAwaDNtMSAwaDRtMSAwaDJtMSAwaDRtMSAwaDIiLz48L2c+PC9zdmc+Cg==" alt="QR — watch on YouTube" />
+        <div class="qr-note">Scan to watch<br/>on YouTube</div>
+      </div>
+    </div>
+    <div class="case-media media" data-video="assets/media/case2.mp4" data-img="assets/media/case2.jpg">
+      <div class="frameline"></div>
+      <div class="ph">
+        <svg viewBox="0 0 24 24"><path d="M3 12l2-5h14l2 5v5H3zM3 12h18"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/></svg>
+        <span>Cinematic Case Image</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · SERVICES -->
+  <section class="slide light" id="services">
+    <div class="eyebrow">Capabilities</div>
+    <h2 class="headline" style="margin-top:16px">What We Create</h2>
+    <div class="s-grid">
+      <div class="card"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 8h18M7 4v16"/><path d="M3 16h18" opacity=".5"/><path d="M11 11l4 2.5-4 2.5z" fill="#141416" stroke="none"/></svg><div><div class="cn">Cinematic Reels</div><div class="cd">Scroll-stopping short-form built for social.</div></div></div>
+      <div class="card"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M3 12l2-5h14l2 5v5H3zM3 12h18"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/></svg><div><div class="cn">Automotive Commercials</div><div class="cd">Feature-grade films for vehicles & dealers.</div></div></div>
+      <div class="card"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 3z"/><path d="M8 9h8M8 12h5"/></svg><div><div class="cn">Brand Storytelling</div><div class="cd">Narratives that make people remember you.</div></div></div>
+      <div class="card"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 3v18M4 7.5l8 4.5 8-4.5"/></svg><div><div class="cn">Product Showcase</div><div class="cd">Objects shot like objects of desire.</div></div></div>
+      <div class="card"><svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.4"/><circle cx="17" cy="6" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M8 11l7-4M8 13l7 4"/></svg><div><div class="cn">Social Media Campaigns</div><div class="cd">Coordinated content that compounds.</div></div></div>
+      <div class="card"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 3l2 6 6 .2-4.8 3.8L17 19l-5-3.4L7 19l1.8-6L4 9.2 10 9z"/></svg><div><div class="cn">Creative Direction</div><div class="cd">The vision behind every decision.</div></div></div>
+    </div>
+  </section>
+
+  <!-- 08 · WHY -->
+  <section class="slide dark" id="why">
+    <div class="eyebrow">The Difference</div>
+    <h2 class="headline" style="margin-top:16px">Why AI Content Studio</h2>
+    <div class="why-grid">
+      <div class="wcard"><div class="idx">01</div><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M3 10h18M8 6v12"/><path d="M11 12l4 2.2-4 2.2z" fill="#fff" stroke="none"/></svg><div class="wt">Cinematic Direction</div><div class="wd">We shoot for the big screen, not the timeline.</div></div>
+      <div class="wcard"><div class="idx">02</div><svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1" fill="#fff"/></svg><div class="wt">Strategic Thinking</div><div class="wd">Every project starts with a business goal.</div></div>
+      <div class="wcard"><div class="idx">03</div><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><circle cx="12" cy="12" r="2.4"/></svg><div class="wt">AI-Powered Creativity</div><div class="wd">Cutting-edge tools, human taste in command.</div></div>
+      <div class="wcard"><div class="idx">04</div><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 4-6"/></svg><div class="wt">Business-Focused Content</div><div class="wd">Films measured by the results they drive.</div></div>
+    </div>
+  </section>
+
+  <!-- 09 · CONTACT -->
+  <section class="slide ink" id="contact">
+    <div class="slide-bg media" data-video="assets/media/contact.mp4" data-img="assets/media/contact.jpg"></div>
+    <div class="slide-veil"></div>
+    <div class="c-left">
+      <div class="eyebrow">Contact</div>
+      <h2 class="headline">Let's Build<br/>Something<br/>Remarkable</h2>
+      <div class="channels">
+        <a class="ch" href="https://instagram.com/aicontentstudious" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg><span class="lbl">Instagram</span><span class="val">@aicontentstudious</span></a>
+        <a class="ch" href="https://youtube.com/@AIContentStudioUS" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="#fff" stroke="none"/></svg><span class="lbl">YouTube</span><span class="val">@AIContentStudioUS</span></a>
+        <a class="ch" href="https://www.linkedin.com/in/antonio-timas-09232740a/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><svg class="ico" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 10.5V17M7 7v.02M11 17v-3.5a2 2 0 0 1 4 0V17" stroke-linecap="round"/></svg><span class="lbl">LinkedIn</span><span class="val">Antonio Timas</span></a>
+        <div class="ch"><svg class="ico" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg><span class="lbl">Location</span><span class="val">Greater Boston · USA</span></div>
+        <a class="ch" href="https://natanyau.github.io/ai-content-studio-portfolio/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><svg class="ico" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span class="lbl">Website</span><span class="val">Online Portfolio</span></a>
+      </div>
+    </div>
+    <div class="c-right">
+      <div class="qr-cards">
+        <div class="qr-card"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNzAiIGhlaWdodD0iMzcwIiBjbGFzcz0ic2Vnbm8iPjxnIHRyYW5zZm9ybT0ic2NhbGUoMTApIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDM3djM3aC0zN3oiLz48cGF0aCBjbGFzcz0icXJsaW5lIiBzdHJva2U9IiMwYTBhMGIiIGQ9Ik0yIDIuNWg3bTEgMGgybTQgMGgxbTEgMGg1bTEgMGgybTIgMGg3bS0zMyAxaDFtNSAwaDFtMiAwaDJtMiAwaDFtNCAwaDFtMSAwaDJtMSAwaDJtMSAwaDFtNSAwaDFtLTMzIDFoMW0xIDBoM20xIDBoMW0xIDBoMm0yIDBoMW0yIDBoMW0yIDBoMW0xIDBoMW0xIDBoM20xIDBoMW0xIDBoM20xIDBoMW0tMzMgMWgxbTEgMGgzbTEgMGgxbTEgMGgxbTIgMGgzbTEgMGgxbTEgMGgybTMgMGgxbTEgMGgxbTEgMGgxbTEgMGgzbTEgMGgxbS0zMyAxaDFtMSAwaDNtMSAwaDFtNCAwaDFtNSAwaDdtMiAwaDFtMSAwaDNtMSAwaDFtLTMzIDFoMW01IDBoMW0xIDBoMW0yIDBoMW0yIDBoMm0xIDBoNG0xIDBoMW0xIDBoMW0xIDBoMW01IDBoMW0tMzMgMWg3bTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGg3bS0yNSAxaDNtMSAwaDFtMSAwaDRtMyAwaDJtLTIyIDFoMW0xIDBoMW0xIDBoNG0xIDBoMW0xIDBoMm03IDBoMW0xIDBoNW0xIDBoMm0xIDBoMW0tMzMgMWgybTUgMGgzbTEgMGgxbTQgMGgybTIgMGgzbTEgMGg0bTMgMGgybS0zMiAxaDJtMyAwaDJtMiAwaDNtMSAwaDFtMSAwaDFtMSAwaDJtMiAwaDFtMSAwaDFtMiAwaDJtMSAwaDNtLTMwIDFoMW00IDBoMW0xIDBoMW0xIDBoMW0zIDBoMW0xIDBoOG0yIDBoMm0yIDBoMW0tMzMgMWg3bTEgMGgxbTEgMGgzbTEgMGgxbTMgMGgxbTEgMGgybTEgMGgxbTEgMGgybTIgMGgxbTEgMGgxbS0yOSAxaDJtMiAwaDFtNiAwaDFtMyAwaDFtMiAwaDJtMSAwaDNtMSAwaDFtMSAwaDNtLTMwIDFoNW0xIDBoMm0xIDBoM20yIDBoMm0xIDBoOG0zIDBoMW0tMzIgMWgybTggMGgybTYgMGgxbTIgMGg0bTEgMGgxbTEgMGgxbTIgMGgxbS0zMCAxaDNtMSAwaDNtMSAwaDNtMSAwaDFtMiAwaDZtMSAwaDFtMSAwaDFtMSAwaDFtMiAwaDFtLTMyIDFoMW0xIDBoM20yIDBoMW0xIDBoMm00IDBoMm0xIDBoMW0yIDBoM20zIDBoMW0xIDBoMW0xIDBoMW0tMzEgMWgybTMgMGgzbTEgMGgzbTEgMGg0bTIgMGgxbTQgMGgybTMgMGgzbS0zMiAxaDFtMSAwaDNtMiAwaDRtNSAwaDNtMSAwaDJtMSAwaDFtMiAwaDFtMyAwaDJtLTMwIDFoMW0yIDBoM20yIDBoMW0xIDBoNG0xIDBoMW0xIDBoMm0xIDBoMW0xIDBoMW01IDBoMm0tMzEgMWgybTEgMGgxbTIgMGgzbTEgMGgxbTUgMGgxbTEgMGgybTIgMGgzbTIgMGgxbTEgMGgybS0zMyAxaDNtMiAwaDJtMSAwaDFtMyAwaDFtMSAwaDFtNCAwaDFtMiAwaDFtMSAwaDFtMSAwaDVtMSAwaDFtLTMyIDFoM201IDBoMm0xIDBoMm0yIDBoNG0xIDBoMW0xIDBoMm0yIDBoMW0xIDBoMW0tMzAgMWgxbTUgMGgxbTEgMGgybTIgMGgxbTEgMGgzbTQgMGgxbTEgMGg2bS0yMSAxaDNtMSAwaDNtMSAwaDFtMSAwaDNtMSAwaDFtMSAwaDFtMyAwaDJtMiAwaDFtLTMzIDFoN20xIDBoM20xIDBoMm00IDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoNG0tMzIgMWgxbTUgMGgxbTEgMGgybTEgMGgxbTEgMGgxbTEgMGgybTEgMGgxbTEgMGgzbTEgMGgxbTMgMGgxbTMgMGgxbS0zMyAxaDFtMSAwaDNtMSAwaDFtMyAwaDNtMSAwaDFtMSAwaDJtMSAwaDFtMSAwaDJtMSAwaDZtMSAwaDJtLTMzIDFoMW0xIDBoM20xIDBoMW0xIDBoMW0yIDBoNW01IDBoMW0xIDBoMm0xIDBoMW0xIDBoMW0xIDBoMm0tMzIgMWgxbTEgMGgzbTEgMGgxbTYgMGgxbTEgMGgzbTQgMGg0bTIgMGgzbTEgMGgxbS0zMyAxaDFtNSAwaDFtMSAwaDFtMSAwaDNtMyAwaDFtMiAwaDNtMSAwaDNtLTI2IDFoN20yIDBoMW00IDBoM20yIDBoMW0xIDBoMW0yIDBoMm0yIDBoMm0xIDBoMSIvPjwvZz48L3N2Zz4K" alt="QR Instagram" /><div class="lbl">Instagram</div></div>
+        <div class="qr-card"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMzAiIGhlaWdodD0iMzMwIiBjbGFzcz0ic2Vnbm8iPjxnIHRyYW5zZm9ybT0ic2NhbGUoMTApIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDMzdjMzaC0zM3oiLz48cGF0aCBjbGFzcz0icXJsaW5lIiBzdHJva2U9IiMwYTBhMGIiIGQ9Ik0yIDIuNWg3bTIgMGgybTQgMGgxbTEgMGgzbTIgMGg3bS0yOSAxaDFtNSAwaDFtMSAwaDNtMiAwaDNtMSAwaDRtMSAwaDFtNSAwaDFtLTI5IDFoMW0xIDBoM20xIDBoMW00IDBoMW03IDBoMW0yIDBoMW0xIDBoM20xIDBoMW0tMjkgMWgxbTEgMGgzbTEgMGgxbTIgMGg0bTEgMGgzbTUgMGgxbTEgMGgzbTEgMGgxbS0yOSAxaDFtMSAwaDNtMSAwaDFtMSAwaDRtMiAwaDJtMSAwaDNtMiAwaDFtMSAwaDNtMSAwaDFtLTI5IDFoMW01IDBoMW0yIDBoMW0yIDBoNW0xIDBoM20xIDBoMW01IDBoMW0tMjkgMWg3bTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGg3bS0yMCAxaDFtMyAwaDFtMyAwaDJtLTE5IDFoMW0xIDBoMW0xIDBoMW0xIDBoMW0yIDBoNW02IDBoMW0zIDBoMW0yIDBoMW0tMjYgMWgxbTEgMGgxbTIgMGgybTIgMGgxbTMgMGgzbTIgMGgxbTEgMGgxbTIgMGgxbTIgMGgxbS0yOCAxaDFtMyAwaDJtMiAwaDFtMSAwaDFtMiAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtNSAwaDNtLTI4IDFoMW0yIDBoMW0yIDBoNW0xIDBoNW0yIDBoMW0zIDBoMW0yIDBoMW0tMjcgMWgzbTEgMGgzbTEgMGgybTEgMGgybTUgMGg0bTIgMGgxbTEgMGgybS0yNyAxaDFtMSAwaDJtNCAwaDFtNSAwaDJtMyAwaDNtMSAwaDFtMiAwaDFtLTI3IDFoOG0xIDBoMW0xIDBoMW0yIDBoMW0xIDBoMW0yIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0tMjggMWgybTEgMGgybTEgMGgxbTEgMGgxbTMgMGgybTEgMGg1bTEgMGgxbTIgMGgxbTEgMGgxbS0yOCAxaDJtMSAwaDFtMSAwaDRtMSAwaDNtMiAwaDJtMyAwaDRtMSAwaDFtMSAwaDJtLTI4IDFoMW0xIDBoMW0zIDBoMW0yIDBoMW0yIDBoMm0xIDBoMW0zIDBoMW0xIDBoMW0yIDBoMm0xIDBoMW0tMjkgMWgxbTEgMGgxbTEgMGgzbTQgMGgybTUgMGgxbTEgMGg0bTMgMGgybS0yOCAxaDRtMiAwaDJtMiAwaDhtNiAwaDFtMSAwaDFtLTI4IDFoMW0xIDBoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0zIDBoMW0zIDBoNW0tMTcgMWg0bTEgMGgybTEgMGgybTEgMGgybTMgMGgxbTEgMGgzbS0yOSAxaDdtMiAwaDJtMiAwaDJtMSAwaDVtMSAwaDFtMSAwaDJtMSAwaDJtLTI5IDFoMW01IDBoMW0yIDBoMW0zIDBoNm0xIDBoMW0zIDBoMm0xIDBoMm0tMjkgMWgxbTEgMGgzbTEgMGgxbTEgMGgxbTIgMGgybTEgMGgxbTIgMGgxbTIgMGg1bS0yNSAxaDFtMSAwaDNtMSAwaDFtMiAwaDFtMyAwaDFtMiAwaDFtNyAwaDFtMSAwaDNtLTI5IDFoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0yIDBoMm0xIDBoM20xIDBoM20yIDBoMW0tMjkgMWgxbTUgMGgxbTIgMGgybTUgMGgzbTEgMGgxbTMgMGgxbTIgMGgxbS0yOCAxaDdtMSAwaDFtMSAwaDNtMSAwaDRtMSAwaDJtMSAwaDRtMSAwaDIiLz48L2c+PC9zdmc+Cg==" alt="QR YouTube" /><div class="lbl">YouTube</div></div>
+        <div class="qr-card"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OTAiIGhlaWdodD0iNDkwIiBjbGFzcz0ic2Vnbm8iPjxnIHRyYW5zZm9ybT0ic2NhbGUoMTApIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDQ5djQ5aC00OXoiLz48cGF0aCBjbGFzcz0icXJsaW5lIiBzdHJva2U9IiMwYTBhMGIiIGQ9Ik00IDQuNWg3bTIgMGgzbTMgMGgxbTEgMGgxbTEgMGgxbTIgMGgybTEgMGgybTMgMGgzbTEgMGg3bS00MSAxaDFtNSAwaDFtMiAwaDJtMSAwaDFtNCAwaDJtMSAwaDFtMSAwaDFtMSAwaDJtMyAwaDFtNCAwaDFtNSAwaDFtLTQxIDFoMW0xIDBoM20xIDBoMW0yIDBoMW0yIDBoMm0zIDBoMW0xIDBoMW0yIDBoMW0xIDBoMW0zIDBoMW0yIDBoMW0yIDBoMW0xIDBoM20xIDBoMW0tNDEgMWgxbTEgMGgzbTEgMGgxbTMgMGgybTIgMGgxbTMgMGgxbTQgMGgybTEgMGgybTIgMGgybTIgMGgxbTEgMGgzbTEgMGgxbS00MSAxaDFtMSAwaDNtMSAwaDFtMSAwaDNtMiAwaDFtMSAwaDRtMSAwaDJtMiAwaDZtMSAwaDFtMiAwaDFtMSAwaDNtMSAwaDFtLTQxIDFoMW01IDBoMW0zIDBoNm0yIDBoMm0xIDBoM201IDBoNG0xIDBoMW01IDBoMW0tNDEgMWg3bTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGg3bS0zMyAxaDFtMSAwaDRtMyAwaDFtMiAwaDFtMSAwaDFtMSAwaDFtMiAwaDVtLTMwIDFoMm0yIDBoM20xIDBoNG0yIDBoMW01IDBoOW0xIDBoM20xIDBoMW0tMzcgMWg0bTEgMGgxbTEgMGgxbTUgMGgzbTEgMGgzbTEgMGgxbTEgMGgxbTEgMGgybTEgMGgybTEgMGg2bTEgMGgxbTEgMGgxbS00MCAxaDJtMyAwaDRtMiAwaDFtMyAwaDNtMSAwaDJtMSAwaDFtNSAwaDJtMiAwaDFtNCAwaDFtLTM5IDFoMW0yIDBoMm0yIDBoM20xIDBoMm00IDBoMm0yIDBoNG01IDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0tMzcgMWg3bTUgMGgxbTEgMGgybTEgMGgxbTIgMGgxbTUgMGgxbTEgMGg0bTEgMGgxbTMgMGgzbS0zOSAxaDFtMiAwaDFtMyAwaDFtMSAwaDFtMSAwaDFtMyAwaDFtMiAwaDFtMSAwaDJtMiAwaDJtNSAwaDNtNCAwaDJtLTQxIDFoMW0xIDBoNm0xIDBoM20yIDBoM20xIDBoNW0xIDBoMm00IDBoM20xIDBoMm0yIDBoM20tNDEgMWgybTIgMGgxbTUgMGgxbTEgMGgybTIgMGgybTIgMGgxbTEgMGgxbTEgMGg0bTMgMGgybTEgMGgxbTIgMGgxbTEgMGgybS00MCAxaDFtMSAwaDJtMSAwaDJtMiAwaDNtNSAwaDNtMiAwaDFtMiAwaDFtMSAwaDFtMSAwaDNtMyAwaDFtMiAwaDJtLTM2IDFoMW0xIDBoM20xIDBoMm0yIDBoMW0zIDBoMm0xIDBoMW00IDBoM20yIDBoMm0xIDBoMW0tMzYgMWgxbTEgMGgzbTEgMGgxbTEgMGgxbTUgMGgybTQgMGg1bTEgMGg0bTQgMGgxbTEgMGgxbS0zNiAxaDFtMSAwaDFtMSAwaDFtMSAwaDJtMSAwaDZtMSAwaDFtMiAwaDJtMSAwaDJtMyAwaDFtNSAwaDJtMSAwaDJtMSAwaDFtLTM5IDFoMW0zIDBoMm0yIDBoMW0xIDBoMm0xIDBoMW0xIDBoMW0xIDBoMW0yIDBoNG0xIDBoMm0xIDBoMm0yIDBoNm0tNDAgMWg2bTQgMGgxbTIgMGgybTEgMGgzbTEgMGgxbTEgMGgybTIgMGgxbTMgMGg1bTEgMGgxbTIgMGgybS00MSAxaDJtNCAwaDFtMSAwaDFtMSAwaDRtMSAwaDFtMSAwaDVtMSAwaDFtMiAwaDFtMyAwaDFtMiAwaDJtMSAwaDJtMSAwaDFtLTQwIDFoMm0xIDBoMW0zIDBoM20zIDBoMm0xIDBoMW0xIDBoMW0xIDBoMW0xIDBoM20xIDBoMm0yIDBoMW0yIDBoMW0xIDBoMW0xIDBoMW0yIDBoMW0tNDAgMWgxbTEgMGgxbTIgMGgxbTkgMGgybTEgMGgybTEgMGgxbTMgMGgxbTIgMGgxbTMgMGgxbTMgMGgybS0zOSAxaDZtNCAwaDFtMSAwaDJtMSAwaDFtMyAwaDFtNCAwaDVtMSAwaDNtMSAwaDFtMiAwaDRtLTQxIDFoMW0yIDBoMm0xIDBoMW0yIDBoMW0yIDBoMW0yIDBoMW0xIDBoNW0yIDBoMW0xIDBoMW0xIDBoNW0xIDBoMW0xIDBoMm0yIDBoMW0tMzggMWgxbTMgMGgxbTIgMGgxbTMgMGgxbTMgMGgxbTMgMGgxbTEgMGgxbTMgMGgxbTIgMGgzbTEgMGgxbTEgMGgxbS0zNyAxaDFtMyAwaDRtNCAwaDFtNyAwaDFtMiAwaDRtMiAwaDRtMSAwaDNtMiAwaDFtLTQwIDFoMW0xIDBoMW0xIDBoMW0zIDBoMW0xIDBoMW0yIDBoMW0yIDBoNG0zIDBoMm05IDBoMW0tMzYgMWgxbTEgMGgybTIgMGgxbTEgMGgxbTIgMGgxbTEgMGgxbTEgMGg0bTIgMGgybTIgMGgybTMgMGgxbTEgMGgzbTEgMGgybS0zNiAxaDFtNCAwaDJtMSAwaDFtMSAwaDNtMiAwaDNtMSAwaDNtMSAwaDFtMSAwaDRtMSAwaDFtMSAwaDFtMiAwaDNtLTM5IDFoMTNtMiAwaDFtMiAwaDFtMyAwaDFtMyAwaDEybTEgMGgxbS0zMyAxaDFtNCAwaDJtNCAwaDFtMiAwaDFtMSAwaDFtMSAwaDFtNCAwaDJtMyAwaDVtLTQxIDFoN20xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMW0yIDBoMW00IDBoM20zIDBoMm0xIDBoMm0xIDBoMW0xIDBoMm0xIDBoMW0tNDAgMWgxbTUgMGgxbTQgMGgxbTEgMGgybTEgMGgybTEgMGgxbTEgMGgxbTQgMGgzbTEgMGgxbTEgMGgxbTMgMGgxbTIgMGgybS00MSAxaDFtMSAwaDNtMSAwaDFtMyAwaDFtMSAwaDNtMiAwaDNtMiAwaDFtMiAwaDFtMSAwaDFtMiAwaDFtMSAwaDVtMSAwaDNtLTQxIDFoMW0xIDBoM20xIDBoMW0xIDBoMW0xIDBoMW0xIDBoMm0xIDBoMm0yIDBoM200IDBoN20zIDBoMW0xIDBoM20tNDEgMWgxbTEgMGgzbTEgMGgxbTEgMGgxbTUgMGgybTEgMGgxbTIgMGgybTIgMGgybTMgMGgybTEgMGgxbTIgMGgxbTEgMGgybTEgMGgxbS00MSAxaDFtNSAwaDFtNCAwaDFtMSAwaDFtMiAwaDNtMyAwaDRtMSAwaDFtNCAwaDFtMSAwaDFtMSAwaDFtMiAwaDFtLTQwIDFoN20yIDBoMm0xIDBoNW0yIDBoM20yIDBoNG0zIDBoMm0xIDBoMW0yIDBoMW0xIDBoMSIvPjwvZz48L3N2Zz4K" alt="QR LinkedIn" /><div class="lbl">LinkedIn</div></div>
+      </div>
+      <div class="qr-note" style="text-align:center">Scan to follow the studio</div>
+    </div>
+  </section>
+
+  <!-- 10 · CLOSING -->
+  <section class="slide dark" id="closing">
+    <div class="logo">A<span class="dot"></span>C<span class="dot"></span>S — AI Content Studio</div>
+    <div class="end-slogan"><span>Small Business.</span><span>Premium Presence.</span></div>
+    <div class="end-note">Every Great Brand Starts Somewhere.</div>
+  </section>
+
+</main>
+
+<script>
+  // ---- media loader: try video (.mp4) → image (.jpg) → keep placeholder ----
+  document.querySelectorAll('.media[data-video],.media[data-img]').forEach(box=>{
+    const vSrc=box.dataset.video, iSrc=box.dataset.img;
+    const showImage=()=>{
+      if(!iSrc) return;
+      const img=new Image();
+      img.onload=()=>{ const el=document.createElement('img'); el.src=iSrc; el.alt=''; box.insertBefore(el,box.firstChild); };
+      img.src=iSrc;
+    };
+    if(vSrc){
+      const v=document.createElement('video');
+      v.muted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.preload='auto';
+      v.addEventListener('loadeddata',()=>{ box.insertBefore(v,box.firstChild); v.play().catch(()=>{}); });
+      v.addEventListener('error',showImage);
+      v.src=vSrc;
+    } else { showImage(); }
+  });
+
+  const deck = document.getElementById('deck');
+  const slides = [...document.querySelectorAll('.slide')];
+  const ctot=document.getElementById('ctot'); if(ctot) ctot.textContent=String(slides.length).padStart(2,'0');
+  const dotsWrap = document.getElementById('dots');
+  const cnum = document.getElementById('cnum');
+  let current = 0;
+
+  slides.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.setAttribute('aria-label','Go to slide '+(i+1));
+    b.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));
+    dotsWrap.appendChild(b);
+  });
+  const dots=[...dotsWrap.children];
+
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        current=slides.indexOf(e.target);
+        dots.forEach((d,i)=>d.classList.toggle('active',i===current));
+        cnum.textContent=String(current+1).padStart(2,'0');
+      }
+    });
+  },{threshold:.55});
+  slides.forEach(s=>io.observe(s));
+
+  window.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '){e.preventDefault();slides[Math.min(current+1,slides.length-1)].scrollIntoView({behavior:'smooth'});}
+    if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();slides[Math.max(current-1,0)].scrollIntoView({behavior:'smooth'});}
+    if(e.key==='Home'){slides[0].scrollIntoView({behavior:'smooth'});}
+    if(e.key==='End'){slides[slides.length-1].scrollIntoView({behavior:'smooth'});}
+  });
+</script>
+</body>
+</html>
