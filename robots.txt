@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://natanyau.github.io/ai-content-studio-portfolio/sitemap.xml
