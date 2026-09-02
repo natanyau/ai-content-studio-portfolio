@@ -1,9 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Content Studio</title>
 <meta name="description" content="AI Content Studio — cinematic AI storytelling for ambitious small businesses. Greater Boston, USA." />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="AI Content Studio — Small Business. Premium Presence." />
 <meta property="og:description" content="Cinematic AI storytelling for ambitious small businesses. Greater Boston, USA." />
 <meta property="og:url" content="https://natanyau.github.io/ai-content-studio-portfolio/" />
+<link rel="canonical" href="https://natanyau.github.io/ai-content-studio-portfolio/" />
 <meta property="og:site_name" content="AI Content Studio" />
 <meta property="og:image" content="https://natanyau.github.io/ai-content-studio-portfolio/preview.jpg" />
 <meta property="og:image:secure_url" content="https://natanyau.github.io/ai-content-studio-portfolio/preview.jpg" />
@@ -415,9 +421,17 @@
     #method .flow{grid-template-columns:1fr}
     #philosophy .pillars,#services .s-grid,#why .why-grid{grid-template-columns:1fr}
     footer .f-top{grid-template-columns:1fr}
-    #home .display{font-size:clamp(2.8rem,15vw,4rem)}
+    #home .display{font-size:clamp(2.4rem,11vw,3.2rem)}
+    /* no mobile o bloco superior entra no fluxo para nao sobrepor o titulo */
+    #home .hero-top{position:relative;top:auto;left:auto;right:auto;margin-bottom:auto;
+      padding:calc(var(--pad) + 64px) var(--pad) 0;gap:10px}
+    #home .hero-top .col{flex:1 1 100%;text-align:left !important}
+    #home .hero-inner{padding-bottom:clamp(56px,9vh,90px)}
   }
 </style>
+</head>
+
+<body>
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
@@ -782,3 +796,6 @@
 
 
 </script>
+
+</body>
+</html>
