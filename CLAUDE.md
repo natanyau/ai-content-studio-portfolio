@@ -59,16 +59,38 @@ Nenhum dos dois substitui abrir o site no seu celular antes de divulgar um link.
 - Nunca commite direto no `main` sem ter rodado o `check.sh`.
 - `.preview/` é ignorado pelo git — é área de trabalho, não entra no repositório.
 
+## Preview de link (Open Graph)
+
+Cada página compartilhável tem `description`, `canonical`, `og:*` e `twitter:*`.
+O `404.html` **não** tem, e isso está correto: página de erro não é indexada nem
+compartilhada, e um `canonical` nela apontaria para o lugar errado.
+
+- Home → `preview.jpg`
+- Case da Crown → `assets/images/crown-case-preview.jpg`, que é o próprio herói da
+  página renderizado a 1200x630. **Se o herói do case mudar, regenere a imagem**,
+  senão o card compartilhado passa a mostrar uma versão que não existe mais.
+
+O LinkedIn guarda o preview em cache por URL e não relê sozinho. Depois de mudar
+qualquer `og:`, force a releitura no `linkedin.com/post-inspector/` — sem isso o
+card antigo continua aparecendo por dias.
+
+A descrição do case precisa manter a ressalva de não-afiliação com a Crown
+Automotive, igual à que a página exibe. Não a remova para encurtar o texto.
+
 ## Pendências conhecidas
 
-- `index.deck-backup-2026-08-29.html` (52KB) é servido publicamente e indexável.
-  Decida: apagar, ou mover para `docs/archive/` (fora do que o Pages publica).
-- `crown-featured-case.html` e `404.html` estão sem `description` e `og:image`:
-  o link do case compartilhado sai sem preview.
-- Nenhuma página tem `<link rel="canonical">`.
+- `index.deck-backup-2026-08-29.html` (52KB) é servido publicamente e indexável,
+  competindo com a home nos buscadores. Decida: apagar, ou mover para
+  `docs/archive/` (fora do que o Pages publica).
 
 ## Ambiente
 
-- Em sessão remota do Claude Code, `fonts.googleapis.com` é bloqueado pelo proxy —
-  o `ERR_CONNECTION_RESET` que aparece no `shots.sh` é isso, não um bug do site.
+- Em sessão remota do Claude Code, `fonts.googleapis.com` e `natanyau.github.io` são
+  bloqueados pela política de rede do ambiente. O `ERR_CONNECTION_RESET` no `shots.sh`
+  é isso, não um bug do site — e não dá para buscar a página publicada. Em compensação,
+  como o site é estático, `git show origin/main:arquivo` mostra exatamente o que o Pages
+  está servindo.
+- O Chromium do Playwright não tem codec H.264, então **os `.mp4` não tocam nos
+  screenshots do `shots.sh` em sessão remota** — aparecem os posters `.jpg`. No seu
+  navegador tocam normalmente. Não confunda isso com vídeo quebrado.
 - `scripts/shots.sh` precisa de `pip install playwright && playwright install chromium`.

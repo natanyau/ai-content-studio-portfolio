@@ -60,10 +60,13 @@ head_ "3. Metadados (SEO / preview de link)"
 for f in $(pages_html); do
   head -1 "$f" | grep -qi '<!doctype html>' || err  "$f: sem <!DOCTYPE html> na 1a linha (risco de quirks mode)"
   grep -q '<title>'                  "$f" || err  "$f: sem <title>"
-  grep -q 'name="description"'       "$f" || warn "$f: sem meta description"
-  grep -q 'rel="canonical"'          "$f" || warn "$f: sem <link rel=canonical>"
-  grep -q 'property="og:image"'      "$f" || warn "$f: sem og:image (preview quebra no LinkedIn/WhatsApp)"
   grep -q '<html[^>]*lang='          "$f" || warn "$f: <html> sem atributo lang"
+  # 404.html nao entra em busca nem e compartilhada: canonical e og seriam errados nela
+  if [ "$f" != "404.html" ]; then
+    grep -q 'name="description"'     "$f" || warn "$f: sem meta description"
+    grep -q 'rel="canonical"'        "$f" || warn "$f: sem <link rel=canonical>"
+    grep -q 'property="og:image"'    "$f" || warn "$f: sem og:image (preview quebra no LinkedIn/WhatsApp)"
+  fi
 done
 [ "$WARNS" -eq 0 ] && [ "$ERRORS" -eq 0 ] && ok "metadados completos"
 
