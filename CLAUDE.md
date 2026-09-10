@@ -1,6 +1,6 @@
-# AI Content Studio — guia do projeto
+# Timas Motion — guia do projeto
 
-Portfólio estático da AI Content Studio, publicado pelo **GitHub Pages** em
+Portfólio estático da Timas Motion, publicado pelo **GitHub Pages** em
 `https://natanyau.github.io/ai-content-studio-portfolio/`.
 Sem build, sem framework, sem dependências: o que está no repositório é exatamente
 o que vai ao ar quando o `main` recebe um push.
