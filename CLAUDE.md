@@ -16,7 +16,6 @@ o que vai ao ar quando o `main` recebe um push.
 | `preview.jpg` | Imagem de preview de link (Open Graph), 1200×630. |
 | `scripts/check.sh` | Verificação pré-publicação. |
 | `scripts/shots.sh` | Screenshots em mobile/tablet/desktop. |
-| `index.deck-backup-*.html` | Deck antigo. **Está sendo servido publicamente** — ver "Pendências". |
 
 ## Regras que evitam quebrar o site
 
@@ -79,9 +78,11 @@ Automotive, igual à que a página exibe. Não a remova para encurtar o texto.
 
 ## Pendências conhecidas
 
-- `index.deck-backup-2026-08-29.html` (52KB) é servido publicamente e indexável,
-  competindo com a home nos buscadores. Decida: apagar, ou mover para
-  `docs/archive/` (fora do que o Pages publica).
+Nenhuma aberta. O `index.deck-backup-2026-08-29.html` (deck antigo, 52KB) foi
+apagado: era servido publicamente e indexável, competindo com a home nos
+buscadores. Nada no site apontava para ele — a URL agora responde `404.html`, e
+o Google tira a página do índice depois de algumas passagens do crawler. O
+conteúdo continua no histórico do git (`git show 256d78e:index.deck-backup-2026-08-29.html`).
 
 ## Ambiente
 
