@@ -13,7 +13,7 @@ python3 -c "import playwright" 2>/dev/null || {
 
 FILES=("$@")
 if [ ${#FILES[@]} -eq 0 ]; then
-  mapfile -t FILES < <(find . -maxdepth 1 -name '*.html' -printf '%f\n' | grep -v backup | sort)
+  while IFS= read -r line; do FILES+=("$line"); done < <(find . -maxdepth 1 -name '*.html' -exec basename {} \; | grep -v backup | sort)
 fi
 
 mkdir -p .preview

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verificação pré-publicação do AI Content Studio.
+# Verificação pré-publicação do Timas Motion.
 # Site estático servido pelo GitHub Pages em /ai-content-studio-portfolio/.
 # Uso: bash scripts/check.sh   (código 0 = pode publicar, 1 = erro bloqueante)
 
@@ -15,7 +15,7 @@ warn() { printf '  \033[33mAVISO\033[0m  %s\n' "$1"; WARNS=$((WARNS+1)); }
 ok()   { printf '  \033[32mok\033[0m     %s\n' "$1"; }
 head_() { printf '\n\033[1m%s\033[0m\n' "$1"; }
 
-pages_html() { find . -maxdepth 1 -name '*.html' -printf '%f\n' | sort; }
+pages_html() { find . -maxdepth 1 -name '*.html' -exec basename {} \; | sort; }
 
 # 1 ─ Referências locais quebradas -------------------------------------------
 head_ "1. Referências locais (href/src)"
