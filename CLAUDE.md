@@ -16,7 +16,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `preview.jpg` | Imagem de preview de link (Open Graph), 1200×630. |
 | `scripts/check.sh` | Verificação pré-publicação. |
 | `scripts/shots.sh` | Screenshots em mobile/tablet/desktop. |
-| `index.deck-backup-*.html` | Deck antigo. **Está sendo servido publicamente** — ver "Pendências". |
+| `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
 
 ## Regras que evitam quebrar o site
 
@@ -79,9 +79,11 @@ Automotive, igual à que a página exibe. Não a remova para encurtar o texto.
 
 ## Pendências conhecidas
 
-- `index.deck-backup-2026-08-29.html` (52KB) é servido publicamente e indexável,
-  competindo com a home nos buscadores. Decida: apagar, ou mover para
-  `docs/archive/` (fora do que o Pages publica).
+- Os handles sociais no rodapé e na seção de contato ainda são `@aicontentstudious`
+  (Instagram) e `@AIContentStudioUS` (YouTube), da marca antiga. Só dá para trocar no
+  site depois de renomear as contas nas plataformas — link quebrado é pior que handle velho.
+- `crown-featured-case.html` não tem header, rodapé nem link de volta para a home:
+  quem chega pelo LinkedIn não vê de quem é o case nem tem como voltar ao portfólio.
 
 ## Ambiente
 
