@@ -79,11 +79,11 @@ Automotive, igual à que a página exibe. Não a remova para encurtar o texto.
 
 ## Pendências conhecidas
 
-- Os handles sociais no rodapé e na seção de contato ainda são `@aicontentstudious`
-  (Instagram) e `@AIContentStudioUS` (YouTube), da marca antiga. Só dá para trocar no
-  site depois de renomear as contas nas plataformas — link quebrado é pior que handle velho.
-- `crown-featured-case.html` não tem header, rodapé nem link de volta para a home:
-  quem chega pelo LinkedIn não vê de quem é o case nem tem como voltar ao portfólio.
+- Os nomes exibidos no site foram atualizados. O Instagram ainda usa o endereço
+  `https://instagram.com/aicontentstudious`; o YouTube usa o endereço estável do canal
+  `https://www.youtube.com/channel/UCWr4GlFo173CoBw1g8Jk_IA`.
+  A renomeação das contas para `@timasmotion` continua pendente nas plataformas.
+  Só atualize os destinos e o QR code depois de confirmar que as novas URLs funcionam.
 
 ## Ambiente
 
