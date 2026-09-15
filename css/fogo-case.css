@@ -76,3 +76,13 @@ a:focus-visible,video:focus-visible{outline:3px solid var(--accent);outline-offs
   .wide{aspect-ratio:4/3}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.reference-notes{margin-top:40px;padding:clamp(20px,3vw,36px);border:1px solid var(--line);background:var(--surface)}
+.reference-notes h3{font-size:clamp(1.7rem,3vw,2.4rem)}
+.source-list{padding-left:1.4rem;margin-bottom:0}
+.source-list li+li{margin-top:22px}
+.source-list p{margin:.5rem 0}
+.reference-notes a,.cards a{overflow-wrap:anywhere}
+.application-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin:32px 0}
+.film-spec{font-size:.85rem;letter-spacing:.04em;color:var(--accent)}
+@media(max-width:760px){.application-grid{grid-template-columns:1fr}}
