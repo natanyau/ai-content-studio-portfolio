@@ -78,6 +78,20 @@ os comandos de cópia no fim. A troca é sua, depois de olhar o resultado, porqu
 regra 4 vale aqui também. Vídeo acima de 5MB ganha teto de bitrate no reencode, já
 que vai ser recomprimido de qualquer jeito.
 
+O poster de cada vídeo sai do **HTML** (`data-poster` / `poster`), não do nome do
+arquivo — o reel do Fogo, por exemplo, usa `cha.jpg`. Duas consequências que já
+morderam:
+
+- **Poster que o site também usa como imagem comum é pulado.** O `cha.jpg` aparece
+  4× na galeria do case e como fundo no `index.html`; marcá-lo colocaria a marca em
+  fotos. O script avisa quais pulou, para você decidir à mão.
+- **A resolução do poster atual é preservada.** Quatro posters (`contact`, `cover`,
+  `philosophy`, `who`) são 1080×1920 enquanto o vídeo é 720×1280. Extrair no tamanho
+  do vídeo deixaria a imagem mais mole do que hoje.
+
+A marca em si (`.watermark/mark.png`) **não é versionada** — `.watermark/` é área de
+trabalho, como `.preview/`. Guarde uma cópia fora do repositório.
+
 Duas coisas que não dá para desfazer depois: **guarde os masters limpos fora do
 repositório** (depois da troca o original some do projeto) e **calibre num arquivo só**
 antes de processar os oito — reencode é perda, e rodar duas vezes perde duas vezes.
