@@ -16,6 +16,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `preview.jpg` | Imagem de preview de link (Open Graph), 1200×630. |
 | `scripts/check.sh` | Verificação pré-publicação. |
 | `scripts/shots.sh` | Screenshots em mobile/tablet/desktop. |
+| `scripts/watermark.sh` | Aplica a marca d'água nos vídeos e regenera os posters. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
 
 ## Regras que evitam quebrar o site
@@ -32,7 +33,8 @@ o que vai ao ar quando o `main` recebe um push.
 4. **Nunca edite nada em `assets/`.** São arquivos binários de produção; substituir só
    manualmente, com o arquivo novo em mãos.
 5. **Vídeo novo entra sempre em par**: `nome.mp4` + `nome.jpg` (poster). Sem poster, a seção
-   fica preta em quem tem autoplay bloqueado.
+   fica preta em quem tem autoplay bloqueado. Se o vídeo tem marca d'água, o poster
+   precisa ter também — é o poster que a maioria vê, não o vídeo.
 6. **Página nova precisa entrar no `sitemap.xml`** e levar `title`, `description`, `canonical`
    e `og:image` — senão o link compartilhado no LinkedIn/WhatsApp sai sem preview.
 7. **Não mexa em `robots.txt` nem em `sitemap.xml` sem motivo declarado.**
@@ -58,6 +60,27 @@ Nenhum dos dois substitui abrir o site no seu celular antes de divulgar um link.
   barata de saber que você não quebrou o mobile ao consertar o desktop.
 - Nunca commite direto no `main` sem ter rodado o `check.sh`.
 - `.preview/` é ignorado pelo git — é área de trabalho, não entra no repositório.
+
+## Marca d'água nos vídeos
+
+`scripts/watermark.sh` aplica a marca e regenera os posters a partir do vídeo **já
+marcado**. Precisa de `ffmpeg` (`brew install ffmpeg`) e de um PNG com fundo
+transparente em `.watermark/mark.png`.
+
+```bash
+bash scripts/watermark.sh                      # todos os .mp4 de assets/
+bash scripts/watermark.sh assets/media/who.mp4 # um só, para calibrar
+MARK=~/Desktop/marca.png OPACITY=0.4 bash scripts/watermark.sh
+```
+
+O script **não** substitui nada em `assets/` — escreve em `.watermark/out/` e imprime
+os comandos de cópia no fim. A troca é sua, depois de olhar o resultado, porque a
+regra 4 vale aqui também. Vídeo acima de 5MB ganha teto de bitrate no reencode, já
+que vai ser recomprimido de qualquer jeito.
+
+Duas coisas que não dá para desfazer depois: **guarde os masters limpos fora do
+repositório** (depois da troca o original some do projeto) e **calibre num arquivo só**
+antes de processar os oito — reencode é perda, e rodar duas vezes perde duas vezes.
 
 ## Preview de link (Open Graph)
 
