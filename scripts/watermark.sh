@@ -38,6 +38,9 @@ err()   { printf '  \033[31mERRO\033[0m   %s\n' "$1"; ERRORS=$((ERRORS+1)); }
 warn()  { printf '  \033[33mAVISO\033[0m  %s\n' "$1"; }
 ok()    { printf '  \033[32mok\033[0m     %s\n' "$1"; }
 head_() { printf '\n\033[1m%s\033[0m\n' "$1"; }
+# Bytes -> "1.2" (uma casa), so com aritmetica do shell: awk aninhado dentro de
+# printf dentro de ok() quebrava no awk do macOS e o relatorio saia "M -> M".
+mb()  { printf '%d.%d' "$(( $1 / 1048576 ))" "$(( $1 % 1048576 * 10 / 1048576 ))"; }
 
 # 1 ─ Pre-requisitos ----------------------------------------------------------
 head_ "1. Pre-requisitos"
@@ -147,9 +150,9 @@ while IFS=$'\t' read -r src poster is_shared; do
   fi
 
   a=$(wc -c < "$src" | tr -d ' '); b=$(wc -c < "$out" | tr -d ' ')
-  ok "$(printf '%s  %sM -> %sM' "$base" \
-        "$(awk "BEGIN{printf \"%.1f\", $a/1048576}")" \
-        "$(awk "BEGIN{printf \"%.1f\", $b/1048576}")")"
+  delta=$(( (b - a) * 100 / a ))
+  [ "$delta" -ge 0 ] && sign="+" || sign=""
+  ok "$base  $(mb "$a")M -> $(mb "$b")M  (${sign}${delta}%)"
 
   # ── Poster ────────────────────────────────────────────────────────────────
   if [ -z "$poster" ]; then
