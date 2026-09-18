@@ -14,6 +14,10 @@
 # arquivo: nem todo video tem poster de mesmo nome. Um poster que o site
 # tambem usa como imagem comum e PULADO — marca-lo colocaria a marca em fotos
 # de galeria. O script avisa quais, para voce decidir a mao.
+#
+# A marca e aplicada SOBRE o poster que ja existe, nunca sobre um frame novo
+# extraido do video: o poster e um frame escolhido, e troca-lo mudaria a
+# imagem que a pagina mostra.
 
 set -uo pipefail
 cd "$(dirname "$0")/.." || exit 1
@@ -26,7 +30,8 @@ OPACITY="${OPACITY:-0.55}"        # 0 = invisivel, 1 = solida
 MARGIN="${MARGIN:-140}"           # pixels acima da borda inferior
 WIDTH_1080="${WIDTH_1080:-190}"   # largura da marca em video de 1080 de largura
 WIDTH_720="${WIDTH_720:-120}"     # largura da marca em video de 720 de largura
-POSTER_AT="${POSTER_AT:-1}"       # segundo de onde sai o poster
+CRF="${CRF:-21}"                  # qualidade do reencode (menor = melhor)
+BITRATE_CAP="${BITRATE_CAP:-2500}"   # teto absoluto em kbps
 
 ERRORS=0; SKIPPED=0
 err()   { printf '  \033[31mERRO\033[0m   %s\n' "$1"; ERRORS=$((ERRORS+1)); }
@@ -109,11 +114,20 @@ while IFS=$'\t' read -r src poster is_shared; do
   [ -z "$vw" ] && { err "$src: nao consegui ler a largura"; continue; }
   if [ "$vw" -ge 1000 ]; then mw="$WIDTH_1080"; else mw="$WIDTH_720"; fi
 
-  bytes=$(wc -c < "$src" | tr -d ' ')
-  if [ "$bytes" -gt 5242880 ]; then
-    rate=(-crf 23 -maxrate 2200k -bufsize 4400k); mode="crf23 + teto 2200k"
+  # Teto de bitrate amarrado a ORIGEM. Sem isso o reencode incha: as fontes
+  # ja vem comprimidas (540-970 kbps nos pequenos), e um crf alto "melhora" o
+  # arquivo e dobra o tamanho. O teto e min(1.15x origem, BITRATE_CAP): os
+  # pequenos param de inflar, e so o que passa do teto e reduzido.
+  srckbps=$(ffprobe -v error -show_entries format=bit_rate -of csv=p=0 "$src" 2>/dev/null)
+  srckbps=$(( ${srckbps:-0} / 1000 ))
+  if [ "$srckbps" -gt 0 ]; then
+    maxk=$(( srckbps * 115 / 100 ))
+    [ "$maxk" -gt "$BITRATE_CAP" ] && maxk="$BITRATE_CAP"
+    rate=(-crf "$CRF" -maxrate "${maxk}k" -bufsize "$(( maxk * 2 ))k")
+    mode="origem ${srckbps}k -> teto ${maxk}k"
   else
-    rate=(-crf 20); mode="crf20"
+    rate=(-crf "$CRF" -maxrate "${BITRATE_CAP}k" -bufsize "$(( BITRATE_CAP * 2 ))k")
+    mode="bitrate de origem ilegivel -> teto ${BITRATE_CAP}k"
   fi
 
   if ffprobe -v error -select_streams a:0 -show_entries stream=codec_type -of csv=p=0 "$src" 2>/dev/null | grep -q audio
@@ -145,21 +159,30 @@ while IFS=$'\t' read -r src poster is_shared; do
   fi
 
   pout="$OUTDIR/$(basename "$poster")"
-  # Preserva a resolucao do poster atual: varios sao maiores que o video, e
-  # extrair no tamanho do video deixaria a imagem mais mole do que hoje.
-  if [ -f "$poster" ]; then
-    pdim=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height \
-           -of csv=s=x:p=0 "$poster" 2>/dev/null)
-  else
-    pdim=""
+  if [ ! -f "$poster" ]; then
+    warn "$base: poster $poster nao existe no disco — nada a marcar"
+    SKIPPED=$((SKIPPED+1)); continue
   fi
-  if [ -n "$pdim" ]; then scaleflag=(-vf "scale=${pdim%x*}:${pdim#*x}"); else scaleflag=(); fi
 
-  if ! ffmpeg -y -loglevel error -ss "$POSTER_AT" -i "$out" -frames:v 1 \
-       "${scaleflag[@]}" -q:v 3 "$pout" 2>&1; then
-    err "$base: ffmpeg falhou ao gerar o poster"; continue
+  # A marca vai sobre o POSTER ATUAL, nao sobre um frame extraido do video.
+  # O poster e um frame escolhido a dedo — extrair outro trocaria a imagem que
+  # a pagina mostra para quem tem autoplay bloqueado, que e a maioria. Marcar o
+  # proprio arquivo preserva a escolha, a resolucao e o enquadramento.
+  pw=$(ffprobe -v error -select_streams v:0 -show_entries stream=width \
+       -of csv=p=0 "$poster" 2>/dev/null)
+  if [ -z "$pw" ] || [ "$pw" -le 0 ]; then
+    err "$base: nao consegui ler a largura do poster"; continue
   fi
-  ok "$(basename "$pout")  ${pdim:-tamanho do video}"
+  # Mesma proporcao visual do video: poster maior, marca proporcionalmente maior.
+  pmw=$(( mw * pw / vw ))
+  pmargin=$(( MARGIN * pw / vw ))
+
+  if ! ffmpeg -y -loglevel error -i "$poster" -i "$MARK" \
+      -filter_complex "[1:v]scale=${pmw}:-1,format=rgba,colorchannelmixer=aa=${OPACITY}[wm];[0:v][wm]overlay=(W-w)/2:H-h-${pmargin}" \
+      -q:v 2 "$pout" 2>&1; then
+    err "$base: ffmpeg falhou ao marcar o poster"; continue
+  fi
+  ok "$(basename "$pout")  ${pw}px de largura, marca ${pmw}px"
 done <<< "$MAP"
 
 # 4 ─ Resultado ---------------------------------------------------------------

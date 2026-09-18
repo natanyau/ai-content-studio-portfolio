@@ -75,8 +75,12 @@ MARK=~/Desktop/marca.png OPACITY=0.4 bash scripts/watermark.sh
 
 O script **não** substitui nada em `assets/` — escreve em `.watermark/out/` e imprime
 os comandos de cópia no fim. A troca é sua, depois de olhar o resultado, porque a
-regra 4 vale aqui também. Vídeo acima de 5MB ganha teto de bitrate no reencode, já
-que vai ser recomprimido de qualquer jeito.
+regra 4 vale aqui também.
+
+**O teto de bitrate é amarrado à origem de cada arquivo** (`min(1.15× origem, 2500k)`).
+Sem isso o reencode incha: as fontes já vêm comprimidas entre 540 e 970 kbps, e um
+`crf` generoso "melhora" o arquivo e quase dobra o tamanho. Com o teto, os sete
+pequenos param de inflar e só o reel do Fogo é de fato reduzido.
 
 O poster de cada vídeo sai do **HTML** (`data-poster` / `poster`), não do nome do
 arquivo — o reel do Fogo, por exemplo, usa `cha.jpg`. Duas consequências que já
@@ -85,9 +89,12 @@ morderam:
 - **Poster que o site também usa como imagem comum é pulado.** O `cha.jpg` aparece
   4× na galeria do case e como fundo no `index.html`; marcá-lo colocaria a marca em
   fotos. O script avisa quais pulou, para você decidir à mão.
-- **A resolução do poster atual é preservada.** Quatro posters (`contact`, `cover`,
-  `philosophy`, `who`) são 1080×1920 enquanto o vídeo é 720×1280. Extrair no tamanho
-  do vídeo deixaria a imagem mais mole do que hoje.
+- **A marca é aplicada sobre o poster que já existe**, nunca sobre um frame novo
+  extraído do vídeo. O poster é um frame escolhido a dedo: no `who`, por exemplo,
+  o segundo 1 do vídeo mostra o Jeep, não a garagem que a página exibe hoje. Marcar
+  o próprio arquivo preserva o enquadramento e a resolução — quatro posters
+  (`contact`, `cover`, `philosophy`, `who`) são 1080×1920 num vídeo de 720×1280.
+  A marca escala junto: 120px no vídeo de 720 vira 180px no poster de 1080.
 
 A marca em si (`.watermark/mark.png`) **não é versionada** — `.watermark/` é área de
 trabalho, como `.preview/`. Guarde uma cópia fora do repositório.
