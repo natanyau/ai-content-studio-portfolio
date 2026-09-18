@@ -77,10 +77,14 @@ O script **não** substitui nada em `assets/` — escreve em `.watermark/out/` e
 os comandos de cópia no fim. A troca é sua, depois de olhar o resultado, porque a
 regra 4 vale aqui também.
 
-**O teto de bitrate é amarrado à origem de cada arquivo** (`min(1.15× origem, 2500k)`).
+**O teto de bitrate é amarrado à origem de cada arquivo** (`min(origem, BITRATE_CAP)`).
 Sem isso o reencode incha: as fontes já vêm comprimidas entre 540 e 970 kbps, e um
-`crf` generoso "melhora" o arquivo e quase dobra o tamanho. Com o teto, os sete
-pequenos param de inflar e só o reel do Fogo é de fato reduzido.
+`crf` generoso "melhora" o arquivo em vez de preservá-lo. Com o teto, os sete pequenos
+param de inflar e só o reel do Fogo é de fato reduzido.
+
+O `bufsize` é **1×** o `maxrate`, não 2×. O buffer VBV começa cheio, então ele é folga
+que o codificador gasta por cima da média — num clipe de 10s essa folga pesa, e com o
+buffer dobrado o arquivo ainda crescia ~20% apesar do teto.
 
 O poster de cada vídeo sai do **HTML** (`data-poster` / `poster`), não do nome do
 arquivo — o reel do Fogo, por exemplo, usa `cha.jpg`. Duas consequências que já

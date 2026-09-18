@@ -30,7 +30,7 @@ OPACITY="${OPACITY:-0.55}"        # 0 = invisivel, 1 = solida
 MARGIN="${MARGIN:-140}"           # pixels acima da borda inferior
 WIDTH_1080="${WIDTH_1080:-190}"   # largura da marca em video de 1080 de largura
 WIDTH_720="${WIDTH_720:-120}"     # largura da marca em video de 720 de largura
-CRF="${CRF:-21}"                  # qualidade do reencode (menor = melhor)
+CRF="${CRF:-23}"                  # qualidade do reencode (menor = melhor)
 BITRATE_CAP="${BITRATE_CAP:-2500}"   # teto absoluto em kbps
 
 ERRORS=0; SKIPPED=0
@@ -114,19 +114,23 @@ while IFS=$'\t' read -r src poster is_shared; do
   [ -z "$vw" ] && { err "$src: nao consegui ler a largura"; continue; }
   if [ "$vw" -ge 1000 ]; then mw="$WIDTH_1080"; else mw="$WIDTH_720"; fi
 
-  # Teto de bitrate amarrado a ORIGEM. Sem isso o reencode incha: as fontes
-  # ja vem comprimidas (540-970 kbps nos pequenos), e um crf alto "melhora" o
-  # arquivo e dobra o tamanho. O teto e min(1.15x origem, BITRATE_CAP): os
-  # pequenos param de inflar, e so o que passa do teto e reduzido.
+  # Teto de bitrate amarrado a ORIGEM: min(origem, BITRATE_CAP). Sem teto o
+  # reencode incha, porque as fontes ja vem comprimidas (540-970 kbps nos
+  # pequenos) e um crf generoso "melhora" o arquivo em vez de preserva-lo.
+  #
+  # O bufsize e 1x o maxrate, nao 2x. O buffer VBV comeca cheio, entao ele e
+  # folga que o codificador gasta por cima da media — num clipe de 10s essa
+  # folga pesa, e um bufsize dobrado deixava o arquivo crescer ~20% mesmo com
+  # o teto no lugar.
   srckbps=$(ffprobe -v error -show_entries format=bit_rate -of csv=p=0 "$src" 2>/dev/null)
   srckbps=$(( ${srckbps:-0} / 1000 ))
   if [ "$srckbps" -gt 0 ]; then
-    maxk=$(( srckbps * 115 / 100 ))
+    maxk="$srckbps"
     [ "$maxk" -gt "$BITRATE_CAP" ] && maxk="$BITRATE_CAP"
-    rate=(-crf "$CRF" -maxrate "${maxk}k" -bufsize "$(( maxk * 2 ))k")
+    rate=(-crf "$CRF" -maxrate "${maxk}k" -bufsize "${maxk}k")
     mode="origem ${srckbps}k -> teto ${maxk}k"
   else
-    rate=(-crf "$CRF" -maxrate "${BITRATE_CAP}k" -bufsize "$(( BITRATE_CAP * 2 ))k")
+    rate=(-crf "$CRF" -maxrate "${BITRATE_CAP}k" -bufsize "${BITRATE_CAP}k")
     mode="bitrate de origem ilegivel -> teto ${BITRATE_CAP}k"
   fi
 
