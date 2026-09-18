@@ -111,8 +111,14 @@ O LinkedIn guarda o preview em cache por URL e não relê sozinho. Depois de mud
 qualquer `og:`, force a releitura no `linkedin.com/post-inspector/` — sem isso o
 card antigo continua aparecendo por dias.
 
-A descrição do case precisa manter a ressalva de não-afiliação com a Crown
-Automotive, igual à que a página exibe. Não a remova para encurtar o texto.
+A descrição do case precisa manter a ressalva sobre a Crown Automotive, igual à que
+a página exibe (aparece em três `meta`, na nota do herói e na do rodapé — os cinco
+textos andam juntos). Não a remova para encurtar o texto.
+
+O que a ressalva afirma é deliberado: **não encomendado, revisado ou endossado**. Ela
+não diz "não afiliado" porque o autor do case trabalha na Crown Automotive Sales, e
+negar vínculo seria falso. Se alguém "restaurar" a redação antiga em nome da
+concisão, volta a ser uma afirmação incorreta na página publicada.
 
 ## Pendências conhecidas
 
