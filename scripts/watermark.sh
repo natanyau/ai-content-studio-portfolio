@@ -14,6 +14,10 @@
 # arquivo: nem todo video tem poster de mesmo nome. Um poster que o site
 # tambem usa como imagem comum e PULADO — marca-lo colocaria a marca em fotos
 # de galeria. O script avisa quais, para voce decidir a mao.
+#
+# A marca e aplicada SOBRE o poster que ja existe, nunca sobre um frame novo
+# extraido do video: o poster e um frame escolhido, e troca-lo mudaria a
+# imagem que a pagina mostra.
 
 set -uo pipefail
 cd "$(dirname "$0")/.." || exit 1
@@ -26,13 +30,17 @@ OPACITY="${OPACITY:-0.55}"        # 0 = invisivel, 1 = solida
 MARGIN="${MARGIN:-140}"           # pixels acima da borda inferior
 WIDTH_1080="${WIDTH_1080:-190}"   # largura da marca em video de 1080 de largura
 WIDTH_720="${WIDTH_720:-120}"     # largura da marca em video de 720 de largura
-POSTER_AT="${POSTER_AT:-1}"       # segundo de onde sai o poster
+CRF="${CRF:-23}"                  # qualidade do reencode (menor = melhor)
+BITRATE_CAP="${BITRATE_CAP:-2500}"   # teto absoluto em kbps
 
 ERRORS=0; SKIPPED=0
 err()   { printf '  \033[31mERRO\033[0m   %s\n' "$1"; ERRORS=$((ERRORS+1)); }
 warn()  { printf '  \033[33mAVISO\033[0m  %s\n' "$1"; }
 ok()    { printf '  \033[32mok\033[0m     %s\n' "$1"; }
 head_() { printf '\n\033[1m%s\033[0m\n' "$1"; }
+# Bytes -> "1.2" (uma casa), so com aritmetica do shell: awk aninhado dentro de
+# printf dentro de ok() quebrava no awk do macOS e o relatorio saia "M -> M".
+mb()  { printf '%d.%d' "$(( $1 / 1048576 ))" "$(( $1 % 1048576 * 10 / 1048576 ))"; }
 
 # 1 ─ Pre-requisitos ----------------------------------------------------------
 head_ "1. Pre-requisitos"
@@ -109,11 +117,24 @@ while IFS=$'\t' read -r src poster is_shared; do
   [ -z "$vw" ] && { err "$src: nao consegui ler a largura"; continue; }
   if [ "$vw" -ge 1000 ]; then mw="$WIDTH_1080"; else mw="$WIDTH_720"; fi
 
-  bytes=$(wc -c < "$src" | tr -d ' ')
-  if [ "$bytes" -gt 5242880 ]; then
-    rate=(-crf 23 -maxrate 2200k -bufsize 4400k); mode="crf23 + teto 2200k"
+  # Teto de bitrate amarrado a ORIGEM: min(origem, BITRATE_CAP). Sem teto o
+  # reencode incha, porque as fontes ja vem comprimidas (540-970 kbps nos
+  # pequenos) e um crf generoso "melhora" o arquivo em vez de preserva-lo.
+  #
+  # O bufsize e 1x o maxrate, nao 2x. O buffer VBV comeca cheio, entao ele e
+  # folga que o codificador gasta por cima da media — num clipe de 10s essa
+  # folga pesa, e um bufsize dobrado deixava o arquivo crescer ~20% mesmo com
+  # o teto no lugar.
+  srckbps=$(ffprobe -v error -show_entries format=bit_rate -of csv=p=0 "$src" 2>/dev/null)
+  srckbps=$(( ${srckbps:-0} / 1000 ))
+  if [ "$srckbps" -gt 0 ]; then
+    maxk="$srckbps"
+    [ "$maxk" -gt "$BITRATE_CAP" ] && maxk="$BITRATE_CAP"
+    rate=(-crf "$CRF" -maxrate "${maxk}k" -bufsize "${maxk}k")
+    mode="origem ${srckbps}k -> teto ${maxk}k"
   else
-    rate=(-crf 20); mode="crf20"
+    rate=(-crf "$CRF" -maxrate "${BITRATE_CAP}k" -bufsize "${BITRATE_CAP}k")
+    mode="bitrate de origem ilegivel -> teto ${BITRATE_CAP}k"
   fi
 
   if ffprobe -v error -select_streams a:0 -show_entries stream=codec_type -of csv=p=0 "$src" 2>/dev/null | grep -q audio
@@ -129,9 +150,9 @@ while IFS=$'\t' read -r src poster is_shared; do
   fi
 
   a=$(wc -c < "$src" | tr -d ' '); b=$(wc -c < "$out" | tr -d ' ')
-  ok "$(printf '%s  %sM -> %sM' "$base" \
-        "$(awk "BEGIN{printf \"%.1f\", $a/1048576}")" \
-        "$(awk "BEGIN{printf \"%.1f\", $b/1048576}")")"
+  delta=$(( (b - a) * 100 / a ))
+  [ "$delta" -ge 0 ] && sign="+" || sign=""
+  ok "$base  $(mb "$a")M -> $(mb "$b")M  (${sign}${delta}%)"
 
   # ── Poster ────────────────────────────────────────────────────────────────
   if [ -z "$poster" ]; then
@@ -145,21 +166,30 @@ while IFS=$'\t' read -r src poster is_shared; do
   fi
 
   pout="$OUTDIR/$(basename "$poster")"
-  # Preserva a resolucao do poster atual: varios sao maiores que o video, e
-  # extrair no tamanho do video deixaria a imagem mais mole do que hoje.
-  if [ -f "$poster" ]; then
-    pdim=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height \
-           -of csv=s=x:p=0 "$poster" 2>/dev/null)
-  else
-    pdim=""
+  if [ ! -f "$poster" ]; then
+    warn "$base: poster $poster nao existe no disco — nada a marcar"
+    SKIPPED=$((SKIPPED+1)); continue
   fi
-  if [ -n "$pdim" ]; then scaleflag=(-vf "scale=${pdim%x*}:${pdim#*x}"); else scaleflag=(); fi
 
-  if ! ffmpeg -y -loglevel error -ss "$POSTER_AT" -i "$out" -frames:v 1 \
-       "${scaleflag[@]}" -q:v 3 "$pout" 2>&1; then
-    err "$base: ffmpeg falhou ao gerar o poster"; continue
+  # A marca vai sobre o POSTER ATUAL, nao sobre um frame extraido do video.
+  # O poster e um frame escolhido a dedo — extrair outro trocaria a imagem que
+  # a pagina mostra para quem tem autoplay bloqueado, que e a maioria. Marcar o
+  # proprio arquivo preserva a escolha, a resolucao e o enquadramento.
+  pw=$(ffprobe -v error -select_streams v:0 -show_entries stream=width \
+       -of csv=p=0 "$poster" 2>/dev/null)
+  if [ -z "$pw" ] || [ "$pw" -le 0 ]; then
+    err "$base: nao consegui ler a largura do poster"; continue
   fi
-  ok "$(basename "$pout")  ${pdim:-tamanho do video}"
+  # Mesma proporcao visual do video: poster maior, marca proporcionalmente maior.
+  pmw=$(( mw * pw / vw ))
+  pmargin=$(( MARGIN * pw / vw ))
+
+  if ! ffmpeg -y -loglevel error -i "$poster" -i "$MARK" \
+      -filter_complex "[1:v]scale=${pmw}:-1,format=rgba,colorchannelmixer=aa=${OPACITY}[wm];[0:v][wm]overlay=(W-w)/2:H-h-${pmargin}" \
+      -q:v 2 "$pout" 2>&1; then
+    err "$base: ffmpeg falhou ao marcar o poster"; continue
+  fi
+  ok "$(basename "$pout")  ${pw}px de largura, marca ${pmw}px"
 done <<< "$MAP"
 
 # 4 ─ Resultado ---------------------------------------------------------------

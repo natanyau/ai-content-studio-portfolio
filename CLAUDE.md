@@ -75,8 +75,16 @@ MARK=~/Desktop/marca.png OPACITY=0.4 bash scripts/watermark.sh
 
 O script **não** substitui nada em `assets/` — escreve em `.watermark/out/` e imprime
 os comandos de cópia no fim. A troca é sua, depois de olhar o resultado, porque a
-regra 4 vale aqui também. Vídeo acima de 5MB ganha teto de bitrate no reencode, já
-que vai ser recomprimido de qualquer jeito.
+regra 4 vale aqui também.
+
+**O teto de bitrate é amarrado à origem de cada arquivo** (`min(origem, BITRATE_CAP)`).
+Sem isso o reencode incha: as fontes já vêm comprimidas entre 540 e 970 kbps, e um
+`crf` generoso "melhora" o arquivo em vez de preservá-lo. Com o teto, os sete pequenos
+param de inflar e só o reel do Fogo é de fato reduzido.
+
+O `bufsize` é **1×** o `maxrate`, não 2×. O buffer VBV começa cheio, então ele é folga
+que o codificador gasta por cima da média — num clipe de 10s essa folga pesa, e com o
+buffer dobrado o arquivo ainda crescia ~20% apesar do teto.
 
 O poster de cada vídeo sai do **HTML** (`data-poster` / `poster`), não do nome do
 arquivo — o reel do Fogo, por exemplo, usa `cha.jpg`. Duas consequências que já
@@ -85,9 +93,43 @@ morderam:
 - **Poster que o site também usa como imagem comum é pulado.** O `cha.jpg` aparece
   4× na galeria do case e como fundo no `index.html`; marcá-lo colocaria a marca em
   fotos. O script avisa quais pulou, para você decidir à mão.
-- **A resolução do poster atual é preservada.** Quatro posters (`contact`, `cover`,
-  `philosophy`, `who`) são 1080×1920 enquanto o vídeo é 720×1280. Extrair no tamanho
-  do vídeo deixaria a imagem mais mole do que hoje.
+- **A marca é aplicada sobre o poster que já existe**, nunca sobre um frame novo
+  extraído do vídeo. O poster é um frame escolhido a dedo: no `who`, por exemplo,
+  o segundo 1 do vídeo mostra o Jeep, não a garagem que a página exibe hoje. Marcar
+  o próprio arquivo preserva o enquadramento e a resolução — quatro posters
+  (`contact`, `cover`, `philosophy`, `who`) são 1080×1920 num vídeo de 720×1280.
+  A marca escala junto: 120px no vídeo de 720 vira 180px no poster de 1080.
+
+### Dois arquivos precisam de ajuste próprio
+
+Descobertos medindo os oito, não dá para o script adivinhar:
+
+```bash
+BITRATE_CAP=940 bash scripts/watermark.sh assets/media/cover.mp4  # cena difícil
+MARGIN=220      bash scripts/watermark.sh assets/media/crown.mp4  # rodapé ocupado
+```
+
+- **`cover`** é a cena do Jeep levantando poeira sobre cascalho: detalhe fino em
+  movimento, o pior caso para o x264. No padrão é o único que ainda cresce (~1,7%) e o
+  de pior VMAF (84,4). A culpa é do codec, não da marca — medido com e sem ela, a
+  diferença foi de 1,4 ponto.
+
+  **`BITRATE_CAP=940` é o ajuste, e foi medido:** a nota fica perto de 84, o arquivo
+  para de crescer, e lado a lado com o `crf 23` não há diferença visível (mesma textura
+  nas pedras, mesma suavização da poeira). `CRF=21` foi tentado antes e **não** resolveu
+  — o gargalo é o teto, não a qualidade-alvo.
+
+- **`crown`** tem texto queimado no rodapé do vídeo ("THE JEEP AUTHORITY /
+  CROWNAUTOMOTIVE.NET") com uma linha horizontal acima. Na margem padrão de 140 a marca
+  cai em cima da linha, entre os dois textos. `MARGIN=220` sobe para a área limpa —
+  medido no vídeo e no `crown.jpg`.
+
+  Ele encolhe muito (−56%, 1,13 MB → 0,49 MB, VMAF 95,1) porque a origem vinha a 2265
+  kbps, bitrate muito acima do que um card de gradiente precisa. Em contraste normal é
+  indistinguível da origem e o texto do rodapé segue nítido. **Com contraste forçado 4×
+  aparece um bloqueio leve nas bordas do brilho amarelo** — ponto fraco clássico de
+  gradiente escuro. Não aparece em uso normal, mas pode surgir como banding em tela de
+  brilho alto no escuro. Se aparecer, regenere o crown com um teto mais alto.
 
 A marca em si (`.watermark/mark.png`) **não é versionada** — `.watermark/` é área de
 trabalho, como `.preview/`. Guarde uma cópia fora do repositório.
