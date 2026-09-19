@@ -105,22 +105,31 @@ morderam:
 Descobertos medindo os oito, não dá para o script adivinhar:
 
 ```bash
-MARGIN=220 bash scripts/watermark.sh assets/media/crown.mp4  # rodapé ocupado
+BITRATE_CAP=940 bash scripts/watermark.sh assets/media/cover.mp4  # cena difícil
+MARGIN=220      bash scripts/watermark.sh assets/media/crown.mp4  # rodapé ocupado
 ```
+
+- **`cover`** é a cena do Jeep levantando poeira sobre cascalho: detalhe fino em
+  movimento, o pior caso para o x264. No padrão é o único que ainda cresce (~1,7%) e o
+  de pior VMAF (84,4). A culpa é do codec, não da marca — medido com e sem ela, a
+  diferença foi de 1,4 ponto.
+
+  **`BITRATE_CAP=940` é o ajuste, e foi medido:** a nota fica perto de 84, o arquivo
+  para de crescer, e lado a lado com o `crf 23` não há diferença visível (mesma textura
+  nas pedras, mesma suavização da poeira). `CRF=21` foi tentado antes e **não** resolveu
+  — o gargalo é o teto, não a qualidade-alvo.
 
 - **`crown`** tem texto queimado no rodapé do vídeo ("THE JEEP AUTHORITY /
   CROWNAUTOMOTIVE.NET") com uma linha horizontal acima. Na margem padrão de 140 a marca
   cai em cima da linha, entre os dois textos. `MARGIN=220` sobe para a área limpa —
-  **medido e confirmado** no vídeo e no `crown.jpg`.
-- **`cover`** é a cena do Jeep levantando poeira sobre cascalho: detalhe fino em
-  movimento, o pior caso para o x264. No `crf 23` padrão é o único que ainda cresce
-  (~1,7%) e o de pior qualidade medida. A culpa é do codec, não da marca — medido com
-  e sem ela, a diferença foi de 1,4 ponto de VMAF.
+  medido no vídeo e no `crown.jpg`.
 
-  **Não existe ajuste fechado para ele ainda.** `CRF=21` foi tentado e *não* resolveu.
-  As saídas em aberto são aceitar o `crf 23` com o +1,7%, ou baixar o teto só para esse
-  arquivo e medir se a nota aguenta. Enquanto não houver medição, não escreva aqui um
-  valor como se fosse resolvido.
+  Ele encolhe muito (−56%, 1,13 MB → 0,49 MB, VMAF 95,1) porque a origem vinha a 2265
+  kbps, bitrate muito acima do que um card de gradiente precisa. Em contraste normal é
+  indistinguível da origem e o texto do rodapé segue nítido. **Com contraste forçado 4×
+  aparece um bloqueio leve nas bordas do brilho amarelo** — ponto fraco clássico de
+  gradiente escuro. Não aparece em uso normal, mas pode surgir como banding em tela de
+  brilho alto no escuro. Se aparecer, regenere o crown com um teto mais alto.
 
 A marca em si (`.watermark/mark.png`) **não é versionada** — `.watermark/` é área de
 trabalho, como `.preview/`. Guarde uma cópia fora do repositório.
