@@ -139,16 +139,26 @@ O LinkedIn guarda o preview em cache por URL e não relê sozinho. Depois de mud
 qualquer `og:`, force a releitura no `linkedin.com/post-inspector/` — sem isso o
 card antigo continua aparecendo por dias.
 
-A descrição do case precisa manter a ressalva de não-afiliação com a Crown
-Automotive, igual à que a página exibe. Não a remova para encurtar o texto.
+A descrição do case precisa manter a ressalva sobre a Crown Automotive, igual à que
+a página exibe (aparece em três `meta`, na nota do herói e na do rodapé — os cinco
+textos andam juntos). Não a remova para encurtar o texto.
+
+O que a ressalva afirma é deliberado: **não encomendado, revisado ou endossado**. Ela
+não diz "não afiliado" porque o autor do case trabalha na Crown Automotive Sales, e
+negar vínculo seria falso. Se alguém "restaurar" a redação antiga em nome da
+concisão, volta a ser uma afirmação incorreta na página publicada.
 
 ## Pendências conhecidas
 
-- Os nomes exibidos no site foram atualizados. O Instagram ainda usa o endereço
-  `https://instagram.com/aicontentstudious`; o YouTube usa o endereço estável do canal
-  `https://www.youtube.com/channel/UCWr4GlFo173CoBw1g8Jk_IA`.
-  A renomeação das contas para `@timasmotion` continua pendente nas plataformas.
-  Só atualize os destinos e o QR code depois de confirmar que as novas URLs funcionam.
+- O Instagram já foi renomeado para `@timasmotion` e o site aponta para
+  `https://instagram.com/timasmotion`. O YouTube usa o endereço estável do canal
+  `https://www.youtube.com/channel/UCWr4GlFo173CoBw1g8Jk_IA`, que não depende do nome
+  de exibição.
+- O QR code do bloco de contato é um PNG em base64 embutido no `index.html` e codifica
+  `https://www.instagram.com/timasmotion`. Se o handle mudar de novo, trocar os links não
+  basta — o QR precisa ser regerado (versão 4, correção Q, módulo de 10px, borda de 4
+  módulos, preto `#0a0a0b`, 410x410), senão ele continua levando para o endereço antigo
+  sem que nada no HTML denuncie.
 
 ## Ambiente
 
