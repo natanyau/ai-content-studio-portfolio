@@ -105,17 +105,22 @@ morderam:
 Descobertos medindo os oito, não dá para o script adivinhar:
 
 ```bash
-CRF=21 bash scripts/watermark.sh assets/media/cover.mp4      # cena difícil
 MARGIN=220 bash scripts/watermark.sh assets/media/crown.mp4  # rodapé ocupado
 ```
 
+- **`crown`** tem texto queimado no rodapé do vídeo ("THE JEEP AUTHORITY /
+  CROWNAUTOMOTIVE.NET") com uma linha horizontal acima. Na margem padrão de 140 a marca
+  cai em cima da linha, entre os dois textos. `MARGIN=220` sobe para a área limpa —
+  **medido e confirmado** no vídeo e no `crown.jpg`.
 - **`cover`** é a cena do Jeep levantando poeira sobre cascalho: detalhe fino em
   movimento, o pior caso para o x264. No `crf 23` padrão é o único que ainda cresce
   (~1,7%) e o de pior qualidade medida. A culpa é do codec, não da marca — medido com
-  e sem ela, a diferença foi de 1,4 ponto. `CRF=21` resolve só esse.
-- **`crown`** tem texto queimado no rodapé do vídeo ("THE JEEP AUTHORITY /
-  CROWNAUTOMOTIVE.NET") com uma linha horizontal acima. Na margem padrão de 140 a marca
-  cai em cima da linha, entre os dois textos. `MARGIN=220` sobe para a área limpa.
+  e sem ela, a diferença foi de 1,4 ponto de VMAF.
+
+  **Não existe ajuste fechado para ele ainda.** `CRF=21` foi tentado e *não* resolveu.
+  As saídas em aberto são aceitar o `crf 23` com o +1,7%, ou baixar o teto só para esse
+  arquivo e medir se a nota aguenta. Enquanto não houver medição, não escreva aqui um
+  valor como se fosse resolvido.
 
 A marca em si (`.watermark/mark.png`) **não é versionada** — `.watermark/` é área de
 trabalho, como `.preview/`. Guarde uma cópia fora do repositório.
