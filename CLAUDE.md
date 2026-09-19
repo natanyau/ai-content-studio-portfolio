@@ -164,9 +164,10 @@ a página exibe (aparece em três `meta`, na nota do herói e na do rodapé — 
 textos andam juntos). Não a remova para encurtar o texto.
 
 O que a ressalva afirma é deliberado: **não encomendado, revisado ou endossado**. Ela
-não diz "não afiliado" porque o autor do case trabalha na Crown Automotive Sales, e
-negar vínculo seria falso. Se alguém "restaurar" a redação antiga em nome da
-concisão, volta a ser uma afirmação incorreta na página publicada.
+não diz "não afiliado" porque, neste caso, negar afiliação seria falso. A redação atual
+é a única que cobre as duas coisas ao mesmo tempo: o case é independente e a página não
+faz uma afirmação incorreta. Se alguém "restaurar" a redação antiga em nome da concisão,
+volta a ser uma afirmação incorreta na página publicada.
 
 ## Pendências conhecidas
 
