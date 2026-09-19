@@ -38,6 +38,12 @@ o que vai ao ar quando o `main` recebe um push.
 6. **Página nova precisa entrar no `sitemap.xml`** e levar `title`, `description`, `canonical`
    e `og:image` — senão o link compartilhado no LinkedIn/WhatsApp sai sem preview.
 7. **Não mexa em `robots.txt` nem em `sitemap.xml` sem motivo declarado.**
+   E saiba que **o `robots.txt` deste repositório não está em vigor**: ele só valeria
+   na raiz do domínio (`natanyau.github.io/robots.txt`), que seria servida por um
+   repositório `natanyau.github.io` — inexistente. Num *project site* do Pages o
+   arquivo fica em subdiretório e nenhum crawler o lê. O próprio arquivo explica isso
+   no topo. Não escreva em lugar nenhum que ele bloqueia alguém; hoje não bloqueia.
+   Quem sustenta a reserva de direitos é o `terms.html`, que não depende dele.
 
 ## Antes de publicar (sempre nesta ordem)
 
