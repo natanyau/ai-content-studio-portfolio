@@ -1,3 +1,20 @@
+# ATENCAO — ESTE ARQUIVO NAO ESTA EM VIGOR.
+#
+# robots.txt so vale na RAIZ DO DOMINIO. Este site e um project site do GitHub
+# Pages, servido em natanyau.github.io/ai-content-studio-portfolio/, entao este
+# arquivo fica num subdiretorio e NENHUM crawler o consulta. O endereco que os
+# crawlers leem e natanyau.github.io/robots.txt, que hoje nao existe: seria
+# servido por um repositorio chamado natanyau.github.io, que nao foi criado.
+#
+# As diretivas abaixo, portanto, nao bloqueiam ninguem no momento. Elas ficam
+# aqui porque registram a intencao de forma datada e publica, e porque passam a
+# valer sem edicao se o site ganhar dominio proprio (CNAME na raiz) ou se o
+# conteudo destas linhas for copiado para a raiz de natanyau.github.io.
+#
+# A reserva de direitos que de fato tem peso e a do terms.html. Ela nao depende
+# de robots.txt para existir.
+# ---------------------------------------------------------------------------
+
 # Search engines: fully allowed. Being found matters more than being hidden.
 User-agent: *
 Allow: /
