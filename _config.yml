@@ -1,0 +1,27 @@
+# Configuração do Jekyll usada pelo GitHub Pages.
+#
+# O site não usa Jekyll para nada: não há layout, template nem front matter.
+# Este arquivo existe por um motivo só — impedir que arquivos de trabalho do
+# repositório sejam servidos junto com o site.
+#
+# Sem ele, o build padrão copia todo arquivo da raiz que não comece com "." ou "_".
+# Markdown sem front matter não é convertido, é copiado verbatim: o CLAUDE.md
+# ficava legível em /ai-content-studio-portfolio/CLAUDE.md, e os .sh de scripts/
+# em /ai-content-studio-portfolio/scripts/. Nenhum dos dois pertence ao site.
+#
+# Isto cobre só o site publicado. O repositório é público, então esses arquivos
+# continuam visíveis no GitHub — que é onde eles servem para alguma coisa.
+
+exclude:
+  - CLAUDE.md
+  - scripts/
+  - .claude/          # dot-dir já é ignorado por padrão; listado para deixar a intenção clara
+  # devoluções do padrão do Jekyll, que esta lista sobrescreve por inteiro
+  - Gemfile
+  - Gemfile.lock
+  - gemfiles/
+  - node_modules/
+  - vendor/
+
+# Sem plugins, sem tema, sem coleções. Se algum dia o site precisar de build,
+# esta é a hora de reler a regra 1 do CLAUDE.md antes de adicionar qualquer coisa.

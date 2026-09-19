@@ -18,6 +18,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `scripts/shots.sh` | Screenshots em mobile/tablet/desktop. |
 | `scripts/watermark.sh` | Aplica a marca d'água nos vídeos e regenera os posters. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
+| `_config.yml` | Única função: tirar `CLAUDE.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
 
 ## Regras que evitam quebrar o site
 
@@ -44,6 +45,14 @@ o que vai ao ar quando o `main` recebe um push.
    arquivo fica em subdiretório e nenhum crawler o lê. O próprio arquivo explica isso
    no topo. Não escreva em lugar nenhum que ele bloqueia alguém; hoje não bloqueia.
    Quem sustenta a reserva de direitos é o `terms.html`, que não depende dele.
+8. **Não apague o `_config.yml`.** Ele parece contradizer o "sem build" do topo, mas não
+   adiciona etapa nenhuma: o GitHub Pages já roda o Jekyll neste repositório, com ou sem
+   ele. O que o arquivo faz é preencher o `exclude`. Sem isso o build copia todo arquivo
+   da raiz que não comece com `.` ou `_`, e `CLAUDE.md` vira uma página legível em
+   `/ai-content-studio-portfolio/CLAUDE.md` — Markdown sem front matter não é convertido,
+   é servido verbatim. O mesmo valia para os `.sh` de `scripts/`. Isso cobre só o site;
+   o repositório é público e esses arquivos continuam à vista no GitHub, que é onde eles
+   têm utilidade. Ao criar um arquivo de trabalho novo na raiz, acrescente-o ao `exclude`.
 
 ## Antes de publicar (sempre nesta ordem)
 
