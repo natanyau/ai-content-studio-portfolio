@@ -53,6 +53,8 @@ o que vai ao ar quando o `main` recebe um push.
    é servido verbatim. O mesmo valia para os `.sh` de `scripts/`. Isso cobre só o site;
    o repositório é público e esses arquivos continuam à vista no GitHub, que é onde eles
    têm utilidade. Ao criar um arquivo de trabalho novo na raiz, acrescente-o ao `exclude`.
+   O `check.sh` cobra isso: avisa a cada arquivo da raiz que iria ao ar sem estar listado,
+   e falha de vez se o `_config.yml` sumir.
 
 ## Antes de publicar (sempre nesta ordem)
 
@@ -63,7 +65,10 @@ python3 -m http.server 8000   # e abra http://localhost:8000
 ```
 
 O `check.sh` valida: referências quebradas, tags desbalanceadas, DOCTYPE/meta ausentes,
-`img` sem `alt`, sitemap desatualizado, assets órfãos ou pesados, e segredos commitados.
+`img` sem `alt`, sitemap desatualizado, assets órfãos ou pesados, arquivo de trabalho
+vazando para o site publicado, e segredos commitados. A varredura de segredos cobre todo
+arquivo de texto do repositório, não só o que vai ao ar: num repositório público um token
+num `.md` ou num `.yml` fica igualmente exposto.
 O `shots.sh` acusa scroll horizontal, quirks mode e erros de JS por viewport.
 
 Nenhum dos dois substitui abrir o site no seu celular antes de divulgar um link.

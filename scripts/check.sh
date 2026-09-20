@@ -97,6 +97,33 @@ for f in $(pages_html); do
   esac
 done
 
+# O Pages roda o Jekyll: tudo na raiz que não comece com "." ou "_" vai ao ar,
+# inclusive .md e .sh, servidos verbatim. Quem segura isso é o exclude do
+# _config.yml. Sem esta checagem, esquecer um arquivo novo lá é silencioso.
+if [ ! -f _config.yml ]; then
+  err "_config.yml ausente — sem ele o CLAUDE.md e os scripts/ voltam a ser servidos em $BASE/ (regra 8 do CLAUDE.md)"
+else
+  excl=$(sed -n '/^exclude:/,/^[^[:space:]-]/p' _config.yml \
+         | grep -E '^[[:space:]]*-[[:space:]]' \
+         | sed -E 's/^[[:space:]]*-[[:space:]]*//; s/[[:space:]]*#.*$//; s#/+$##; s/[[:space:]]*$//')
+  leaks=0
+  for e in *; do
+    [ -e "$e" ] || continue
+    case "$e" in .*|_*) continue ;; esac
+    printf '%s\n' "$excl" | grep -qxF "$e" && continue
+    case "$e" in
+      *.html|*.css|*.js|*.xml|*.txt|*.jpg|*.jpeg|*.png|*.gif|*.svg|*.webp|*.ico|*.mp4|*.webm|*.pdf|LICENSE)
+        continue ;;
+    esac
+    if [ -d "$e" ]; then
+      case "$e" in assets|css|docs) continue ;; esac
+    fi
+    warn "$e vai ao ar em $BASE/$e — se é arquivo de trabalho, acrescente ao exclude do _config.yml"
+    leaks=$((leaks+1))
+  done
+  [ "$leaks" -eq 0 ] && ok "nenhum arquivo de trabalho vazando para o site"
+fi
+
 # 7 ─ Assets órfãos e peso ----------------------------------------------------
 head_ "7. Assets"
 find assets -type f 2>/dev/null | while read -r a; do
@@ -115,8 +142,14 @@ tot=$(du -sm assets 2>/dev/null | cut -f1)
 
 # 8 ─ Segredos ----------------------------------------------------------------
 head_ "8. Segredos"
-if grep -rInE '(api[_-]?key|secret|token|password)[[:space:]]*[:=][[:space:]]*["'\''][A-Za-z0-9_\-]{16,}' \
-     --include='*.html' --include='*.css' --include='*.js' . 2>/dev/null | grep -v '^./scripts/'; then
+# Cobre todo arquivo de texto do repositório, não só o que vai ao ar: num
+# repositório público um token num .md ou num .yml fica igualmente exposto.
+if grep -rInE '(api[_-]?key|secret|token|password|senha)[[:space:]]*[:=][[:space:]]*["'\''][A-Za-z0-9_\-]{16,}' \
+     --include='*.html' --include='*.css' --include='*.js'  --include='*.md' \
+     --include='*.yml'  --include='*.yaml' --include='*.json' --include='*.sh' \
+     --include='*.txt'  --include='*.xml' \
+     --exclude-dir='.git' --exclude-dir='.preview' --exclude-dir='.watermark' \
+     . 2>/dev/null; then
   err "possível segredo commitado (revise as linhas acima)"
 else
   ok "nenhum segredo aparente"
