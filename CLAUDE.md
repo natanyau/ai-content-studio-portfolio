@@ -14,7 +14,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `404.html` | Página de erro servida pelo Pages. |
 | `assets/media/` | Vídeos `.mp4` + posters `.jpg` de cada seção. Cada vídeo **precisa** do `.jpg` de mesmo nome como fallback. |
 | `preview.jpg` | Imagem de preview de link (Open Graph), 1200×630. |
-| `scripts/check.sh` | Verificação pré-publicação. |
+| `scripts/check.sh` | Verificação pré-publicação. Também roda sozinho no GitHub a cada push (`.github/workflows/check.yml`): erro vira ✗ vermelho no commit, aviso só aparece no resumo da execução. |
 | `scripts/shots.sh` | Screenshots em mobile/tablet/desktop. |
 | `scripts/watermark.sh` | Aplica a marca d'água nos vídeos e regenera os posters. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
