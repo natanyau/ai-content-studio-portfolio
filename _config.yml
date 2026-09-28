@@ -16,6 +16,7 @@ exclude:
   - CLAUDE.md
   - scripts/
   - .claude/          # dot-dir já é ignorado por padrão; listado para deixar a intenção clara
+  - .github/          # idem
   # devoluções do padrão do Jekyll, que esta lista sobrescreve por inteiro
   - Gemfile
   - Gemfile.lock

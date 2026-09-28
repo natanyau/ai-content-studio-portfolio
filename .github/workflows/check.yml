@@ -1,0 +1,34 @@
+# Roda scripts/check.sh a cada push e pull request.
+# Erro no check.sh = X vermelho no commit. Aviso não falha, mas aparece
+# no resumo da execução (aba Actions, ou tocando no ✓ do commit no app).
+
+name: check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificação pré-publicação
+        run: |
+          set -o pipefail
+          bash scripts/check.sh | tee check.log
+        # o resumo roda mesmo com erro, que é quando ele mais importa
+
+      - name: Resumo
+        if: always()
+        run: |
+          {
+            echo '```'
+            sed -E 's/\x1b\[[0-9;]*m//g' check.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
