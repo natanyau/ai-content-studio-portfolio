@@ -1,0 +1,5 @@
+{
+  "name": "trava-assets",
+  "version": "0.1.0",
+  "description": "Impede o Claude de alterar arquivos em assets/ (regra 4 do CLAUDE.md)"
+}
