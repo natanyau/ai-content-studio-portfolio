@@ -3,21 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Fogo Featured Case by Timas Motion — a reference-informed cinematic interpretation of Fogo Island, Cape Verde." />
-  <meta property="og:title" content="Fogo Featured Case — Timas Motion" />
-  <meta property="og:description" content="Shaped by Fire. Defined by Life. A reference-informed cinematic interpretation of Fogo Island, Cape Verde." />
-  <link rel="canonical" href="https://natanyau.github.io/ai-content-studio-portfolio/fogo-featured-case.html" />
+  <meta name="description" content="TM-003 · Casa Cavoquinho by Timas Motion — an independent hospitality creative study built around the guest journey through Paul Valley, Santo Antão, Cape Verde. Not commissioned by or affiliated with Casa Cavoquinho." />
+  <meta property="og:title" content="TM-003 · Casa Cavoquinho — Timas Motion" />
+  <meta property="og:description" content="Stay in the Rhythm of the Valley. An independent, AI-assisted hospitality study of the guest journey through Paul Valley, Santo Antão. Not commissioned by or affiliated with Casa Cavoquinho." />
+  <link rel="canonical" href="https://natanyau.github.io/ai-content-studio-portfolio/tm-003-casa-cavoquinho.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://natanyau.github.io/ai-content-studio-portfolio/fogo-featured-case.html" />
-  <meta property="og:image" content="https://natanyau.github.io/ai-content-studio-portfolio/assets/fogo/cha.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <title>Fogo Featured Case — Timas Motion</title>
+  <meta property="og:url" content="https://natanyau.github.io/ai-content-studio-portfolio/tm-003-casa-cavoquinho.html" />
+  <meta name="twitter:card" content="summary" />
+  <title>TM-003 · Casa Cavoquinho — Timas Motion</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23131312'/><text x='50' y='68' font-family='Arial' font-size='58' font-weight='800' fill='white' text-anchor='middle'>T</text></svg>" />
   <link rel="stylesheet" href="css/fogo-case.css" />
   <style>
     .case-nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px clamp(18px,4vw,56px);background:linear-gradient(180deg,rgba(0,0,0,.72),rgba(0,0,0,0));font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
     .case-nav a{color:#f5f3ec;text-decoration:none}.case-nav__brand{font-weight:800}.case-nav__back{color:#c2c0b9!important}
     .independent-note{margin-top:26px;padding:16px 18px;border-left:2px solid var(--accent);background:rgba(0,0,0,.28);max-width:760px;color:var(--muted);font-size:.9rem}
+    /* No TM-003 stills exist yet: the hero and concept use a valley-toned gradient instead of a photo. */
+    .hero,.concept{background-image:radial-gradient(ellipse at 70% 15%,rgba(227,216,191,.16),transparent 55%),linear-gradient(165deg,#24301f 0%,#18201a 45%,#131312 100%)}
+    .concept{min-height:80svh}
+    .rhythm{display:flex;flex-wrap:wrap;gap:.6rem;margin:28px 0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.2rem,2.6vw,1.8rem);color:var(--text)}
+    .rhythm b{color:var(--accent);font-weight:400}
+    .beats{list-style:none;padding:0;margin:32px 0;max-width:760px}
+    .beats li{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.3rem,2.8vw,2rem);color:var(--text);padding:12px 0;border-bottom:1px solid var(--line)}
+    .beats li:last-child{color:var(--accent)}
+    .principles{counter-reset:p;list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:32px 0}
+    .principles li{counter-increment:p;padding:22px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.2rem,2.4vw,1.6rem)}
+    .principles li::before{content:counter(p,decimal-leading-zero);display:block;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:.75rem;letter-spacing:.18em;color:var(--accent);margin-bottom:6px}
+    .moments{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:36px 0}
+    .moments li{padding:20px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+    .moments span{display:block;font-size:.75rem;letter-spacing:.18em;color:var(--accent);font-weight:700}
+    .moments strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:1.25rem;font-weight:400;margin-top:6px}
+    .tag-list{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:20px 0}
+    .tag-list li{padding:6px 12px;border:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+    @media(max-width:760px){.principles,.moments{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -28,167 +45,173 @@
   </nav>
 
   <main>
-    <section class="hero" >
+    <section class="hero" aria-labelledby="cover-title">
       <div class="hero__overlay"></div>
       <div class="wrap hero__content">
-        <p class="eyebrow">Cape Verde · Timas Motion</p>
-        <h1>FOGO <span>Featured Case</span></h1>
-        <h2>Shaped by Fire. Defined by Life.</h2>
-        <p class="lead">A reference-informed cinematic interpretation of Fogo Island, Cape Verde.</p>
+        <p class="eyebrow">TM-003 · Santo Antão · Cape Verde</p>
+        <h1 id="cover-title">TM-003 <span>Casa Cavoquinho</span></h1>
+        <h2>Stay in the Rhythm of the Valley.</h2>
+        <p class="lead">A hospitality creative study built around the guest journey through Paul Valley.</p>
         <div class="case-actions">
           <a class="case-button" href="#film">Watch the film <span aria-hidden="true">↗</span></a>
           <a class="case-button case-button--outline" href="#case-story">Explore the process <span aria-hidden="true">↓</span></a>
         </div>
-        <p class="independent-note"><strong>Independent Creative Case Study.</strong> Developed as a self-initiated Timas Motion project using visual reference, human creative direction and AI-assisted production.</p>
+        <p class="independent-note"><strong>Independent Creative Case Study · Timas Motion.</strong> Not commissioned by or officially affiliated with Casa Cavoquinho.</p>
       </div>
     </section>
 
-    <section class="section split" id="case-story">
-      <div>
-        <p class="eyebrow">01 — The Challenge</p>
-        <h2>More than the volcano.</h2>
-        <p class="big-question">How do you tell the story of an island shaped by a volcano without reducing it to the volcano itself?</p>
-        <p>Fogo is defined by contrast. Black volcanic landscapes coexist with agriculture, historic architecture, mountain communities and everyday life. The challenge was to translate that diversity into a cinematic visual narrative while keeping the island recognizable and grounded in local reference.</p>
-        <p class="pull">The challenge was not to reinvent Fogo. It was to reveal it.</p>
-      </div>
-      <div class="stack">
-        <img width="512" height="910" decoding="async" src="assets/fogo/coast.jpg" alt="Black volcanic coastline in the Fogo project" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/sao-filipe.jpg" alt="São Filipe visual from the Fogo project" />
-      </div>
+    <section class="section" id="case-story">
+      <p class="eyebrow">01 — The Challenge</p>
+      <h2>More than a place to stay.</h2>
+      <p>Casa Cavoquinho already presents the practical side of a stay: accommodation, breakfast and dinner, hiking information and access to the Paul Valley.</p>
+      <p>The brief was not to invent a new experience, or to suggest that the property’s own communication was falling short. It was to explore how those existing elements could connect into a clearer guest journey, so a prospective visitor understands what the property offers and also what staying there could feel like.</p>
+      <p class="big-question">How can a rural guesthouse be presented not simply as accommodation in the valley, but as a base for experiencing the valley itself?</p>
     </section>
 
     <section class="section dark-grid">
       <div>
         <p class="eyebrow">02 — The Insight</p>
-        <h2>Authenticity became the strategy.</h2>
-        <p>The strongest story was already there. It did not need to be invented.</p>
-        <p>Fogo’s identity comes from the relationship between land, communities, cultivation, architecture and the Atlantic. That insight changed the role of AI: instead of inventing a more dramatic island, each visual decision had to remain connected to recognizable local reference.</p>
-        <p class="pull">AI could enhance light, composition and atmosphere. But local reference had to remain the filter.</p>
+        <h2>The journey became the story.</h2>
+        <p>The opportunity was in connecting the moments of the stay, rather than listing them.</p>
       </div>
-      <img width="512" height="910" decoding="async" class="tall" src="assets/fogo/coffee.jpg" alt="Coffee and mountain vegetation visual from the Fogo project" />
+      <ol class="beats">
+        <li>Wake in the valley.</li>
+        <li>Move through it.</li>
+        <li>Experience the landscape.</li>
+        <li>Return to the same base.</li>
+        <li>Slow down.</li>
+      </ol>
     </section>
 
-    <section class="concept" >
+    <section class="section">
+      <p class="eyebrow">03 — The Strategy</p>
+      <h2>The house is the base.<br /><span>The valley is the experience.</span></h2>
+      <div class="cards application-grid">
+        <article><h3>Objective</h3><p>Turn the property’s existing experiences into a clear guest journey that helps prospective visitors picture Casa Cavoquinho as their base in the Paul Valley.</p></article>
+        <article><h3>Core promise</h3><p>A base from which guests experience the valley, return to comfort, and stay connected to the place throughout their visit.</p></article>
+        <article><h3>Logic</h3><p>The property is the base. The valley is the experience. The guest connects the two.</p></article>
+      </div>
+      <p class="eyebrow">Narrative</p>
+      <p class="rhythm" aria-label="Narrative: wake, prepare, explore, return, rest">wake <b aria-hidden="true">→</b> prepare <b aria-hidden="true">→</b> explore <b aria-hidden="true">→</b> return <b aria-hidden="true">→</b> rest</p>
+      <p class="pull">Casa <span aria-hidden="true">→</span> Valley <span aria-hidden="true">→</span> Casa</p>
+    </section>
+
+    <section class="concept" aria-labelledby="idea-title">
       <div class="concept__overlay"></div>
       <div class="wrap concept__content">
-        <p class="eyebrow">03 — The Concept</p>
-        <h2>SHAPED BY FIRE.<br /><span>DEFINED BY LIFE.</span></h2>
-        <p>Fire shaped the island. Life gave it meaning.</p>
+        <p class="eyebrow">04 — The Big Idea</p>
+        <h2 id="idea-title">STAY IN THE RHYTHM<br /><span>OF THE VALLEY.</span></h2>
+        <p>“Stay” ties the line to hospitality. “Rhythm” carries the pace of the experience: waking in the valley, moving through it, coming back and slowing down.</p>
+        <p class="pull">The valley stopped being the setting and became the rhythm of the stay.</p>
       </div>
     </section>
 
     <section class="section">
-      <p class="eyebrow">04 — Creative Direction</p>
-      <h2>Cinematic realism grounded in local reference.</h2>
-      <p class="lead">Elevated in presentation. Believable in place.</p>
-      <div class="gallery four">
-        <img width="512" height="910" decoding="async" src="assets/fogo/coast.jpg" alt="Volcanic coast" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/sao-filipe.jpg" alt="Historic São Filipe" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/coffee.jpg" alt="Coffee and mountain vegetation" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/cha.jpg" alt="Chã and volcanic terrain" />
+      <p class="eyebrow">05 — Creative Direction</p>
+      <h2>Feel a day in the valley.<br /><span>Don’t watch an ad about it.</span></h2>
+      <p class="lead">North star: make the viewer feel a day in the Paul Valley, not watch an advertisement about it.</p>
+      <ol class="principles">
+        <li>Presence over spectacle.</li>
+        <li>The guest journey stays central.</li>
+        <li>Local reality is the filter.</li>
+        <li>Sensory continuity.</li>
+      </ol>
+      <div class="cards application-grid">
+        <article><h3>Inside the guesthouse</h3><p>Closer, calmer, human shots.</p></article>
+        <article><h3>Outside</h3><p>Broader landscapes and movement through the valley.</p></article>
+        <article><h3>Return</h3><p>Intimate again.</p></article>
       </div>
-      <p class="pull">AI supported the cinematic interpretation. Local reference remained the filter.</p>
+      <p class="pull">AI supports the cinematic interpretation. Reality and public visual references guide the decisions.</p>
     </section>
 
     <section class="section research" id="references">
-      <p class="eyebrow">05 — Reference &amp; Creative Decisions</p>
-      <h2>A place to reference.<br />A story to interpret.</h2>
-      <p>The goal was not simply to find beautiful references. It was to keep Fogo recognizable.</p>
-      <div class="process">Reference <b>→</b> Generate <b>→</b> Compare <b>→</b> Refine <b>→</b> Review</div>
+      <p class="eyebrow">06 — Research &amp; Reality Framework</p>
+      <h2>Reality set the boundaries.<br /><span>Direction worked inside them.</span></h2>
+      <p>The project drew on Casa Cavoquinho’s published information and on public visual references to the Paul Valley.</p>
       <div class="evidence">
-        <img width="512" height="910" decoding="async" src="assets/fogo/coffee.jpg" alt="Mosteiros-inspired coffee and mountain vegetation visual" />
         <div class="cards">
-          <article><h3>Documented context</h3><p>The municipality of Mosteiros describes coffee cultivation on volcanic soils at elevations of 350–1,300 metres. This gives the coffee theme a specific geographic context. <a class="text-link" href="https://www.cmmost.cv/cafe-fogo">Read the municipal source ↗</a></p></article>
-          <article><h3>Creative risk</h3><p>A lush, generic tropical landscape could obscure the relationship between cultivation and volcanic terrain.</p></article>
-          <article><h3>Visual criteria</h3><p>Read the coffee study through three elements: cultivation in the foreground, mountain relief and settlement in the distance. These are creative criteria, not a geographic survey.</p></article>
-          <article><h3>Interpretation</h3><p>The image is an AI-assisted visual study. It does not establish the exact location of a plantation or document a real viewpoint.</p></article>
+          <article>
+            <h3>About the stay</h3>
+            <ul class="tag-list">
+              <li>Guesthouse context</li>
+              <li>Valley-facing accommodation</li>
+              <li>Breakfast and dinner</li>
+              <li>Hiking information</li>
+              <li>How the stay relates to the valley</li>
+            </ul>
+          </article>
+          <article>
+            <h3>About the valley</h3>
+            <ul class="tag-list">
+              <li>General topography</li>
+              <li>Cultivated landscapes</li>
+              <li>Rural pathways and scale</li>
+              <li>Buildings on steep terrain</li>
+            </ul>
+          </article>
+        </div>
+        <div class="cards">
+          <article><h3>Interpretation</h3><p>The generated house, room, breakfast setup and guest scenes are conceptual interpretations. They are not documentary records and do not show the property’s exact architecture, interiors, food presentation or guest experience.</p></article>
+          <article><h3>What this case does not claim</h3><p>No booking growth, occupancy change, revenue impact, client approval or commercial performance.</p></article>
         </div>
       </div>
-      <p class="pull">Could this realistically belong to Fogo?</p>
-      <div class="reference-notes">
-        <h3>Read the local context.</h3>
-        <p>These public references were added during the case-study review. They provide context for the themes below; they do not certify the generated scenes or document the original production process.</p>
-        <ol class="source-list">
-          <li><a class="text-link" href="https://www.cmmost.cv/cafe-fogo">Câmara Municipal dos Mosteiros — Café do Fogo ↗</a><p>Coffee cultivation, volcanic soils and the upland growing areas of Mosteiros. Context for the coffee visual study.</p></li>
-          <li><a class="text-link" href="https://www.fogo.cv/index.php/2017-11-01-14-37-19/2017-11-01-14-38-32/historia-de-sao-filipe">Portal da Ilha do Fogo — História de São Filipe ↗</a><p>The coastal setting and historic sobrados of São Filipe. Context for the architectural theme, without claiming an exact reconstruction.</p></li>
-        </ol>
-      </div>
     </section>
 
     <section class="section">
-      <p class="eyebrow">06 — The Production</p>
-      <h2>AI assisted the production.<br /><span>Human direction shaped the result.</span></h2>
-      <div class="process">Reference <b>→</b> Prompt <b>→</b> Generate <b>→</b> Evaluate <b>→</b> Refine <b>→</b> Approve</div>
-      <div class="gallery three">
-        <img width="512" height="910" decoding="async" src="assets/fogo/sao-filipe.jpg" alt="Composition and place" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/mountains.jpg" alt="Atmosphere and terrain" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/cha.jpg" alt="Geography and recognizable identity" />
-      </div>
-      <p class="pull">Believability mattered more than spectacle.</p>
+      <p class="eyebrow">07 — The Production</p>
+      <h2>Nine moments.<br /><span>One guest journey.</span></h2>
+      <p>The film was designed as one connected journey, not a set of separate hospitality shots.</p>
+      <ol class="moments">
+        <li><span>01</span><strong>Morning Presence</strong></li>
+        <li><span>02</span><strong>Wake / First Contact</strong></li>
+        <li><span>03</span><strong>Breakfast / Local Taste</strong></li>
+        <li><span>04</span><strong>Preparation to Leave</strong></li>
+        <li><span>05</span><strong>Into the Valley</strong></li>
+        <li><span>06</span><strong>Through the Valley</strong></li>
+        <li><span>07</span><strong>The Return</strong></li>
+        <li><span>08</span><strong>Late-Afternoon Rest</strong></li>
+        <li><span>09</span><strong>Closing / The Promise</strong></li>
+      </ol>
+      <div class="process">Generate for the story <b>→</b> Validate against references <b>→</b> Correct for continuity</div>
+      <p class="pull">Every scene had to earn its place in the journey.</p>
     </section>
 
     <section class="section">
-      <p class="eyebrow">07 — The Edit</p>
-      <h2>The final story was built in the edit.</h2>
-      <p>Individual scenes became a connected journey through rhythm, sequence, contrast and sound. The studies below show the visual palette explored across the project; the film presents the selected sequence.</p>
-      <div class="timeline">
-        <img width="512" height="910" decoding="async" src="assets/fogo/coast.jpg" alt="Volcanic coast visual study" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/ocean.jpg" alt="Coastal street visual study" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/sao-filipe.jpg" alt="São Filipe architecture visual study" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/coffee.jpg" alt="Coffee cultivation visual study" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/volcano-sunset.jpg" alt="Volcanic landscape at sunset" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/cha.jpg" alt="Chã-inspired terrain and settlement" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/community.jpg" alt="Community visual study" />
-        <img width="512" height="910" decoding="async" src="assets/fogo/rural-life.jpg" alt="Rural daily life visual study" />
-      </div>
-      <p class="pull">Not simply a story about a volcano. A story about the life that exists around it.</p>
+      <p class="eyebrow">08 — The Edit</p>
+      <h2>Calm, movement, calm.</h2>
+      <p class="rhythm" aria-label="Edit structure: calm, preparation, exploration, return, rest">calm <b aria-hidden="true">→</b> preparation <b aria-hidden="true">→</b> exploration <b aria-hidden="true">→</b> return <b aria-hidden="true">→</b> rest</p>
+      <p>The opening is restrained. The middle section carries more movement. The ending slows down again. Sound and music hold the spaces and the stages of the day together.</p>
+      <p class="pull">STAY IN THE RHYTHM OF THE VALLEY.</p>
     </section>
 
     <section class="section film" id="film" aria-labelledby="film-title">
-      <p class="eyebrow">08 — The Final Film</p>
-      <h2 id="film-title">A cinematic portrait of Fogo.</h2>
-      <p class="lead">Built around local reference, contrast and identity.</p>
-      <p class="film-spec">39 seconds · Vertical 9:16 · 1080 × 1920 delivery</p>
-      <video width="1080" height="1920" aria-label="Fogo cinematic film" controls playsinline preload="metadata" poster="assets/fogo/cha.jpg">
-        <source src="assets/fogo/fogo-final-reel.mp4?v=1080-pt-2" type="video/mp4" />
+      <p class="eyebrow">09 — The Final Film</p>
+      <h2 id="film-title">Stay in the Rhythm of the Valley</h2>
+      <p class="lead">A 36-second hospitality film built around one complete guest journey: wake, explore, return, rest.</p>
+      <video aria-label="Stay in the Rhythm of the Valley, TM-003 hospitality film" controls playsinline preload="metadata">
+        <source src="assets/tm-003/tm-003-final-film.mp4" type="video/mp4" />
         Your browser does not support HTML5 video.
       </video>
-      <p><a class="text-link" href="assets/fogo/fogo-final-reel.mp4?v=1080-pt-2">Open the film directly ↗</a></p>
-      <h3>Shaped by Fire. Defined by Life.</h3>
-      <p class="pull">FOGO. CINEMATICALLY TOLD.</p>
+      <p><a class="text-link" href="assets/tm-003/tm-003-final-film.mp4">Open the film directly ↗</a></p>
     </section>
 
     <section class="section outcome">
-      <p class="eyebrow">09 — The Outcome</p>
-      <h2>More than a finished film.</h2>
-      <p>A 39-second film and a set of visual studies demonstrate the studio’s approach to place, atmosphere and editorial rhythm.</p>
+      <p class="eyebrow">10 — The Outcome</p>
+      <h2>A complete hospitality concept.</h2>
+      <p>TM-003 produced a hospitality communication concept built from public research, guest-journey strategy and a cinematic narrative. The outcome is the creative work and the process behind it, not a claim of commercial performance.</p>
       <div class="method">
-        <span>Understand the place.</span>
-        <span>Find the story.</span>
-        <span>Protect the identity.</span>
-        <span>Elevate the presentation.</span>
+        <span>Research grounded the project.</span>
+        <span>Strategy gave it direction.</span>
+        <span>The guest journey gave it structure.</span>
+        <span>The film gave it form.</span>
       </div>
-      <img width="512" height="910" decoding="async" class="wide" src="assets/fogo/cha.jpg" alt="Fogo volcanic territory and community" />
-      <p>The project does not present AI-generated scenes as documentary photography. It presents a reference-informed cinematic interpretation of Fogo, developed through visual reference and human creative direction.</p>
-      <p class="pull">FOGO. CINEMATICALLY TOLD.</p>
     </section>
 
-    <section class="section applications" id="applications" aria-labelledby="applications-title">
-      <p class="eyebrow">Commercial possibilities</p>
-      <h2 id="applications-title">A sense of place.<br />A reason to connect.</h2>
-      <p class="lead">A creative approach for independent stays, local experiences and destination brands.</p>
-      <div class="application-grid cards">
-        <article><h3>Audience</h3><p>Travellers looking for culture, landscape and a more personal connection to a destination.</p></article>
-        <article><h3>Communication goal</h3><p>Introduce the character of a place and invite viewers to explore a stay or experience through a clear next step.</p></article>
-        <article><h3>Possible uses</h3><p>A social introduction, a film for a hospitality website, or a short destination story connected to an enquiry page.</p></article>
-      </div>
-      <p>These are proposed applications. Fogo is a self-initiated creative study, with no commissioned tourism campaign or measured commercial results presented.</p>
-      <a class="case-button" href="mailto:talutimas@gmail.com?subject=Tourism%20film%20inquiry%20%E2%80%94%20Timas%20Motion">Discuss a film for your brand <span aria-hidden="true">↗</span></a>
-    </section>
-
-    <aside class="disclosure wrap">
-      <strong>AI transparency</strong>
-      <p>AI-assisted cinematic interpretation based on research and local reference. Not presented as documentary photography.</p>
+    <aside class="disclosure wrap" aria-label="Transparency">
+      <strong>Transparency</strong>
+      <p>Independent Creative Case Study. Not commissioned by or officially affiliated with Casa Cavoquinho.</p>
+      <p>AI-assisted cinematic interpretation based on the property’s published information and public visual references to the Paul Valley.</p>
+      <p>No commercial results or client approval are claimed.</p>
     </aside>
   </main>
   <footer class="case-footer wrap">
