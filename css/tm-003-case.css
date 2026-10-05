@@ -91,8 +91,8 @@ a:focus-visible,video:focus-visible{outline:3px solid var(--accent);outline-offs
 .case-nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px clamp(18px,4vw,56px);background:linear-gradient(180deg,rgba(0,0,0,.72),rgba(0,0,0,0));font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
 .case-nav a{color:#f5f3ec;text-decoration:none}.case-nav__brand{font-weight:800}.case-nav__back{color:#c2c0b9!important}
 .independent-note{margin-top:26px;padding:16px 18px;border-left:2px solid var(--accent);background:rgba(0,0,0,.28);max-width:760px;color:var(--muted);font-size:.9rem}
-/* TM-003: sem stills por enquanto, hero e conceito usam gradiente em tom de vale */
-.hero,.concept{background-image:radial-gradient(ellipse at 70% 15%,rgba(227,216,191,.16),transparent 55%),linear-gradient(165deg,#24301f 0%,#18201a 45%,#131312 100%)}
+/* TM-003: sem stills por enquanto, hero e conceito usam o mesmo fundo grafite da home */
+.hero,.concept{background-image:radial-gradient(130% 90% at 78% 8%,#26272e 0%,rgba(12,12,16,0) 55%),radial-gradient(120% 120% at 12% 96%,#1a1414 0%,rgba(10,10,11,0) 50%),linear-gradient(180deg,#0c0c10 0%,#0a0a0b 100%)}
 .concept{min-height:80svh}
 .rhythm{display:flex;flex-wrap:wrap;gap:.6rem;margin:28px 0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.2rem,2.6vw,1.8rem);color:var(--text)}
 .rhythm b{color:var(--accent);font-weight:400}
