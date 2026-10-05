@@ -1081,6 +1081,18 @@ a:focus-visible {
   line-height: 1.7;
 }
 
+.case-closing__copyright {
+  margin: 14px 0 0;
+  color: var(--gray-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.case-closing__copyright a {
+  color: var(--white);
+  text-underline-offset: 4px;
+}
+
 /* Mobile */
 
 

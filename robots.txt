@@ -1,4 +1,73 @@
+# ATENCAO — ESTE ARQUIVO NAO ESTA EM VIGOR.
+#
+# robots.txt so vale na RAIZ DO DOMINIO. Este site e um project site do GitHub
+# Pages, servido em natanyau.github.io/ai-content-studio-portfolio/, entao este
+# arquivo fica num subdiretorio e NENHUM crawler o consulta. O endereco que os
+# crawlers leem e natanyau.github.io/robots.txt, que hoje nao existe: seria
+# servido por um repositorio chamado natanyau.github.io, que nao foi criado.
+#
+# As diretivas abaixo, portanto, nao bloqueiam ninguem no momento. Elas ficam
+# aqui porque registram a intencao de forma datada e publica, e porque passam a
+# valer sem edicao se o site ganhar dominio proprio (CNAME na raiz) ou se o
+# conteudo destas linhas for copiado para a raiz de natanyau.github.io.
+#
+# A reserva de direitos que de fato tem peso e a do terms.html. Ela nao depende
+# de robots.txt para existir.
+# ---------------------------------------------------------------------------
+
+# Search engines: fully allowed. Being found matters more than being hidden.
 User-agent: *
 Allow: /
 
 Sitemap: https://natanyau.github.io/ai-content-studio-portfolio/sitemap.xml
+
+# ---------------------------------------------------------------------------
+# Crawlers that collect content as machine-learning training data.
+# Timas Motion expressly reserves all rights in this work for text and data
+# mining and for training automated generative systems. See:
+# https://natanyau.github.io/ai-content-studio-portfolio/terms.html
+#
+# Blocking these costs no search visibility: none of them rank this site.
+# Answer engines that cite their sources (OAI-SearchBot, ChatGPT-User,
+# PerplexityBot, Claude-User) are deliberately NOT blocked — they send
+# readers here, which is the point of a portfolio.
+# ---------------------------------------------------------------------------
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
