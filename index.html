@@ -321,13 +321,14 @@
     font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gray-soft);
   }
   .featured .f-tag .pill{padding:6px 12px;border:1px solid var(--accent);border-radius:999px;color:#fff;font-weight:600}
+  .tm003-featured .f-tag .pill{white-space:nowrap}
   .featured h3{font-size:clamp(2rem,3.6vw,3.4rem);line-height:1;margin-bottom:16px}
   .featured .f-lede{font-size:clamp(1rem,1.3vw,1.28rem);color:var(--gray-soft);font-weight:500;line-height:1.5;max-width:42ch}
   .featured .f-meta{display:flex;gap:38px;margin:30px 0;flex-wrap:wrap}
   .featured .f-meta .n{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-.05em;line-height:.9}
   .featured .f-meta .l{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:6px}
   .featured .btn{align-self:flex-start}
-  #work .fogo-featured{margin-top:clamp(22px,2.6vw,34px)}
+  #work .fogo-featured,#work .tm003-featured{margin-top:clamp(22px,2.6vw,34px)}
 
   .case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(22px,2.6vw,34px);margin-top:clamp(22px,2.6vw,34px)}
   .case-card{
@@ -599,7 +600,7 @@
     <div class="featured fogo-featured reveal">
       <div class="media ph-5 f-media" style="background-image:url('assets/fogo/cha.jpg');background-size:cover;background-position:center">
         <div class="frameline"></div><div class="grain"></div>
-        <div class="badge">New Featured Case</div>
+        <div class="badge">Featured Case</div>
         <div class="ph"><span class="cap">Fogo Island · Cape Verde</span></div>
       </div>
       <div class="f-info">
@@ -611,6 +612,25 @@
           <div><div class="n">Fogo</div><div class="l">Cape Verde</div></div>
         </div>
         <a href="fogo-featured-case.html" class="btn btn-primary">Explore the full case <span class="arw">→</span></a>
+      </div>
+    </div>
+
+    <!-- TM-003 Casa Cavoquinho -->
+    <div class="featured tm003-featured reveal">
+      <div class="media ph-2 f-media" style="background-image:url('assets/Tm-003.jpg');background-size:cover;background-position:center 45%">
+        <div class="frameline"></div><div class="grain"></div>
+        <div class="badge">New Featured Case</div>
+        <div class="ph"><span class="cap">Paul Valley · Santo Antão</span></div>
+      </div>
+      <div class="f-info">
+        <div class="f-tag"><span class="pill">Case TM-003</span> Independent Creative Study</div>
+        <h3>Casa Cavoquinho</h3>
+        <p class="f-lede">Stay in the Rhythm of the Valley. A hospitality study built around the guest journey: wake at the house, explore the Paul Valley, return and rest.</p>
+        <div class="f-meta">
+          <div><div class="n">36s</div><div class="l">Hospitality film</div></div>
+          <div><div class="n">Santo Antão</div><div class="l">Cape Verde</div></div>
+        </div>
+        <a href="tm-003-casa-cavoquinho.html" class="btn btn-primary">Explore the full case <span class="arw">→</span></a>
       </div>
     </div>
 
