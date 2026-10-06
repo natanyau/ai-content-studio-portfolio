@@ -94,8 +94,8 @@ a:focus-visible,video:focus-visible{outline:3px solid var(--accent);outline-offs
 .case-nav a{color:var(--text);text-decoration:none}.case-nav__brand{font-weight:800}.case-nav__back{color:var(--muted)!important}
 .independent-note{margin-top:26px;padding:16px 18px;border-left:2px solid var(--accent);background:rgba(0,0,0,.28);max-width:760px;color:var(--muted);font-size:.9rem}
 /* TM-003: hero e conceito usam frames do próprio filme */
-.hero{background-image:url("../assets/tm-003-01-morning.jpg");background-position:center 40%}
-.concept{background-image:url("../assets/tm-003-09-closing.jpg");background-position:center 60%}
+.hero{background-image:url("../assets/images/tm-003-01-morning.jpg");background-position:center 40%}
+.concept{background-image:url("../assets/images/tm-003-09-closing.jpg");background-position:center 60%}
 .concept{min-height:80svh}
 .rhythm{display:flex;flex-wrap:wrap;gap:.6rem;margin:28px 0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.2rem,2.6vw,1.8rem);color:var(--text)}
 .rhythm b{color:var(--accent);font-weight:400}
