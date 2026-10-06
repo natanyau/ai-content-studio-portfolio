@@ -45,5 +45,16 @@
         ]
       }
     ]
+  },
+  "extraKnownMarketplaces": {
+    "timas-mods": {
+      "source": {
+        "source": "directory",
+        "path": "./.claude/mods"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "trava-assets@timas-mods": true
   }
 }
