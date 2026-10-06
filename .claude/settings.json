@@ -41,6 +41,12 @@
             "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/scripts/check.sh\" 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | tail -30 | jq -Rs '{hookSpecificOutput:{hookEventName:\"SessionStart\",additionalContext:(\"Estado atual do site (scripts/check.sh). Corrija ERROs antes de publicar; não introduza novos AVISOs:\\n\" + .)}}'",
             "timeout": 30,
             "statusMessage": "Verificando o site..."
+          },
+          {
+            "type": "command",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\" && { claude plugin list 2>/dev/null | grep -q \"trava-assets@timas-mods\" || { claude plugin marketplace add ./.claude/mods --scope local && claude plugin install trava-assets@timas-mods --scope local; }; } >/dev/null 2>&1; true",
+            "timeout": 60,
+            "statusMessage": "Ligando a trava de assets/..."
           }
         ]
       }

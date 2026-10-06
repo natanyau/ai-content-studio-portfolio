@@ -19,7 +19,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `scripts/watermark.sh` | Aplica a marca d'água nos vídeos e regenera os posters. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
 | `_config.yml` | Única função: tirar `CLAUDE.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
-| `.claude/mods/trava-assets/` | Mod do Claude Code que barra `Edit`, `Write` e comandos de shell que alterem `assets/` (regra 4). Não carrega sozinho: `claude --plugin-dir .claude/mods/trava-assets`. Testes: `claude plugin test .claude/mods/trava-assets`. |
+| `.claude/mods/trava-assets/` | Mod do Claude Code que barra `Edit`, `Write` e comandos de shell que alterem `assets/` (regra 4). `.claude/mods/` é um marketplace local (`timas-mods`) e um hook de `SessionStart` instala o mod com escopo `local` quando ele falta, inclusive em container novo na nuvem; vale já na sessão que o instalou. Testes: `claude plugin test .claude/mods/trava-assets`. |
 
 ## Regras que evitam quebrar o site
 
