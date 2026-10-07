@@ -893,6 +893,12 @@ a:focus-visible {
   line-height: 1.75;
 }
 
+.execution-disclaimer a {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .pilot-section {
   border-top: 1px solid var(--line);
   background: var(--black);
