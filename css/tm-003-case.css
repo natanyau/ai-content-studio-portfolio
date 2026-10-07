@@ -119,3 +119,5 @@ a:focus-visible,video:focus-visible{outline:3px solid var(--accent);outline-offs
 @media(max-width:760px){.principles{grid-template-columns:1fr}.moments{grid-template-columns:repeat(2,minmax(0,1fr))}.moments li:last-child{grid-column:1/-1}.moments li:last-child img{aspect-ratio:16/9}.moments strong{font-size:1.05rem}}
 .case-copyright{margin-top:48px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.7;max-width:70ch}
 .case-copyright a{color:var(--accent);text-underline-offset:4px}
+/* Capa: o nome da casa é o título; o código do case fica na linha de cima */
+.hero h1{font-size:clamp(3rem,10vw,8rem)}
