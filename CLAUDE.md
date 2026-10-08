@@ -1,7 +1,7 @@
 # Timas Motion — guia do projeto
 
 Portfólio estático da Timas Motion, publicado pelo **GitHub Pages** em
-`https://natanyau.github.io/ai-content-studio-portfolio/`.
+`https://timasmotion.com` (domínio próprio, via arquivo `CNAME` na raiz).
 Sem build, sem framework, sem dependências: o que está no repositório é exatamente
 o que vai ao ar quando o `main` recebe um push.
 
@@ -13,6 +13,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `crown-featured-case.html` | Case Crown. Único arquivo que usa CSS externo (`css/crown-case.css`). |
 | `404.html` | Página de erro servida pelo Pages. |
 | `assets/media/` | Vídeos `.mp4` + posters `.jpg` de cada seção. Cada vídeo **precisa** do `.jpg` de mesmo nome como fallback. |
+| `CNAME` | Domínio próprio do Pages. **Se sumir, o site volta para a URL do github.io e o `robots.txt` deixa de valer.** |
 | `preview.jpg` | Imagem de preview de link (Open Graph), 1200×630. |
 | `scripts/check.sh` | Verificação pré-publicação. Também roda sozinho no GitHub a cada push (`.github/workflows/check.yml`): erro vira ✗ vermelho no commit, aviso só aparece no resumo da execução. |
 | `scripts/shots.sh` | Screenshots em mobile/tablet/desktop. |
@@ -25,10 +26,12 @@ o que vai ao ar quando o `main` recebe um push.
 
 1. **Não converta o CSS/JS inline do `index.html` em arquivos separados.** É decisão de
    arquitetura, não descuido. O mesmo vale para não "modernizar" para React/Vite/Tailwind.
-2. **Links internos de navegação usam o caminho absoluto do Pages**
-   (`/ai-content-studio-portfolio/`), porque o site vive num subdiretório. Já os assets
-   usam caminho relativo (`assets/media/...`). Não unifique os dois — cada um está certo
-   no seu contexto.
+2. **Links internos de navegação saem da raiz** (`/`, `/terms.html`), porque o site tem
+   domínio próprio. Já os assets usam caminho relativo (`assets/media/...`). Não unifique
+   os dois — cada um está certo no seu contexto.
+   Até setembro de 2026 o site vivia em `natanyau.github.io/ai-content-studio-portfolio/`
+   e esses links carregavam o prefixo do subdiretório. Se encontrar `/ai-content-studio-portfolio/`
+   em algum lugar, é resquício: hoje leva a 404.
 3. **Toda página precisa começar com `<!DOCTYPE html>`** e ter `<html lang>`, `<meta charset>`
    e `<meta name="viewport">`. Sem o DOCTYPE o browser entra em *quirks mode*; sem o viewport
    o celular renderiza a 980px. Já aconteceu neste repositório.
@@ -40,12 +43,11 @@ o que vai ao ar quando o `main` recebe um push.
 6. **Página nova precisa entrar no `sitemap.xml`** e levar `title`, `description`, `canonical`
    e `og:image` — senão o link compartilhado no LinkedIn/WhatsApp sai sem preview.
 7. **Não mexa em `robots.txt` nem em `sitemap.xml` sem motivo declarado.**
-   E saiba que **o `robots.txt` deste repositório não está em vigor**: ele só valeria
-   na raiz do domínio (`natanyau.github.io/robots.txt`), que seria servida por um
-   repositório `natanyau.github.io` — inexistente. Num *project site* do Pages o
-   arquivo fica em subdiretório e nenhum crawler o lê. O próprio arquivo explica isso
-   no topo. Não escreva em lugar nenhum que ele bloqueia alguém; hoje não bloqueia.
-   Quem sustenta a reserva de direitos é o `terms.html`, que não depende dele.
+   O `robots.txt` **está em vigor** desde a migração para domínio próprio: ele é servido
+   em `timasmotion.com/robots.txt`, que é a raiz do domínio — o único lugar onde
+   `robots.txt` vale. Antes disso o site era um *project site* e o arquivo ficava num
+   subdiretório, onde nenhum crawler o lia. **Se o `CNAME` sair, ele volta a ser inerte.**
+   Quem sustenta a reserva de direitos independente disso é o `terms.html`.
 8. **Não apague o `_config.yml`.** Ele parece contradizer o "sem build" do topo, mas não
    adiciona etapa nenhuma: o GitHub Pages já roda o Jekyll neste repositório, com ou sem
    ele. O que o arquivo faz é preencher o `exclude`. Sem isso o build copia todo arquivo
@@ -198,7 +200,7 @@ volta a ser uma afirmação incorreta na página publicada.
 
 ## Ambiente
 
-- Em sessão remota do Claude Code, `fonts.googleapis.com` e `natanyau.github.io` são
+- Em sessão remota do Claude Code, `fonts.googleapis.com` e o domínio do site são
   bloqueados pela política de rede do ambiente. O `ERR_CONNECTION_RESET` no `shots.sh`
   é isso, não um bug do site — e não dá para buscar a página publicada. Em compensação,
   como o site é estático, `git show origin/main:arquivo` mostra exatamente o que o Pages
