@@ -18,6 +18,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `scripts/check.sh` | Verificação pré-publicação. Também roda sozinho no GitHub a cada push (`.github/workflows/check.yml`): erro vira ✗ vermelho no commit, aviso só aparece no resumo da execução. |
 | `scripts/shots.sh` | Screenshots em mobile/tablet/desktop. |
 | `scripts/watermark.sh` | Aplica a marca d'água nos vídeos e regenera os posters. |
+| `scripts/carousel-tm003.py` | Gera o carrossel do TM-003 (PNG 1080×1350 + PDF). Molde para os próximos cases. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
 | `_config.yml` | Única função: tirar `CLAUDE.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
 | `.claude/mods/trava-assets/` | Mod do Claude Code que barra `Edit`, `Write` e comandos de shell que alterem `assets/` (regra 4). Não carrega sozinho: `claude --plugin-dir .claude/mods/trava-assets`. Testes: `claude plugin test .claude/mods/trava-assets`. |
@@ -171,6 +172,11 @@ compartilhada, e um `canonical` nela apontaria para o lugar errado.
 - Case da Crown → `assets/images/crown-case-preview.jpg`, que é o próprio herói da
   página renderizado a 1200x630. **Se o herói do case mudar, regenere a imagem**,
   senão o card compartilhado passa a mostrar uma versão que não existe mais.
+- Case do Fogo → `assets/fogo-case-preview.jpg`, também o herói renderizado. Para caber
+  o herói inteiro, renderize num viewport maior e reduza (1760×924 com
+  `device_scale_factor` 1200/1760), ou capture só a `section.hero` e recorte 1200×630.
+- Case TM-003 → `assets/tm-003-preview.jpg`, composição própria: grafite à esquerda
+  com nome, linha e ressalva; frame do filme à direita.
 
 O LinkedIn guarda o preview em cache por URL e não relê sozinho. Depois de mudar
 qualquer `og:`, force a releitura no `linkedin.com/post-inspector/` — sem isso o
@@ -185,6 +191,76 @@ não diz "não afiliado" porque, neste caso, negar afiliação seria falso. A re
 é a única que cobre as duas coisas ao mesmo tempo: o case é independente e a página não
 faz uma afirmação incorreta. Se alguém "restaurar" a redação antiga em nome da concisão,
 volta a ser uma afirmação incorreta na página publicada.
+
+## Como fazer um case novo
+
+Padrão fechado com o TM-003 e aplicado depois ao Fogo e à Crown. Para o próximo,
+copie o `tm-003-casa-cavoquinho.html` e o `css/tm-003-case.css` como molde e
+reescreva o conteúdo seção por seção. Nunca faça busca-e-troca global a partir de
+outro case: sobra nome, alt, ID e link do case antigo.
+
+**Ordem da página.** Capa (o nome da marca ou do lugar é o título grande; o código
+`TM-00X` vai na linha pequena de cima, com o local) → **The Film** logo abaixo da capa
+(ninguém deve precisar rolar oito seções para ver o trabalho) → 01 Challenge, com os
+cards *Strategic focus / Project scope / Evidence standard* → Insight → Strategy →
+Big Idea → Creative Direction → Research & Reality (fontes) → Production → Edit →
+Outcome, com as entregas marcadas *Produced* ou *Documented* → bloco Transparency.
+
+**Cores.** As da home, não as de cada case: fundo `#0a0a0b`, cards `#17171a`, linha
+`#2a2a2e`, texto `#fff` e `#b7b7bc`. Vermelho `#e1262f` em títulos, botões e
+destaques grandes; **texto vermelho pequeno (rótulos, números, links) usa `#ff4a52`**,
+que passa de 4,5:1 no preto (o `#e1262f` fica em 3,9–4,3:1). O bege antigo do Fogo
+saiu do site.
+
+**Tom.** O da Crown: analítico e comedido ("could", "may"), frases simples, sem slogan
+em destaque. Nenhum resultado comercial, aprovação do cliente ou afiliação afirmados.
+A ressalva de independência aparece na capa, nos `meta` e no bloco final.
+
+**Toda afirmação factual tem fonte nomeada e link**, numa seção *Research Sources* que
+diz o que cada fonte sustenta e o que ela **não** prova. Fontes sobre a propriedade
+ficam separadas das referências visuais de paisagem. Cada ressalva aparece uma vez por
+papel (resumo na seção 01, detalhe junto das fontes, fechamento em Transparency), não
+em toda seção.
+
+**Descreva o filme pelo que ele mostra.** Antes de escrever "the film closes on…",
+extraia os últimos frames e confira; antes de chamar um vídeo de "cinematic film",
+veja o que ele contém. Já aconteceu duas vezes: TM-003 e Fogo diziam fechar com a
+frase do conceito, que não aparece na tela; a Crown chamava de filme sobre a
+comunidade Jeep um cartão de logo de 4 s. Nota interna do tipo "must be reviewed
+before publication" não pode ficar numa página publicada: confira e cite a fonte.
+
+**Proteções que todo case leva** (iguais às do `main`): `meta author` e `copyright`,
+`og:site_name` e `og:locale`, favicon vetorial, `<video controlsList="nodownload"
+disablePictureInPicture>`, nenhum link direto para o `.mp4`, e a linha de copyright
+com `/terms.html` no rodapé.
+
+**Imagens do case.** Frames do próprio filme: detecte os cortes
+(`ffmpeg -vf "select='gt(scene,0.3)',showinfo"`) e tire um frame do meio de cada um,
+720×1280, JPEG q82. Alt começa com "Film still:". Capa e Big Idea usam o primeiro e o
+último plano como fundo.
+
+**Filme.** Comprima a partir do master, nunca de uma versão já comprimida: 720×1280,
+`crf 23`, `maxrate` 1800k se houver texto na imagem ou 1000k sem texto, `bufsize`
+igual ao `maxrate`, `-movflags +faststart`. Confira o SSIM contra o master (≥ 0,97).
+A marca vai junto, com os parâmetros do `watermark.sh` (120 px de largura em vídeo de
+720, 140 px acima da borda, opacidade 0,55); poster com a mesma marca, e sem texto
+queimado. **Legenda queimada na imagem não sai**: peça a versão limpa.
+
+**Uploads pelo celular** (o Claude não grava em `assets/`, regra 4). O "Upload files"
+do GitHub cai **na pasta aberta e no ramo selecionado**: confira os dois antes do
+"Commit changes" e confira o resultado pelo hash depois. Já caiu na raiz, em
+`assets/` em vez de `assets/images/`, e no ramo errado. Se o arquivo certo chegou com
+outro nome ou outra pasta, ajuste a página em vez de pedir outro upload; cópia
+duplicada se reverte com `git revert`.
+
+**Publicação.** Trabalhe num ramo; traga o `main` antes de juntar; prévia privada
+(Artifact no claude.ai com as páginas e os assets) para revisar pelo celular; merge
+`--no-ff` no `main` só com "pode publicar" explícito. Depois: Post Inspector com o
+endereço `timasmotion.com` de cada página que mudou.
+
+**Divulgação.** Carrossel de 10 slides 1080×1350 + o mesmo em PDF para o LinkedIn,
+gerado por `scripts/carousel-tm003.py` (molde: troque textos e imagens). No Instagram
+link não é clicável na legenda: use a bio e o story com figurinha de link.
 
 ## Pendências conhecidas
 
