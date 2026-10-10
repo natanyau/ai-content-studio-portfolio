@@ -1,0 +1,11 @@
+{
+  "name": "timas-mods",
+  "owner": { "name": "Timas Motion" },
+  "plugins": [
+    {
+      "name": "trava-assets",
+      "source": "./trava-assets",
+      "description": "Impede o Claude de alterar arquivos em assets/ (regra 4 do CLAUDE.md)"
+    }
+  ]
+}
