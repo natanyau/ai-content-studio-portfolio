@@ -49,12 +49,6 @@ p{font-size:34px;line-height:1.45;color:#d6d6da}
 .note{font-size:24px;line-height:1.5;color:#b7b7bc;border-left:4px solid #e1262f;padding-left:22px}
 """
 
-def foot(i):
-    return f'<div class="foot"><span class="brand">Timas Motion</span><span>TM-003 · {i:02d}/10</span></div>'
-
-def bg(n, veil, pos='center'):
-    return f'<div class="bg" style="background-image:url({img(n)});background-position:{pos}"></div><div class="veil" style="background:{veil}"></div>'
-
 DARK_BOTTOM = 'linear-gradient(180deg,rgba(10,10,11,.78) 0%,rgba(10,10,11,.2) 20%,rgba(10,10,11,.45) 42%,rgba(10,10,11,.9) 62%,rgba(10,10,11,.97) 100%)'
 DARK_FULL = 'rgba(10,10,11,.72)'
 def foot(i): return f'<div class="foot"><span class="brand">Timas Motion</span><span>TM-002 · {i:02d}/10</span></div>'

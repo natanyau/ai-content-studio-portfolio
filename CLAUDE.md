@@ -20,6 +20,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `scripts/watermark.sh` | Aplica a marca d'água nos vídeos e regenera os posters. |
 | `scripts/carousel-tm003.py` | Gera o carrossel do TM-003 (PNG 1080×1350 + PDF). Molde para os próximos cases. |
 | `scripts/carousel-tm002.py` | Carrossel do TM-002 (oficina Jeep). Tira os frames do próprio `case2.mp4` na hora; não grava em `assets/`. |
+| `scripts/carousel-fogo.py` | Carrossel do Fogo. Frames do próprio filme (1080×1920); as imagens de `assets/fogo/` têm 512 px e borram no slide. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
 | `_config.yml` | Única função: tirar `CLAUDE.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
 | `.claude/mods/trava-assets/` | Mod do Claude Code que barra `Edit`, `Write` e comandos de shell que alterem `assets/` (regra 4). Não carrega sozinho: `claude --plugin-dir .claude/mods/trava-assets`. Testes: `claude plugin test .claude/mods/trava-assets`. |
