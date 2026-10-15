@@ -347,8 +347,9 @@
   .case-card .blk p{font-size:.92rem;line-height:1.6;color:var(--gray-soft)}
   .case-card .c-foot{margin-top:auto;padding-top:18px;display:flex;align-items:center;gap:10px;color:var(--gray);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
   .case-card .c-foot svg{width:16px;height:16px;fill:currentColor;stroke:none}
-  a.c-foot{transition:color .3s var(--ease)}
-  a.c-foot:hover{color:var(--accent-soft)}
+  a.c-foot,button.c-foot{transition:color .3s var(--ease)}
+  a.c-foot:hover,button.c-foot:hover{color:var(--accent-soft)}
+  button.c-foot{background:none;border:0;padding-left:0;padding-right:0;padding-bottom:0;font:inherit;cursor:pointer;text-align:left}
 
   /* ================= SERVICES ================= */
   #services .s-grid{
@@ -663,7 +664,7 @@
           <div class="blk"><div class="k">Creative brief</div><p>Show the precision behind specialist Jeep workmanship through a distinctive cinematic identity.</p></div>
           <div class="blk"><div class="k">Strategy</div><p>Build an identity around craftsmanship: the bay, the tools, the parts and the hands at work, ending on the finished vehicle.</p></div>
           <div class="blk"><div class="k">The film</div><p>A 30-second vertical reel with no on-screen text: the workshop, its tools, brake and suspension work, closing on the finished Jeep at sunset.</p></div>
-          <a class="c-foot" href="assets/media/case2.mp4" target="_blank" rel="noopener" aria-label="Watch the Premium Jeep Workshop film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch film</a>
+          <button type="button" class="c-foot" data-play-film aria-label="Watch the Premium Jeep Workshop film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch film</button>
         </div>
       </article>
     </div>
@@ -785,29 +786,52 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   // ---- cinematic media loader: lazy autoplay (only the video on screen plays) ----
+  const mountVideo = (box) => {
+    if (!box._v) {
+      const v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+      v.setAttribute('muted',''); v.setAttribute('playsinline','');
+      v.setAttribute('controlsList','nodownload'); v.disablePictureInPicture = true;
+      if (box.dataset.poster) v.poster = box.dataset.poster;
+      v.addEventListener('loadeddata', () => box.classList.add('has-video'));
+      v.src = box.dataset.video;
+      box.insertBefore(v, box.firstChild);
+      box._v = v;
+    }
+    return box._v;
+  };
   const vObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       const box = e.target;
       if (e.isIntersecting) {
-        if (!box._v) {
-          const src = box.dataset.video;
-          if (!src) return;
-          const v = document.createElement('video');
-          v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
-          v.setAttribute('muted',''); v.setAttribute('playsinline','');
-          if (box.dataset.poster) v.poster = box.dataset.poster;
-          v.addEventListener('loadeddata', () => box.classList.add('has-video'));
-          v.src = src;
-          box.insertBefore(v, box.firstChild);
-          box._v = v;
-        }
-        box._v.play().catch(()=>{});
+        if (!box.dataset.video) return;
+        mountVideo(box).play().catch(()=>{});
       } else if (box._v) {
         box._v.pause();
       }
     });
   }, {rootMargin:'250px 0px', threshold:.01});
   document.querySelectorAll('.media[data-video]').forEach(el => vObs.observe(el));
+
+  // "Watch film": plays the card's own video with sound in fullscreen, instead of
+  // linking to the .mp4 (no direct file links on the site). Back to the muted loop on exit.
+  document.querySelectorAll('[data-play-film]').forEach(btn => btn.addEventListener('click', () => {
+    const box = btn.closest('.case-card').querySelector('.media[data-video]');
+    const v = mountVideo(box);
+    const toLoop = () => { v.controls = false; v.muted = true; v.loop = true; v.play().catch(()=>{}); };
+    v.loop = false; v.muted = false; v.controls = true; v.currentTime = 0;
+    v.play().catch(()=>{});
+    if (v.requestFullscreen) {
+      v.requestFullscreen().catch(()=>{});
+      const onFs = () => { if (!document.fullscreenElement) { document.removeEventListener('fullscreenchange', onFs); toLoop(); } };
+      document.addEventListener('fullscreenchange', onFs);
+    } else if (v.webkitEnterFullscreen) {
+      // iPhone Safari: only the video element can go fullscreen, once metadata is in.
+      const enter = () => { try { v.webkitEnterFullscreen(); } catch (err) {} };
+      v.readyState >= 1 ? enter() : v.addEventListener('loadedmetadata', enter, {once:true});
+      v.addEventListener('webkitendfullscreen', toLoop, {once:true});
+    }
+  }));
 
   // nav scrolled state
   const nav = document.getElementById('nav');
