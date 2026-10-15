@@ -1,9 +1,10 @@
 # Gera o carrossel do case da Crown (10 slides 1080x1350 + PDF para o LinkedIn).
 # A Crown é um case de estratégia, não de filme: o "filme" é um cartão de marca de 4 s.
 # Imagens: um frame do cartão (assets/media/crown.mp4, 1080x1920) e as duas imagens de produto
-# (assets/images/rt*.png), copiadas para .carousel/crown/frames/ SEM a faixa do rodapé. Essa
-# faixa diz "or officially affiliated with...", e negar afiliação é falso neste case (ver
-# CLAUDE.md, Preview de link). Nada é gravado em assets/.
+# (assets/images/rt*.png), copiadas para .carousel/crown/frames/ sem a faixa do rodapé: a
+# ressalva já aparece na capa e no último slide, e em letra pequena só repetiria. (Até out/2026
+# essa faixa dizia "or officially affiliated with...", o que é falso neste case; as imagens
+# foram refeitas com a ressalva da página.) Nada é gravado em assets/.
 # A ressalva usada é a da página: "Not commissioned, reviewed, or endorsed by Crown Automotive Sales."
 # Os textos saem de crown-featured-case.html; se ela mudar, atualize aqui.
 # Uso: python3 scripts/carousel-crown.py   -> escreve em .carousel/crown/out/ (não versionado)
@@ -26,7 +27,7 @@ if not os.path.exists(card):
     subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-ss', '3.5',
                     '-i', os.path.join(ROOT, 'assets', 'media', 'crown.mp4'),
                     '-frames:v', '1', '-q:v', '2', card], check=True)
-# 1491x1055; a faixa com a ressalva antiga começa logo abaixo da linha 985.
+# 1491x1055; a faixa do rodapé começa logo abaixo da linha 985.
 for name in ('rt28111-led-tail-light', 'rt31046-big-brake-kit'):
     dst = os.path.join(FRAMES, name + '.png')
     if not os.path.exists(dst):

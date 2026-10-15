@@ -21,6 +21,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `scripts/carousel-tm003.py` | Gera o carrossel do TM-003 (PNG 1080×1350 + PDF). Molde para os próximos cases. |
 | `scripts/carousel-tm002.py` | Carrossel do TM-002 (oficina Jeep). Tira os frames do próprio `case2.mp4` na hora; não grava em `assets/`. |
 | `scripts/carousel-fogo.py` | Carrossel do Fogo. Frames do próprio filme (1080×1920); as imagens de `assets/fogo/` têm 512 px e borram no slide. |
+| `scripts/carousel-crown.py` | Carrossel da Crown. Case de estratégia: usa um frame do cartão de marca e as duas imagens de produto (`assets/images/rt*.png`) sem a faixa do rodapé. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
 | `_config.yml` | Única função: tirar `CLAUDE.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
 | `.claude/commands/` | Comandos do Claude Code: `/verificar`, `/olhar`, `/publicar`, `/novo-case <código e nome>` (case novo do material à prévia, para antes de publicar) e `/carrossel <case>` (carrossel a partir da página e do filme). |
@@ -194,6 +195,11 @@ não diz "não afiliado" porque, neste caso, negar afiliação seria falso. A re
 é a única que cobre as duas coisas ao mesmo tempo: o case é independente e a página não
 faz uma afirmação incorreta. Se alguém "restaurar" a redação antiga em nome da concisão,
 volta a ser uma afirmação incorreta na página publicada.
+
+As duas imagens de produto (`assets/images/rt28111-led-tail-light.png` e
+`rt31046-big-brake-kit.png`) têm a ressalva escrita no rodapé, dentro da imagem. Até outubro
+de 2026 elas ainda diziam "or officially affiliated with…" e foram refeitas com a redação
+certa. Se forem regeneradas, a faixa do rodapé precisa sair com a mesma ressalva da página.
 
 ## Como fazer um case novo
 
