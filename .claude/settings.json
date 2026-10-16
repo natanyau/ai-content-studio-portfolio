@@ -44,7 +44,7 @@
           },
           {
             "type": "command",
-            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\" && { claude plugin list 2>/dev/null | grep -q \"trava-assets@timas-mods\" || { claude plugin marketplace add ./.claude/mods --scope local && claude plugin install trava-assets@timas-mods --scope local; }; } >/dev/null 2>&1; true",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\" && { claude plugin list 2>/dev/null | grep -q \"trava-assets@timas-mods\" || { claude plugin marketplace add ./.claude/mods --scope local && claude plugin install trava-assets@timas-mods --scope local; } >/dev/null 2>&1 || echo 'AVISO: a trava de assets/ (mod trava-assets) não foi instalada nesta sessão. A regra 4 do CLAUDE.md continua valendo: não grave nada em assets/.'; }; true",
             "timeout": 60,
             "statusMessage": "Ligando a trava de assets/..."
           }
@@ -52,15 +52,6 @@
       }
     ]
   },
-  "extraKnownMarketplaces": {
-    "timas-mods": {
-      "source": {
-        "source": "directory",
-        "path": "./.claude/mods"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "trava-assets@timas-mods": true
-  }
+  "enabledPlugins": {},
+  "extraKnownMarketplaces": {}
 }
