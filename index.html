@@ -252,7 +252,8 @@
   #home .hero-sub b{color:#fff;font-weight:700}
   #home .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
   #home .scroll-hint{
-    position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:3;
+    /* 60px = faixa do marquee (51px) + folga: o Scroll fica acima dela, nao por cima */
+    position:absolute;left:50%;bottom:60px;transform:translateX(-50%);z-index:3;
     font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gray);
     display:flex;flex-direction:column;align-items:center;gap:8px;
   }
@@ -442,6 +443,8 @@
     #home .display{font-size:clamp(2.4rem,11vw,3.2rem)}
     /* "Cinematic Presence." numa linha so de 360 a 640px */
     #home .display .thin{font-size:.9em}
+    /* tracinho mais curto para o Scroll nao encostar no Get in touch em telas de 360px */
+    #home .scroll-hint .ln{height:20px}
     /* no mobile o bloco superior entra no fluxo para nao sobrepor o titulo */
     #home .hero-top{position:relative;top:auto;left:auto;right:auto;margin-bottom:auto;
       padding:calc(var(--pad) + 64px) var(--pad) 0;gap:10px}
