@@ -16,7 +16,7 @@ Source Set
 - tm-003-casa-cavoquinho.html (~1.350 palavras): a referência principal
 - crown-featured-case.html (~1.260 palavras): a mais comedida, define o "could / may"
 - fogo-featured-case.html (~1.000 palavras)
-- index.html (~780 palavras): voz mais antiga e promocional, ver "Divisão" abaixo
+- index.html (~780 palavras): na versão anterior a 16/10/2026, voz promocional; ver abaixo
 - scripts/carousel-*.py: títulos dos slides, tirados das páginas
 
 Rhythm
@@ -98,11 +98,12 @@ Channel Notes
 
 ## Decisões e divisões
 
-**Home × cases.** O `index.html` é anterior aos cases e fala como anúncio: "Let's Build
-Something Remarkable", "Cutting-edge tools, human taste in command", "Coordinated content
-that compounds", "seven deliberate stages, no wasted motion". Os cases não usam nada
-disso. O perfil segue os cases; a home é a voz a ser substituída quando ela for revista,
-não um segundo registro válido.
+**Home × cases.** Até 16/10/2026 a home falava como anúncio ("Let's Build Something
+Remarkable", "Cutting-edge tools, human taste in command", "Coordinated content that
+compounds"). Foi reescrita na voz dos cases. Ficaram de fora, por serem marca e não texto
+corrido: o slogan "Small Business. Premium Presence." (também no `og:title`) e
+"Every Great Brand Starts Somewhere". Mudar o slogan é decisão de marca, e pede o Post
+Inspector depois.
 
 **Grafia.** Americana em todo o site, decidido em 16/10/2026 (o estúdio fica em Greater
 Boston): recognizable, labeled, centered, meters, travelers, inquiry, toward, license.
