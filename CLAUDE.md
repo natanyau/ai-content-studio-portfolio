@@ -78,7 +78,12 @@ O `check.sh` valida: referências quebradas, tags desbalanceadas, DOCTYPE/meta a
 vazando para o site publicado, e segredos commitados. A varredura de segredos cobre todo
 arquivo de texto do repositório, não só o que vai ao ar: num repositório público um token
 num `.md` ou num `.yml` fica igualmente exposto.
-O `shots.sh` acusa scroll horizontal, quirks mode e erros de JS por viewport.
+O `shots.sh` acusa scroll horizontal, quirks mode e erros de JS por viewport, e roda o
+axe-core (WCAG 2.2 A/AA) em cada tela. O axe é baixado do npm na primeira vez para
+`.preview/.axe/`, com versão e hash fixos no script; sem rede, as fotos saem e a
+auditoria é pulada. "A conferir à mão" não é erro: é onde o axe não decide sozinho,
+como texto sobre gradiente ou vídeo e falta de legenda. Um resultado limpo não quer
+dizer página acessível: teclado, foco e leitor de tela continuam sendo teste manual.
 
 Nenhum dos dois substitui abrir o site no seu celular antes de divulgar um link.
 
