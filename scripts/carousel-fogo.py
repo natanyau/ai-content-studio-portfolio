@@ -111,7 +111,7 @@ s.append(bg('coffee', 'linear-gradient(180deg,rgba(10,10,11,.6) 0%,rgba(10,10,11
 <p class="eb"><b>05</b> · Reference &amp; decisions</p>
 <div style="margin-top:auto">
 <h2 style="font-size:72px">Could this realistically <span>belong to Fogo?</span></h2>
-<p style="margin-top:32px">The municipality of Mosteiros describes coffee cultivation on volcanic soils at 350–1,300 metres. The coffee study keeps three elements: cultivation in front, mountain relief and settlement behind.</p>
+<p style="margin-top:32px">The municipality of Mosteiros describes coffee cultivation on volcanic soils at 350–1,300 meters. The coffee study keeps three elements: cultivation in front, mountain relief and settlement behind.</p>
 <p class="note" style="margin-top:32px">An AI-assisted visual study. It does not document a real plantation or viewpoint.</p>
 </div>
 <div style="height:48px"></div>@@FOOT@@</div>''')
