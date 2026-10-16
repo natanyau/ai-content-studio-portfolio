@@ -25,7 +25,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
 | `_config.yml` | Única função: tirar `CLAUDE.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
 | `.claude/commands/` | Comandos do Claude Code: `/verificar`, `/olhar`, `/publicar`, `/novo-case <código e nome>` (case novo do material à prévia, para antes de publicar) e `/carrossel <case>` (carrossel a partir da página e do filme). |
-| `.claude/skills/timas-motion-workflow/` | Skill com o processo completo, da pesquisa à divulgação. `references/guia-do-projeto.md` é uma cópia deste arquivo: ao mudar uma regra aqui, copie de novo. |
+| `.claude/skills/timas-motion-workflow/` | Skill com o processo completo, da pesquisa à divulgação. `references/guia-do-projeto.md` é uma cópia deste arquivo: ao mudar uma regra aqui, copie de novo. `references/perfil-de-voz.md` descreve a voz dos textos, com exemplos dos cases. |
 | `.claude/mods/trava-assets/` | Mod do Claude Code que barra `Edit`, `Write` e comandos de shell que alterem `assets/` (regra 4). `.claude/mods/` é um marketplace local (`timas-mods`) e um hook de `SessionStart` instala o mod com escopo `local` quando ele falta, inclusive em container novo na nuvem; vale já na sessão que o instalou. Testes: `claude plugin test .claude/mods/trava-assets`. |
 
 ## Regras que evitam quebrar o site
