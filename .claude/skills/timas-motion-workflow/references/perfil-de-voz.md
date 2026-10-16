@@ -100,10 +100,12 @@ Channel Notes
 
 **Home × cases.** Até 16/10/2026 a home falava como anúncio ("Let's Build Something
 Remarkable", "Cutting-edge tools, human taste in command", "Coordinated content that
-compounds"). Foi reescrita na voz dos cases. Ficaram de fora, por serem marca e não texto
-corrido: o slogan "Small Business. Premium Presence." (também no `og:title`) e
-"Every Great Brand Starts Somewhere". Mudar o slogan é decisão de marca, e pede o Post
-Inspector depois.
+compounds"). Foi reescrita na voz dos cases. O slogan passou de "Small Business. Premium Presence."
+para "Small Business. Cinematic Presence." em 16/10/2026: "Premium" era elogio sem fato;
+"Cinematic" descreve o trabalho e repete o fecho dos cases ("Give your story a cinematic
+presence."). Ele aparece no título da home, no rodapé, no `og:title`, no `404.html` e
+dentro do `preview.jpg`; mudar de novo exige refazer a imagem e passar no Post Inspector.
+"Every Great Brand Starts Somewhere" ficou como está.
 
 **Grafia.** Americana em todo o site, decidido em 16/10/2026 (o estúdio fica em Greater
 Boston): recognizable, labeled, centered, meters, travelers, inquiry, toward, license.
