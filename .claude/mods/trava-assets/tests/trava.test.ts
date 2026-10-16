@@ -108,7 +108,7 @@ describe('dentro do engine', () => {
       chegou++
       return { result: {} } as never
     })
-    on('ui.toast', () => undefined as never)
+    on('ui.toast', () => ({ value: undefined }) as never)
     const r = await $.tool.call({ tool: 'Bash', command: 'cp .watermark/out/who.mp4 assets/media/who.mp4' })
     expect(r.deny).toContain('regra 4')
     expect(chegou).toBe(0)
