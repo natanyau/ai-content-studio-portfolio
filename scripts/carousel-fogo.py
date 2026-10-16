@@ -38,7 +38,7 @@ html,body{width:1080px;height:1350px;overflow:hidden;background:#0a0a0b;color:#f
 .veil{position:absolute;inset:0}
 .c{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
 .eb{font-size:22px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#b7b7bc}
-.eb b{color:#e1262f;font-weight:700}
+.eb b{color:#ff4a52;font-weight:700}
 h1,h2{font-family:"Liberation Serif",Georgia,serif;font-weight:700;line-height:1.02;letter-spacing:-.01em}
 h1{font-size:118px}
 h2{font-size:84px}
@@ -67,7 +67,7 @@ s.append(bg('cha', DARK_BOTTOM, 'center 45%') + '''<div class="c">
 <p class="eb" style="margin-top:14px">Cape Verde</p>
 <div class="rule"></div>
 <p class="lead">Shaped by Fire. Defined by Life.</p>
-<p style="margin-top:18px">A reference-informed cinematic interpretation of Fogo Island.</p>
+<p style="margin-top:18px;font-size:31px">A reference-informed cinematic interpretation of Fogo Island.</p>
 <p class="note" style="margin-top:40px">Self-initiated by Timas Motion. Not a commissioned tourism campaign.</p>
 </div>
 <div style="height:48px"></div>@@FOOT@@</div>''')
