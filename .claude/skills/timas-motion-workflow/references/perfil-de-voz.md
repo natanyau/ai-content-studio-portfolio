@@ -96,7 +96,7 @@ Channel Notes
   diga o que se propõe, não o que se promete.
 ```
 
-## Divisão que o perfil não resolve sozinho
+## Decisões e divisões
 
 **Home × cases.** O `index.html` é anterior aos cases e fala como anúncio: "Let's Build
 Something Remarkable", "Cutting-edge tools, human taste in command", "Coordinated content
@@ -104,7 +104,6 @@ that compounds", "seven deliberate stages, no wasted motion". Os cases não usam
 disso. O perfil segue os cases; a home é a voz a ser substituída quando ela for revista,
 não um segundo registro válido.
 
-**Grafia.** Fogo e TM-003 usam grafia britânica (recognisable, labelled, centred,
-Travellers, metres); a Crown usa a americana (labeled, centered, specialized). O estúdio
-fica em Greater Boston. Falta decidir qual vale; até lá, um texto novo segue a grafia da
-página a que pertence, e nunca as duas no mesmo texto.
+**Grafia.** Americana em todo o site, decidido em 16/10/2026 (o estúdio fica em Greater
+Boston): recognizable, labeled, centered, meters, travelers, inquiry, toward, license.
+Exceção: nome oficial de instituição fica como ela escreve ("UNESCO World Heritage Centre").
