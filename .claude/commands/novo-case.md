@@ -25,6 +25,7 @@ marcado com **[pare]**.
 4. **Página.** Copie `tm-003-casa-cavoquinho.html` e `css/tm-003-case.css` e reescreva
    seção por seção.
    - Nunca use busca-e-troca global: sobra nome, alt, ID e link do case antigo.
+   - Escreva na voz de `.claude/skills/timas-motion-workflow/references/perfil-de-voz.md`.
    - Toda afirmação factual leva fonte nomeada e link, com o que a fonte não prova.
    - Nenhum resultado comercial, aprovação do cliente ou afiliação afirmados.
    - A ressalva só diz o que é verdade para este case. Se negar afiliação for falso, não negue

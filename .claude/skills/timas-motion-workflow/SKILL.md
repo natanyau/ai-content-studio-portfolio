@@ -25,7 +25,7 @@ Os comandos do projeto executam partes deste processo passo a passo: `/novo-case
 
 - Assista ao filme ou examine frames, incluindo abertura e fechamento, antes de descrevê-lo. Confira duração e conteúdo real.
 - Registre cada afirmação factual com fonte nomeada, URL, o que sustenta e seus limites. Separe fatos sobre a propriedade de referências visuais de paisagem.
-- Use tom analítico, simples e comedido. Não atribua resultados comerciais, aprovação ou afiliação sem evidência.
+- Use tom analítico, simples e comedido. Não atribua resultados comerciais, aprovação ou afiliação sem evidência. O [perfil de voz](references/perfil-de-voz.md) detalha esse tom com exemplos tirados dos cases publicados; siga-o em página, carrossel, post e e-mail.
 - Preserve as ressalvas de independência na capa, nos metadados e no fechamento. Na Crown, mantenha o sentido exato: não encomendado, revisado ou endossado; não troque por uma negação de afiliação.
 
 ## 3. Criar ou revisar o case
