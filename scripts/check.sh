@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Verificação pré-publicação do Timas Motion.
-# Site estático servido pelo GitHub Pages em /ai-content-studio-portfolio/.
+# Site estático servido pelo GitHub Pages em timasmotion.com (dominio proprio).
 # Uso: bash scripts/check.sh   (código 0 = pode publicar, 1 = erro bloqueante)
 
 set -uo pipefail
 cd "$(dirname "$0")/.." || exit 1
 
-BASE="/ai-content-studio-portfolio"
+BASE=""   # dominio proprio: os links internos saem da raiz (/terms.html)
 ERRORS=0
 WARNS=0
 
@@ -113,6 +113,10 @@ else
     printf '%s\n' "$excl" | grep -qxF "$e" && continue
     case "$e" in
       *.html|*.css|*.js|*.xml|*.txt|*.jpg|*.jpeg|*.png|*.gif|*.svg|*.webp|*.ico|*.mp4|*.webm|*.pdf|LICENSE)
+        continue ;;
+      # CNAME nao e arquivo de trabalho: o Pages exige ele na raiz para o
+      # dominio proprio funcionar. Excluir no _config.yml derruba o dominio.
+      CNAME)
         continue ;;
     esac
     if [ -d "$e" ]; then

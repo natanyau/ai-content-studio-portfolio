@@ -8,6 +8,7 @@
   --gray-soft: #8a919c;
   --red: #e1262f;
   --red-dark: #8f1118;
+  --red-soft: #ff4a52; /* vermelho claro da home: texto pequeno em vermelho lê melhor no preto */
   --line: rgba(255, 255, 255, 0.12);
   --container: 1180px;
 }
@@ -170,7 +171,7 @@ a:focus-visible {
 
 .eyebrow {
   margin: 0 0 20px;
-  color: var(--red);
+  color: var(--red-soft);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.19em;
@@ -263,7 +264,7 @@ a:focus-visible {
 .section-number {
   margin: 0;
   padding-top: 6px;
-  color: var(--red);
+  color: var(--red-soft);
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -400,7 +401,7 @@ a:focus-visible {
 
 .card-label {
   margin: 0 0 18px;
-  color: var(--red);
+  color: var(--red-soft);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -423,7 +424,7 @@ a:focus-visible {
 .distribution-card__number {
   display: inline-block;
   margin-bottom: 28px;
-  color: var(--red);
+  color: var(--red-soft);
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -478,7 +479,7 @@ a:focus-visible {
 }
 
 .question-item span {
-  color: var(--red);
+  color: var(--red-soft);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.15em;
@@ -581,7 +582,7 @@ a:focus-visible {
 .pillar-card span {
   display: inline-block;
   margin-bottom: 30px;
-  color: var(--red);
+  color: var(--red-soft);
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -892,6 +893,12 @@ a:focus-visible {
   line-height: 1.75;
 }
 
+.execution-disclaimer a {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .pilot-section {
   border-top: 1px solid var(--line);
   background: var(--black);
@@ -945,7 +952,7 @@ a:focus-visible {
 .storyboard-number {
   display: inline-block;
   margin-bottom: 28px;
-  color: var(--red);
+  color: var(--red-soft);
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.16em;
