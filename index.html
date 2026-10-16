@@ -156,9 +156,13 @@
     position:fixed;inset:0;z-index:110;background:rgba(8,8,9,.98);
     backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;
     gap:8px;padding:0 var(--pad);
-    opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .4s var(--ease),transform .4s var(--ease);
+    opacity:0;pointer-events:none;transform:translateY(-8px);visibility:hidden;
+    transition:opacity .4s var(--ease),transform .4s var(--ease),visibility 0s linear .4s;
   }
-  .mobile-menu.open{opacity:1;pointer-events:auto;transform:none}
+  /* visibility tira os links do menu fechado da ordem do Tab; o atraso deixa o fade de saida terminar */
+  .mobile-menu.open{opacity:1;pointer-events:auto;transform:none;visibility:visible;transition-delay:0s}
+  .skip-link{position:fixed;top:8px;left:16px;z-index:130;padding:12px 18px;background:var(--accent);color:#fff;font-weight:700;transform:translateY(-150%)}
+  .skip-link:focus{transform:none}
   .mobile-menu a{font-size:2rem;font-weight:800;letter-spacing:-.03em;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);color:#fff}
   .mobile-menu a .idx{font-size:.8rem;color:var(--accent);font-weight:700;letter-spacing:.1em;margin-right:14px;vertical-align:middle}
   .mobile-menu .btn{margin-top:28px;align-self:flex-start}
@@ -446,6 +450,7 @@
 </head>
 
 <body>
+<a class="skip-link" href="#content">Skip to content</a>
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
@@ -507,6 +512,7 @@
   <div class="scroll-hint"><span class="ln"></span>Scroll</div>
 </header>
 
+<main id="content">
 <!-- ============ STUDIO ============ -->
 <section class="section light" id="studio">
   <div class="wrap grid">
@@ -753,6 +759,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="f-top">
@@ -846,10 +854,21 @@
     burger.classList.toggle('open', open);
     menu.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     document.body.style.overflow = open ? 'hidden' : '';
   };
   burger.addEventListener('click', () => toggleMenu(!menu.classList.contains('open')));
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  // teclado com o menu aberto: Esc fecha e devolve o foco ao botao; Tab circula entre o botao e os links
+  document.addEventListener('keydown', (e) => {
+    if (!menu.classList.contains('open')) return;
+    if (e.key === 'Escape') { toggleMenu(false); burger.focus(); return; }
+    if (e.key !== 'Tab') return;
+    const items = [burger, ...menu.querySelectorAll('a')];
+    const i = items.indexOf(document.activeElement);
+    const next = e.shiftKey ? (i <= 0 ? items.length - 1 : i - 1) : (i === items.length - 1 || i < 0 ? 0 : i + 1);
+    e.preventDefault(); items[next].focus();
+  });
 
   // scroll reveal
   const io = new IntersectionObserver((entries) => {
