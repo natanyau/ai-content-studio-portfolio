@@ -316,10 +316,17 @@ nunca crie um segundo `v=spf1` (dois SPF invalidam os dois). O `include:_spf.por
 sustenta o encaminhamento e não pode sair. Os dois `_acme-challenge` são do certificado HTTPS.
 
 **Limite conhecido.** O Outlook mostrou "Unverified Sender" nos e-mails enviados como `hello@`,
-mesmo com o SPF e o DMARC no lugar. O motivo provável é que o Gmail pessoal assina o DKIM
-como `gmail.com`, não como `timasmotion.com`. O e-mail chega na caixa de entrada mesmo
-assim. Para conferir, veja a linha `Authentication-Results` da origem da mensagem no
-Outlook. Se o aviso incomodar clientes, a saída é uma caixa própria do domínio, que assina
+mesmo com o SPF e o DMARC no lugar. O "Show original" de um desses e-mails, aberto num
+Gmail, confirmou a causa: `spf=pass` mas para `gmail.com` (o `Return-Path` é o Gmail pessoal,
+não o `hello@`), e `dmarc=fail`. Nem o SPF nem o DKIM saem em nome de `timasmotion.com`, e o
+`include:_spf.google.com` não muda isso. O e-mail é entregue mesmo assim (no Gmail chega na
+aba Primary) porque a política é `p=none`.
+
+**Não endureça o DMARC** (`p=quarantine` ou `p=reject`) enquanto o envio for por este
+caminho: todo e-mail enviado como `hello@` passaria a ir para o spam ou ser recusado.
+
+O `Return-Path` também expõe o Gmail pessoal para quem abrir a origem da mensagem. Se o
+aviso ou essa exposição incomodarem, a saída é uma caixa própria do domínio, que assina
 como `timasmotion.com` (Google Workspace ou o e-mail pago da Porkbun).
 
 **Pendência:** ativar a verificação em duas etapas na conta da Porkbun. Ela controla o
