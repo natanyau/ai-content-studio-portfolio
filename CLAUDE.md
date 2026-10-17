@@ -282,6 +282,49 @@ production."), sem nomear a oficina nem afirmar aprovação ou resultado. Os pla
 prateleiras com caixas de peças ficam fora porque mostram marca de fabricante. No Instagram
 link não é clicável na legenda: use a bio e o story com figurinha de link.
 
+## E-mail do domínio (`hello@timasmotion.com`)
+
+O domínio está registrado na **Porkbun**, que também cuida do DNS. O `hello@` não é uma
+caixa com login: é um **encaminhamento** da Porkbun para o Gmail pessoal do dono. O envio
+é feito pelo próprio Gmail, com o `hello@` cadastrado como alias. Montado em outubro de 2026.
+
+**Receber.** Porkbun → Email Forwarding: `hello@timasmotion.com` → Gmail pessoal. Os dois
+registros `MX` (`fwd1` e `fwd2.porkbun.com`) são desse encaminhamento. Para testar, mande de
+**outro** endereço: o Gmail esconde a cópia de uma mensagem que saiu dele mesmo, e o teste
+parece falhar sem ter falhado.
+
+**Enviar.** Gmail de computador → Settings → Accounts and Import → Send mail as → `Timas
+Motion <hello@timasmotion.com>`, pelo servidor `smtp.gmail.com`, porta 587, TLS, usuário = o
+Gmail pessoal, senha = uma **senha de app** do Google (myaccount.google.com/apppasswords;
+exige verificação em duas etapas). A senha não fica anotada em lugar nenhum: se precisar
+refazer, gere outra. "Reply from the same address the message was sent to" está marcado.
+O app do Gmail no iPhone começa todo e-mail novo pelo endereço pessoal: troque o **From**.
+
+Pelo celular, a opção "Send mail as" só existe no Gmail de computador: no Safari, use
+"Solicitar Site para Computador". O link de confirmação que o Google manda abre errado no
+navegador interno do app do Gmail; copie e abra no Safari.
+
+**DNS do e-mail na Porkbun** (11 registros no total; não apague os outros):
+
+| Tipo | Host | Valor |
+|---|---|---|
+| TXT | (raiz) | `v=spf1 include:_spf.porkbun.com include:_spf.google.com ~all` |
+| TXT | `_dmarc` | `v=DMARC1; p=none` |
+
+O SPF é **um registro só**: para autorizar outro serviço, edite este e acrescente o `include`,
+nunca crie um segundo `v=spf1` (dois SPF invalidam os dois). O `include:_spf.porkbun.com`
+sustenta o encaminhamento e não pode sair. Os dois `_acme-challenge` são do certificado HTTPS.
+
+**Limite conhecido.** O Outlook mostrou "Unverified Sender" nos e-mails enviados como `hello@`,
+mesmo com o SPF e o DMARC no lugar. O motivo provável é que o Gmail pessoal assina o DKIM
+como `gmail.com`, não como `timasmotion.com`. O e-mail chega na caixa de entrada mesmo
+assim. Para conferir, veja a linha `Authentication-Results` da origem da mensagem no
+Outlook. Se o aviso incomodar clientes, a saída é uma caixa própria do domínio, que assina
+como `timasmotion.com` (Google Workspace ou o e-mail pago da Porkbun).
+
+**Pendência:** ativar a verificação em duas etapas na conta da Porkbun. Ela controla o
+domínio, o site e o e-mail.
+
 ## Pendências conhecidas
 
 - O Instagram já foi renomeado para `@timasmotion` e o site aponta para
