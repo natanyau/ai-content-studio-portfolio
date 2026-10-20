@@ -44,9 +44,9 @@
           },
           {
             "type": "command",
-            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\" && { claude plugin list 2>/dev/null | grep -q \"trava-assets@timas-mods\" || { claude plugin marketplace add ./.claude/mods --scope local && claude plugin install trava-assets@timas-mods --scope local; } >/dev/null 2>&1 || echo 'AVISO: a trava de assets/ (mod trava-assets) não foi instalada nesta sessão. A regra 4 do CLAUDE.md continua valendo: não grave nada em assets/.'; }; true",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\" && { claude plugin list 2>/dev/null | grep -q \"timasmotion@timas-mods\" || { claude plugin uninstall trava-assets@timas-mods --scope local; claude plugin marketplace add ./.claude/mods --scope local; claude plugin marketplace update timas-mods; claude plugin install timasmotion@timas-mods --scope local; } >/dev/null 2>&1 || echo 'AVISO: o plugin timasmotion não foi instalado nesta sessão. Sem ele não há /verificar, /olhar, /publicar, /novo-case, /carrossel nem a trava de assets/. A regra 4 do CLAUDE.md continua valendo: não grave nada em assets/. Para instalar à mão: claude plugin marketplace add ./.claude/mods --scope local && claude plugin install timasmotion@timas-mods --scope local'; }; true",
             "timeout": 60,
-            "statusMessage": "Ligando a trava de assets/..."
+            "statusMessage": "Ligando o plugin timasmotion..."
           }
         ]
       }

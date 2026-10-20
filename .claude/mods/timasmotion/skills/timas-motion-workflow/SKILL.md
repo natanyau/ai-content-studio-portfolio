@@ -11,7 +11,7 @@ Execute as etapas pertinentes ao pedido; um ajuste pontual não exige produzir u
 
 Localize a raiz do repositório pelos arquivos `CLAUDE.md`, `index.html` e `scripts/check.sh`. Leia o `CLAUDE.md` atual antes de editar.
 
-Os comandos do projeto executam partes deste processo passo a passo: `/novo-case` cobre as etapas 1 a 7 para um case novo e para antes de publicar; `/carrossel <case>` cobre a etapa 8. Quando o pedido for exatamente um desses, siga o comando (`.claude/commands/`); esta skill dá o contexto. Se mudar uma regra aqui, mude também no comando correspondente e no `CLAUDE.md`. Consulte [o guia completo](references/guia-do-projeto.md) para parâmetros, exceções e decisões históricas. Essa referência é uma cópia do `CLAUDE.md` em 15/10/2026, depois do carrossel da Crown; em divergências, confira a versão atual e as instruções do usuário. Não invente etapas históricas, resultados ou aprovações ausentes das fontes.
+Os comandos do projeto executam partes deste processo passo a passo: `/novo-case` cobre as etapas 1 a 7 para um case novo e para antes de publicar; `/carrossel <case>` cobre a etapa 8. Quando o pedido for exatamente um desses, siga o comando (`commands/` do plugin `timasmotion`, em `.claude/mods/timasmotion/`); esta skill dá o contexto. Se mudar uma regra aqui, mude também no comando correspondente e no `CLAUDE.md`. Consulte [o guia completo](references/guia-do-projeto.md) para parâmetros, exceções e decisões históricas. Essa referência é uma cópia do `CLAUDE.md` em 15/10/2026, depois do carrossel da Crown; em divergências, confira a versão atual e as instruções do usuário. Não invente etapas históricas, resultados ou aprovações ausentes das fontes.
 
 ## 1. Entender a entrega e preparar o trabalho
 
