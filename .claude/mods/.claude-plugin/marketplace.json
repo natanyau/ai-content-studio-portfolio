@@ -1,11 +1,14 @@
 {
   "name": "timas-mods",
-  "owner": { "name": "Timas Motion" },
+  "owner": {
+    "name": "Timas Motion"
+  },
+  "description": "Plugin da Timas Motion para o Claude Code, lido direto desta pasta",
   "plugins": [
     {
-      "name": "trava-assets",
-      "source": "./trava-assets",
-      "description": "Impede o Claude de alterar arquivos em assets/ (regra 4 do CLAUDE.md)"
+      "name": "timasmotion",
+      "source": "./timasmotion",
+      "description": "Comandos, skill do processo e trava de assets/ da Timas Motion"
     }
   ]
 }

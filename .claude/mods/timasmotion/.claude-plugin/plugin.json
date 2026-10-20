@@ -1,0 +1,7 @@
+{
+  "name": "timasmotion",
+  "version": "0.2.0",
+  "description": "Processo da Timas Motion no Claude Code: comandos /verificar, /olhar, /publicar, /novo-case e /carrossel, a skill do processo completo e a trava que impede alterar assets/",
+  "author": { "name": "Timas Motion" },
+  "homepage": "https://timasmotion.com"
+}

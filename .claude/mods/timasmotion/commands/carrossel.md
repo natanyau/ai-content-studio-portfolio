@@ -10,7 +10,7 @@ Carrossel do case **$ARGUMENTS**. O padrão está em `CLAUDE.md`, seção "Divul
    só é necessário em sessão remota). Confira se os textos ainda batem com a página do case.
    Se batem, vá direto ao passo 5.
 2. **Textos.** Saem da página do case, não de memória. Não acrescente fato, número ou
-   resultado que a página não tenha. A ressalva sai igual à da página. O texto do post segue `.claude/skills/timas-motion-workflow/references/perfil-de-voz.md`. Se o case não tiver
+   resultado que a página não tenha. A ressalva sai igual à da página. O texto do post segue `.claude/mods/timasmotion/skills/timas-motion-workflow/references/perfil-de-voz.md`. Se o case não tiver
    página, use o card da home e aponte o último slide para `timasmotion.com/#work`.
 3. **Imagens.** Use frames do próprio filme, na maior resolução disponível. Imagens de
    galeria pequenas borram no slide: as do Fogo, por exemplo, têm 512 px.
