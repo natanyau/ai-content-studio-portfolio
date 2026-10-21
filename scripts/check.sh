@@ -139,8 +139,9 @@ else
   ok "nenhum asset órfão"
 fi
 rm -f /tmp/_orphans
+bigs=$(find assets -type f -size +5M -exec du -h {} + 2>/dev/null | sort -rh | awk '{printf "%s%s (%s)", (NR>1 ? ", " : ""), $2, $1}')
 big=$(find assets -type f -size +5M 2>/dev/null | wc -l)
-[ "$big" -gt 0 ] && warn "$big asset(s) acima de 5MB — pesa no carregamento mobile"
+[ "$big" -gt 0 ] && warn "$big asset(s) acima de 5MB — pesa no carregamento mobile: $bigs"
 tot=$(du -sm assets 2>/dev/null | cut -f1)
 [ "${tot:-0}" -gt 90 ] && warn "assets/ com ${tot}MB (limite prático do GitHub Pages: 1GB, recomendado <100MB)"
 
