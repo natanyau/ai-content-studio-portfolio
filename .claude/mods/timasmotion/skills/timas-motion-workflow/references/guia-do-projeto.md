@@ -334,8 +334,8 @@ de backup foram gerados de novo no mesmo dia e os anteriores deixaram de valer; 
 celular, é com um deles que se entra. Nunca mande print da tela do QR code nem dos códigos:
 quem tem a chave gera os códigos.
 
-**Pendência:** o iPhone marca a senha da Porkbun como reutilizada em outro site. Trocar por
-uma senha única ("Change Password on Website…" no app Senhas).
+A senha também foi trocada em 21/10/2026 por uma senha forte gerada pelo iPhone, salva no
+app Senhas: a anterior era reutilizada em outro site.
 
 ## Pendências conhecidas
 
