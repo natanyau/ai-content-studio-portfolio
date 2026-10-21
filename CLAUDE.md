@@ -328,8 +328,14 @@ O `Return-Path` também expõe o Gmail pessoal para quem abrir a origem da mensa
 aviso ou essa exposição incomodarem, a saída é uma caixa própria do domínio, que assina
 como `timasmotion.com` (Google Workspace ou o e-mail pago da Porkbun).
 
-**Pendência:** ativar a verificação em duas etapas na conta da Porkbun. Ela controla o
-domínio, o site e o e-mail.
+**Conta da Porkbun.** Ela controla o domínio, o site e o e-mail. A verificação em duas
+etapas por app está ativa desde 21/10/2026, com o código no app Senhas do iPhone. Os códigos
+de backup foram gerados de novo no mesmo dia e os anteriores deixaram de valer; sem o
+celular, é com um deles que se entra. Nunca mande print da tela do QR code nem dos códigos:
+quem tem a chave gera os códigos.
+
+**Pendência:** o iPhone marca a senha da Porkbun como reutilizada em outro site. Trocar por
+uma senha única ("Change Password on Website…" no app Senhas).
 
 ## Pendências conhecidas
 
