@@ -329,6 +329,13 @@ sustenta a caixa e não pode sair. Os dois `_acme-challenge` são do certificado
 corpo de teste vazio (`EMPTY_MESSAGE`) e domínio com menos de 14 dias (`FROM_FMBLA_NEWDOM14`),
 que some com o tempo.
 
+**Outlook, no mesmo dia.** Um e-mail sem corpo do `hello@` para um endereço `@outlook.com`
+foi entregue, mas caiu no **Lixo Eletrônico** ("This message has no content"). O aviso
+"Unverified Sender" **sumiu**: o remetente aparece com as iniciais TM, enquanto um anúncio
+na mesma pasta mostrava a etiqueta "Unverified" e o "?". O Lixo Eletrônico vem do conteúdo
+e da idade do domínio, não da autenticação. Nas primeiras semanas, escreva sempre com texto e
+assinatura, e peça aos primeiros contatos que respondam ou salvem o `hello@` nos contatos.
+
 **DMARC em `p=quarantine`.** Está certo assim: o único envio como `@timasmotion.com` é a
 caixa da Porkbun, que sai assinada. A consequência é que **qualquer serviço novo que mande
 e-mail em nome do domínio** (newsletter, formulário do site, Mailchimp, outro provedor) vai
