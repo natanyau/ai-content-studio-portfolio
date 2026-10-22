@@ -288,7 +288,7 @@ O domínio está registrado na **Porkbun**, que também cuida do DNS. Desde 22/1
 automática, vence em 23/10/2027). Ela substituiu o arranjo de outubro de 2026, um
 encaminhamento para o Gmail pessoal com o `hello@` como alias "Send mail as" do Gmail. Esse
 caminho saía sem assinatura do domínio: o Outlook mostrava "Unverified Sender", e o "Show
-original" dava `spf=pass` para `gmail.com` e `dmarc=fail`. O alias foi apagado do Gmail no mesmo dia.
+original" dava `spf=pass` para `gmail.com` e `dmarc=fail`. O alias foi apagado do Gmail no mesmo dia, junto com a senha de app do Google que ele usava.
 
 **Onde ler e escrever.** No app do Gmail do iPhone, conta **Timas Motion** (IMAP), separada da
 pessoal. Escreva para clientes por ela. Servidores: `imap.porkbun.com` porta 993 SSL/TLS;
@@ -335,7 +335,6 @@ envia em nome do domínio: o que não sair pela Porkbun iria para o spam.
 - Conferir no DNS o valor do `_dmarc` depois do Configure DMARC (era `p=none`; o botão pode
   ter mudado) e se há um registro `_dmarc` só.
 - Tirar o `include:_spf.google.com` do SPF: ele só existia por causa do alias do Gmail.
-- Apagar a senha de app do Google criada para o alias (myaccount.google.com/apppasswords).
 
 **Conta da Porkbun.** Ela controla o domínio, o site e o e-mail. A verificação em duas
 etapas por app está ativa desde 21/10/2026, com o código no app Senhas do iPhone. Os códigos
