@@ -333,7 +333,8 @@ que some com o tempo.
 foi entregue, mas caiu no **Lixo Eletrônico** ("This message has no content"). O aviso
 "Unverified Sender" **sumiu**: o remetente aparece com as iniciais TM, enquanto um anúncio
 na mesma pasta mostrava a etiqueta "Unverified" e o "?". O Lixo Eletrônico vem do conteúdo
-e da idade do domínio, não da autenticação. Nas primeiras semanas, escreva sempre com texto e
+e da idade do domínio, não da autenticação. Depois de marcado "Não é lixo eletrônico", o
+e-mail seguinte, com texto, entrou direto na Caixa de Entrada (Focused). Nas primeiras semanas, escreva sempre com texto e
 assinatura, e peça aos primeiros contatos que respondam ou salvem o `hello@` nos contatos.
 
 **DMARC em `p=quarantine`.** Está certo assim: o único envio como `@timasmotion.com` é a
