@@ -310,13 +310,15 @@ mensagem que saiu dele mesmo, e o teste parece falhar sem ter falhado.
 | Tipo | Host | Valor |
 |---|---|---|
 | MX | (raiz) | `fwd1.porkbun.com` (10) e `fwd2.porkbun.com` (20): servem também à caixa hospedada |
-| TXT | (raiz) | `v=spf1 include:_spf.porkbun.com include:_spf.google.com ~all` |
-| TXT | `default._domainkey` | DKIM, criado pela Porkbun |
-| TXT | `_dmarc` | `v=DMARC1; ...` |
+| TXT | (raiz) | `v=spf1 include:_spf.porkbun.com ~all` |
+| TXT | `default._domainkey` | `v=DKIM1; k=rsa; p=…` (chave pública, criada pela Porkbun) |
+| TXT | `_dmarc` | `v=DMARC1; p=quarantine; rua=…@mxtoolbox.dmarc-report.com; ruf=…@forensics.dmarc-report.com; fo=1` |
 
 O DKIM não nasce com a caixa: sai do botão **Configure DMARC**, no quadro "DMARC Notice" da
-página de e-mail do domínio, e leva até 10 minutos. O mesmo quadro tem **Delete DMARC** e
-**Reset DMARC**: não use.
+página de e-mail do domínio, e leva até 10 minutos. O botão reescreveu os três registros de
+uma vez: criou o DKIM, tirou o `include:_spf.google.com` do SPF e trocou o DMARC de `p=none`
+para `p=quarantine`, com os relatórios indo para o serviço da MXToolbox que a Porkbun usa. O
+mesmo quadro tem **Delete DMARC** e **Reset DMARC**: não use.
 
 O SPF é **um registro só**: para autorizar outro serviço, edite este e acrescente o `include`,
 nunca crie um segundo `v=spf1` (dois SPF invalidam os dois). O `include:_spf.porkbun.com`
@@ -327,14 +329,12 @@ sustenta a caixa e não pode sair. Os dois `_acme-challenge` são do certificado
 corpo de teste vazio (`EMPTY_MESSAGE`) e domínio com menos de 14 dias (`FROM_FMBLA_NEWDOM14`),
 que some com o tempo.
 
-**DMARC.** Agora todo envio como `@timasmotion.com` sai assinado, então endurecer para
-`p=quarantine` passou a ser possível. Só faça depois de confirmar que nenhum outro serviço
-envia em nome do domínio: o que não sair pela Porkbun iria para o spam.
-
-**Pendências do e-mail:**
-- Conferir no DNS o valor do `_dmarc` depois do Configure DMARC (era `p=none`; o botão pode
-  ter mudado) e se há um registro `_dmarc` só.
-- Tirar o `include:_spf.google.com` do SPF: ele só existia por causa do alias do Gmail.
+**DMARC em `p=quarantine`.** Está certo assim: o único envio como `@timasmotion.com` é a
+caixa da Porkbun, que sai assinada. A consequência é que **qualquer serviço novo que mande
+e-mail em nome do domínio** (newsletter, formulário do site, Mailchimp, outro provedor) vai
+para o spam até ser autorizado: acrescente o `include` dele no SPF e configure o DKIM dele
+**antes** de usar. Não volte a mandar como `hello@` pelo "Send mail as" do Gmail pessoal:
+com essa política, esses e-mails iriam para o spam.
 
 **Conta da Porkbun.** Ela controla o domínio, o site e o e-mail. A verificação em duas
 etapas por app está ativa desde 21/10/2026, com o código no app Senhas do iPhone. Os códigos
