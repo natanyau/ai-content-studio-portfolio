@@ -283,50 +283,59 @@ link não é clicável na legenda: use a bio e o story com figurinha de link.
 
 ## E-mail do domínio (`hello@timasmotion.com`)
 
-O domínio está registrado na **Porkbun**, que também cuida do DNS. O `hello@` não é uma
-caixa com login: é um **encaminhamento** da Porkbun para o Gmail pessoal do dono. O envio
-é feito pelo próprio Gmail, com o `hello@` cadastrado como alias. Montado em outubro de 2026.
+O domínio está registrado na **Porkbun**, que também cuida do DNS. Desde 22/10/2026 o
+`hello@` é uma **caixa hospedada na Porkbun** (Email Hosting: 10 GB, US$ 36 por ano, renovação
+automática, vence em 23/10/2027). Ela substituiu o arranjo de outubro de 2026, um
+encaminhamento para o Gmail pessoal com o `hello@` como alias "Send mail as" do Gmail. Esse
+caminho saía sem assinatura do domínio: o Outlook mostrava "Unverified Sender", e o "Show
+original" dava `spf=pass` para `gmail.com` e `dmarc=fail`. O alias foi apagado do Gmail no mesmo dia.
 
-**Receber.** Porkbun → Email Forwarding: `hello@timasmotion.com` → Gmail pessoal. Os dois
-registros `MX` (`fwd1` e `fwd2.porkbun.com`) são desse encaminhamento. Para testar, mande de
-**outro** endereço: o Gmail esconde a cópia de uma mensagem que saiu dele mesmo, e o teste
-parece falhar sem ter falhado.
+**Onde ler e escrever.** No app do Gmail do iPhone, conta **Timas Motion** (IMAP), separada da
+pessoal. Escreva para clientes por ela. Servidores: `imap.porkbun.com` porta 993 SSL/TLS;
+`smtp.porkbun.com` porta 587 STARTTLS (se o app reclamar do envio, 465 SSL/TLS); usuário é o
+endereço completo. A senha da caixa fica no app Senhas, no item **mail.porkbun.com**, separado
+do item **porkbun.com** da conta: criar a senha no próprio formulário da Porkbun faria o iPhone
+gravá-la por cima da senha da conta. Para redefinir: Porkbun → coluna EMAIL → Current Accounts
+→ **password**. O Gmail de computador não busca mais caixas de fora (fim do POP, jan/2026); os
+apps sim. Os botões de webmail da Porkbun abrem uma janela que o Safari bloqueia.
 
-**Enviar.** Gmail de computador → Settings → Accounts and Import → Send mail as → `Timas
-Motion <hello@timasmotion.com>`, pelo servidor `smtp.gmail.com`, porta 587, TLS, usuário = o
-Gmail pessoal, senha = uma **senha de app** do Google (myaccount.google.com/apppasswords;
-exige verificação em duas etapas). A senha não fica anotada em lugar nenhum: se precisar
-refazer, gere outra. "Reply from the same address the message was sent to" está marcado.
-O app do Gmail no iPhone começa todo e-mail novo pelo endereço pessoal: troque o **From**.
+**Encaminhamento e caixa não convivem no mesmo endereço**: a Porkbun recusa criar a caixa
+enquanto existir o forward. A troca foi apagar o forward e criar a caixa logo em seguida.
 
-Pelo celular, a opção "Send mail as" só existe no Gmail de computador: no Safari, use
-"Solicitar Site para Computador". O link de confirmação que o Google manda abre errado no
-navegador interno do app do Gmail; copie e abra no Safari.
+Para testar o recebimento, mande de **outro** endereço: o Gmail esconde a cópia de uma
+mensagem que saiu dele mesmo, e o teste parece falhar sem ter falhado.
 
-**DNS do e-mail na Porkbun** (11 registros no total; não apague os outros):
+**DNS do e-mail na Porkbun** (não apague os outros registros):
 
 | Tipo | Host | Valor |
 |---|---|---|
+| MX | (raiz) | `fwd1.porkbun.com` (10) e `fwd2.porkbun.com` (20): servem também à caixa hospedada |
 | TXT | (raiz) | `v=spf1 include:_spf.porkbun.com include:_spf.google.com ~all` |
-| TXT | `_dmarc` | `v=DMARC1; p=none` |
+| TXT | `default._domainkey` | DKIM, criado pela Porkbun |
+| TXT | `_dmarc` | `v=DMARC1; ...` |
+
+O DKIM não nasce com a caixa: sai do botão **Configure DMARC**, no quadro "DMARC Notice" da
+página de e-mail do domínio, e leva até 10 minutos. O mesmo quadro tem **Delete DMARC** e
+**Reset DMARC**: não use.
 
 O SPF é **um registro só**: para autorizar outro serviço, edite este e acrescente o `include`,
 nunca crie um segundo `v=spf1` (dois SPF invalidam os dois). O `include:_spf.porkbun.com`
-sustenta o encaminhamento e não pode sair. Os dois `_acme-challenge` são do certificado HTTPS.
+sustenta a caixa e não pode sair. Os dois `_acme-challenge` são do certificado HTTPS.
 
-**Limite conhecido.** O Outlook mostrou "Unverified Sender" nos e-mails enviados como `hello@`,
-mesmo com o SPF e o DMARC no lugar. O "Show original" de um desses e-mails, aberto num
-Gmail, confirmou a causa: `spf=pass` mas para `gmail.com` (o `Return-Path` é o Gmail pessoal,
-não o `hello@`), e `dmarc=fail`. Nem o SPF nem o DKIM saem em nome de `timasmotion.com`, e o
-`include:_spf.google.com` não muda isso. O e-mail é entregue mesmo assim (no Gmail chega na
-aba Primary) porque a política é `p=none`.
+**Verificado em 22/10/2026** com o mail-tester.com: SPF, DKIM (`DKIM_VALID_AU`, assinado por
+`timasmotion.com`) e DMARC passaram. A nota foi 6,1/10 por dois motivos fora da configuração:
+corpo de teste vazio (`EMPTY_MESSAGE`) e domínio com menos de 14 dias (`FROM_FMBLA_NEWDOM14`),
+que some com o tempo.
 
-**Não endureça o DMARC** (`p=quarantine` ou `p=reject`) enquanto o envio for por este
-caminho: todo e-mail enviado como `hello@` passaria a ir para o spam ou ser recusado.
+**DMARC.** Agora todo envio como `@timasmotion.com` sai assinado, então endurecer para
+`p=quarantine` passou a ser possível. Só faça depois de confirmar que nenhum outro serviço
+envia em nome do domínio: o que não sair pela Porkbun iria para o spam.
 
-O `Return-Path` também expõe o Gmail pessoal para quem abrir a origem da mensagem. Se o
-aviso ou essa exposição incomodarem, a saída é uma caixa própria do domínio, que assina
-como `timasmotion.com` (Google Workspace ou o e-mail pago da Porkbun).
+**Pendências do e-mail:**
+- Conferir no DNS o valor do `_dmarc` depois do Configure DMARC (era `p=none`; o botão pode
+  ter mudado) e se há um registro `_dmarc` só.
+- Tirar o `include:_spf.google.com` do SPF: ele só existia por causa do alias do Gmail.
+- Apagar a senha de app do Google criada para o alias (myaccount.google.com/apppasswords).
 
 **Conta da Porkbun.** Ela controla o domínio, o site e o e-mail. A verificação em duas
 etapas por app está ativa desde 21/10/2026, com o código no app Senhas do iPhone. Os códigos
