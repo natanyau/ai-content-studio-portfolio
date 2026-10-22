@@ -139,9 +139,30 @@ else
   ok "nenhum asset órfão"
 fi
 rm -f /tmp/_orphans
-bigs=$(find assets -type f -size +5M -exec du -h {} + 2>/dev/null | sort -rh | awk '{printf "%s%s (%s)", (NR>1 ? ", " : ""), $2, $1}')
-big=$(find assets -type f -size +5M 2>/dev/null | wc -l)
-[ "$big" -gt 0 ] && warn "$big asset(s) acima de 5MB — pesa no carregamento mobile: $bigs"
+# Vídeo grande que só baixa no play não pesa na abertura da página: conta como
+# sob demanda o .mp4 que, em toda página que o usa, está num <source> de um
+# <video> com preload="metadata" ou "none" e sem autoplay. O loader do
+# index.html (data-src + autoplay) não passa nesse teste e segue avisando.
+sob_demanda() {
+  local n="$1" p achou=0
+  for p in $(pages_html); do
+    grep -qF "$n" "$p" || continue
+    achou=1
+    awk -v n="$n" '/<video/ { v = $0 }
+      index($0, n) { if ($0 !~ /<source/ || v !~ /preload="(metadata|none)"/ || v ~ /autoplay/) bad = 1 }
+      END { exit bad }' "$p" || return 1
+  done
+  [ "$achou" -eq 1 ]
+}
+demanda=0
+while read -r a; do
+  [ -n "$a" ] || continue
+  case "$a" in
+    *.mp4) if sob_demanda "$(basename "$a")"; then demanda=$((demanda+1)); continue; fi ;;
+  esac
+  warn "$a tem $(du -m "$a" | cut -f1)MB — pesa no carregamento mobile"
+done < <(find assets -type f -size +5M 2>/dev/null)
+[ "$demanda" -gt 0 ] && ok "$demanda vídeo(s) acima de 5MB só baixam no play (preload=metadata, sem autoplay)"
 tot=$(du -sm assets 2>/dev/null | cut -f1)
 [ "${tot:-0}" -gt 90 ] && warn "assets/ com ${tot}MB (limite prático do GitHub Pages: 1GB, recomendado <100MB)"
 
