@@ -305,7 +305,7 @@ enquanto existir o forward. A troca foi apagar o forward e criar a caixa logo em
 Para testar o recebimento, mande de **outro** endereço: o Gmail esconde a cópia de uma
 mensagem que saiu dele mesmo, e o teste parece falhar sem ter falhado.
 
-**DNS do e-mail na Porkbun** (não apague os outros registros):
+**DNS do e-mail e da verificação na Porkbun** (não apague os outros registros):
 
 | Tipo | Host | Valor |
 |---|---|---|
@@ -313,6 +313,7 @@ mensagem que saiu dele mesmo, e o teste parece falhar sem ter falhado.
 | TXT | (raiz) | `v=spf1 include:_spf.porkbun.com ~all` |
 | TXT | `default._domainkey` | `v=DKIM1; k=rsa; p=…` (chave pública, criada pela Porkbun) |
 | TXT | `_dmarc` | `v=DMARC1; p=quarantine; rua=…@mxtoolbox.dmarc-report.com; ruf=…@forensics.dmarc-report.com; fo=1` |
+| TXT | (raiz) | `google-site-verification=…`: prova ao Google Search Console que o domínio é seu |
 
 O DKIM não nasce com a caixa: sai do botão **Configure DMARC**, no quadro "DMARC Notice" da
 página de e-mail do domínio, e leva até 10 minutos. O botão reescreveu os três registros de
@@ -323,6 +324,18 @@ mesmo quadro tem **Delete DMARC** e **Reset DMARC**: não use.
 O SPF é **um registro só**: para autorizar outro serviço, edite este e acrescente o `include`,
 nunca crie um segundo `v=spf1` (dois SPF invalidam os dois). O `include:_spf.porkbun.com`
 sustenta a caixa e não pode sair. Os dois `_acme-challenge` são do certificado HTTPS.
+
+**Google Search Console** (desde 23/10/2026). Propriedade do tipo **Domínio**
+`timasmotion.com`, na conta Google pessoal, verificada pelo TXT `google-site-verification`
+acima. **Não apague esse TXT**: sem ele a verificação cai. Ele convive com o SPF sem
+problema, porque só o `v=spf1` não pode ter dois. Sitemap enviado como URL completa,
+`https://timasmotion.com/sitemap.xml` (em propriedade de domínio o campo não traz o prefixo).
+É lá que aparecem cliques, impressões e buscas que trazem gente ao site. Ao criar página
+nova, depois do `sitemap.xml` atualizado, use a **Inspeção de URL** para pedir a indexação.
+
+E-mails oferecendo "registrar o site nos buscadores" (ex.: `domainsubmit.site`) são golpe
+comum contra domínio novo: não clique e não responda "unsubscribe", marque como spam. O
+cadastro oficial é este, gratuito. Cobrança de verdade do domínio só vem de `porkbun.com`.
 
 **Verificado em 22/10/2026** com o mail-tester.com: SPF, DKIM (`DKIM_VALID_AU`, assinado por
 `timasmotion.com`) e DMARC passaram. A nota foi 6,1/10 por dois motivos fora da configuração:
