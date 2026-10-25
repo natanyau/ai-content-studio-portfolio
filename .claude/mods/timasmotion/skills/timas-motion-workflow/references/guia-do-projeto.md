@@ -260,6 +260,13 @@ A marca vai junto, com os parâmetros do `watermark.sh` (120 px de largura em v�
 720, 140 px acima da borda, opacidade 0,55); poster com a mesma marca, e sem texto
 queimado. **Legenda queimada na imagem não sai**: peça a versão limpa.
 
+O teto de 1000k não basta para todo filme sem texto. **No Fogo deu SSIM 0,953** (0,877 na
+cena do café, folhagem em movimento; a marca pesa só 0,002), e o filme ficou em
+**1800k: SSIM 0,972, 8,0 MB**, contra 11 MB da versão anterior a 1080×1920. Como no
+`cover`, o gargalo é o teto, não a marca nem o `crf`. Se o SSIM não chegar a 0,97, suba
+o teto em vez de aceitar a perda. O master limpo fica em `.watermark/masters/`, de onde
+o `carousel-fogo.py` também tira os frames.
+
 **Uploads pelo celular** (o Claude não grava em `assets/`, regra 4). O "Upload files"
 do GitHub cai **na pasta aberta e no ramo selecionado**: confira os dois antes do
 "Commit changes" e confira o resultado pelo hash depois. Já caiu na raiz, em

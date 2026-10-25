@@ -1,7 +1,9 @@
 # Gera o carrossel do case do Fogo (10 slides 1080x1350 + PDF para o LinkedIn).
-# As imagens são frames do próprio filme (assets/fogo/fogo-final-reel.mp4, 1080x1920),
-# extraídos na hora com ffmpeg para .carousel/fogo/frames/. As imagens de assets/fogo/
-# têm só 512 px de largura e ficariam borradas num slide de 1080. Nada é gravado em assets/.
+# As imagens são frames do próprio filme, extraídos na hora com ffmpeg para
+# .carousel/fogo/frames/. A fonte é o master limpo (.watermark/masters/fogo-final-reel.mp4,
+# 1080x1920, sem marca d'água) quando ele existe; senão, o filme publicado em
+# assets/fogo/, que é 720x1280 e leva a marca. As imagens de assets/fogo/ têm só
+# 512 px de largura e ficariam borradas num slide de 1080. Nada é gravado em assets/.
 # Os textos saem da página do case (fogo-featured-case.html); se ela mudar, atualize aqui.
 # Uso: python3 scripts/carousel-fogo.py   -> escreve em .carousel/fogo/out/ (não versionado)
 # Em sessão remota do Claude Code: CHROMIUM=/opt/pw-browsers/chromium python3 scripts/carousel-fogo.py
@@ -12,9 +14,12 @@ from playwright.sync_api import sync_playwright
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FILM = os.path.join(ROOT, 'assets', 'fogo', 'fogo-final-reel.mp4')
+MASTER = os.path.join(ROOT, '.watermark', 'masters', 'fogo-final-reel.mp4')
+FILM = MASTER if os.path.exists(MASTER) else os.path.join(ROOT, 'assets', 'fogo', 'fogo-final-reel.mp4')
 WORK = os.path.join(ROOT, '.carousel', 'fogo')
-FRAMES = os.path.join(WORK, 'frames')
+# Uma pasta de frames por fonte: os frames ficam em cache, e trocar de fonte não pode reaproveitar os da outra.
+FRAMES = os.path.join(WORK, 'frames', 'master' if FILM == MASTER else 'assets')
+print(f'frames de {os.path.relpath(FILM, ROOT)}')
 OUT = os.path.join(WORK, 'out')
 os.makedirs(FRAMES, exist_ok=True)
 os.makedirs(OUT, exist_ok=True)
