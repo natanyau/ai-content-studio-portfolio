@@ -113,4 +113,17 @@ describe('dentro do engine', () => {
     expect(r.deny).toContain('regra 4')
     expect(chegou).toBe(0)
   })
+
+  test('se a checagem falha antes de decidir, recusa', async ($, on) => {
+    on('session.cwd', () => ({ value: CWD }))
+    let chegou = 0
+    on('tool.call', () => {
+      chegou++
+      return { result: {} } as never
+    })
+    // Comando que não é texto faz bashWrites lançar antes de decidir.
+    const r = await $.tool.call({ tool: 'Bash', command: undefined as never })
+    expect(r.deny).toContain('falhou antes de decidir')
+    expect(chegou).toBe(0)
+  })
 })
