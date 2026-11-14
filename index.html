@@ -335,7 +335,7 @@
   .featured .btn{align-self:flex-start}
   #work .fogo-featured,#work .tm003-featured{margin-top:clamp(22px,2.6vw,34px)}
 
-  .case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(22px,2.6vw,34px);margin-top:clamp(22px,2.6vw,34px)}
+  .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,2.6vw,34px);margin-top:clamp(22px,2.6vw,34px)}
   .case-card{
     position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--graphite-2);
     display:flex;flex-direction:column;transition:transform .4s var(--ease),border-color .4s var(--ease)}
@@ -432,6 +432,9 @@
     #philosophy .pillars,#services .s-grid,#why .why-grid{grid-template-columns:repeat(2,1fr)}
     footer .f-top{grid-template-columns:1fr 1fr}
     footer .f-brand{grid-column:1 / -1}
+    /* 3 cards em 2 colunas: o ultimo ocupa a linha inteira em vez de ficar sozinho pela metade */
+    .case-grid{grid-template-columns:repeat(2,1fr)}
+    .case-grid .case-card:last-child:nth-child(odd){grid-column:1 / -1}
   }
   @media(max-width:640px){
     .nav .links,.nav .nav-cta{display:none}
@@ -676,6 +679,22 @@
           <div class="blk"><div class="k">Strategy</div><p>Build an identity around craftsmanship: the bay, the tools, the parts and the hands at work, ending on the finished vehicle.</p></div>
           <div class="blk"><div class="k">The film</div><p>A 30-second vertical reel with no on-screen text: the workshop, its tools, brake and suspension work, closing on the finished Jeep at sunset.</p></div>
           <button type="button" class="c-foot" data-play-film aria-label="Watch the Premium Jeep Workshop film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch film</button>
+        </div>
+      </article>
+
+      <article class="case-card reveal">
+        <div class="media ph-2 c-media" data-video="assets/media/case3.mp4" data-poster="assets/media/case3.jpg" style="background-image:url('assets/media/case3.jpg');background-size:cover;background-position:center">
+          <div class="frameline"></div><div class="grain"></div>
+          <div class="ph"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="cap">Restaurant Reel</span></div>
+        </div>
+        <div class="c-body">
+          <div class="c-top"><span class="tag">Case TM-004</span><span class="ln"></span></div>
+          <h4>Sea to Table</h4>
+          <div class="c-lede">Beachside restaurant concept</div>
+          <div class="blk"><div class="k">Creative brief</div><p>Show a seafood restaurant's food by where it starts: the boat, the catch and the kitchen, before the plate reaches the table.</p></div>
+          <div class="blk"><div class="k">The film</div><p>A 15-second vertical reel: a grilled tuna steak on a table by the sea, a fishing boat at dawn, the net and the catch, the tuna cut on a board, and the beach restaurant at dusk under string lights.</p></div>
+          <div class="blk"><div class="k">Note</div><p>Concept reel, not commissioned by a restaurant. AI-assisted production.</p></div>
+          <button type="button" class="c-foot" data-play-film aria-label="Watch the Sea to Table film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Watch film</button>
         </div>
       </article>
     </div>
