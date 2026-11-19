@@ -14,6 +14,7 @@
 
 exclude:
   - CLAUDE.md
+  - README.md
   - scripts/
   - .claude/          # dot-dir já é ignorado por padrão; listado para deixar a intenção clara
   - .github/          # idem
