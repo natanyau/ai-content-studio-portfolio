@@ -10,9 +10,19 @@ o que vai ao ar quando o `main` recebe um push.
 | Caminho | O que é |
 |---|---|
 | `index.html` | Site principal. CSS e JS **inline por opção** (arquivo único, zero requisições extras). |
-| `crown-featured-case.html` | Case Crown. Único arquivo que usa CSS externo (`css/crown-case.css`). |
+| `crown-featured-case.html` | Case Crown. |
+| `fogo-featured-case.html` | Case Fogo (filme de turismo da ilha do Fogo). |
+| `tm-003-casa-cavoquinho.html` | Case TM-003 (Casa Cavoquinho). Molde para os cases novos. |
+| `css/` | Um CSS por case (`crown-case.css`, `fogo-case.css`, `tm-003-case.css`). As páginas de case usam CSS externo; só o `index.html` é inline (regra 1). |
+| `terms.html` | Copyright e termos de uso. Linkado no rodapé de toda página. |
 | `404.html` | Página de erro servida pelo Pages. |
-| `assets/media/` | Vídeos `.mp4` + posters `.jpg` de cada seção. Cada vídeo **precisa** do `.jpg` de mesmo nome como fallback. |
+| `robots.txt`, `sitemap.xml` | Ver regras 6 e 7. |
+| `LICENSE` | Todos os direitos reservados: o repositório é público só para o Pages servir o site, não é código aberto. |
+| `README.md` | Apresentação curta para quem abre o repositório no GitHub. Fora do site pelo `_config.yml`. |
+| `assets/media/` | Vídeos `.mp4` + posters `.jpg` das seções da home e dos cards de trabalho (`case1`, `case2`, `crown`…). Cada vídeo **precisa** do `.jpg` de mesmo nome como fallback. |
+| `assets/images/` | Frames do TM-003 (`tm-003-0N-*.jpg`), imagens de produto e preview da Crown. |
+| `assets/fogo/` | Filme e imagens do case Fogo. |
+| `assets/` (raiz) | Filme, capa (`Tm-003.jpg`) e preview do TM-003 e o preview do Fogo. Ficaram soltos por histórico; mover quebraria o preview dos links já compartilhados. **Case novo vai em `assets/<case>/`.** |
 | `CNAME` | Domínio próprio do Pages. **Se sumir, o site volta para a URL do github.io e o `robots.txt` deixa de valer.** |
 | `preview.jpg` | Imagem de preview de link (Open Graph), 1200×630. |
 | `scripts/check.sh` | Verificação pré-publicação. Também roda sozinho no GitHub a cada push (`.github/workflows/check.yml`): erro vira ✗ vermelho no commit, aviso só aparece no resumo da execução. |
@@ -23,7 +33,7 @@ o que vai ao ar quando o `main` recebe um push.
 | `scripts/carousel-fogo.py` | Carrossel do Fogo. Frames do próprio filme (1080×1920); as imagens de `assets/fogo/` têm 512 px e borram no slide. |
 | `scripts/carousel-crown.py` | Carrossel da Crown. Case de estratégia: usa um frame do cartão de marca e as duas imagens de produto (`assets/images/rt*.png`) sem a faixa do rodapé. |
 | `docs/archive/` | Deck antigo, fora da raiz publicada e marcado `noindex`. Não é mantido. |
-| `_config.yml` | Única função: tirar `CLAUDE.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
+| `_config.yml` | Única função: tirar `CLAUDE.md`, `README.md`, `scripts/` e `.claude/` do site publicado. Não é build. |
 | `.claude/mods/timasmotion/` | Plugin `timasmotion` do Claude Code, com tudo o que é do processo: os comandos em `commands/` (`/verificar`, `/olhar`, `/publicar`, `/novo-case <código e nome>`, que leva um case novo do material à prévia e para antes de publicar, e `/carrossel <case>`, que monta o carrossel a partir da página e do filme), a skill `skills/timas-motion-workflow/` com o processo completo e, em `hooks/`, a trava que barra `Edit`, `Write` e comandos de shell que alterem `assets/` (regra 4). Na skill, `references/guia-do-projeto.md` é uma cópia deste arquivo: ao mudar uma regra aqui, copie de novo. `references/perfil-de-voz.md` descreve a voz dos textos, com exemplos dos cases. |
 | `.claude/mods/` | Marketplace local (`timas-mods`). Um hook de `SessionStart` em `.claude/settings.json` instala o `timasmotion` com escopo `local` quando ele falta, inclusive em container novo na nuvem, e remove o antigo `trava-assets`. Vale já na sessão que o instalou. Se a instalação falhar, os comandos somem e o hook avisa; a regra 4 continua valendo. O plugin é lido direto da pasta: depois de editar, `/reload-plugins`. Testes: `claude plugin test .claude/mods/timasmotion`. |
 
@@ -288,90 +298,13 @@ production."), sem nomear a oficina nem afirmar aprovação ou resultado. Os pla
 prateleiras com caixas de peças ficam fora porque mostram marca de fabricante. No Instagram
 link não é clicável na legenda: use a bio e o story com figurinha de link.
 
-## E-mail do domínio (`hello@timasmotion.com`)
+## E-mail do domínio
 
-O domínio está registrado na **Porkbun**, que também cuida do DNS. Desde 22/10/2026 o
-`hello@` é uma **caixa hospedada na Porkbun** (Email Hosting: 10 GB, US$ 36 por ano, renovação
-automática, vence em 23/10/2027). Ela substituiu o arranjo de outubro de 2026, um
-encaminhamento para o Gmail pessoal com o `hello@` como alias "Send mail as" do Gmail. Esse
-caminho saía sem assinatura do domínio: o Outlook mostrava "Unverified Sender", e o "Show
-original" dava `spf=pass` para `gmail.com` e `dmarc=fail`. O alias foi apagado do Gmail no mesmo dia, junto com a senha de app do Google que ele usava.
-
-**Onde ler e escrever.** No app do Gmail do iPhone, conta **Timas Motion** (IMAP), separada da
-pessoal. Escreva para clientes por ela. Servidores: `imap.porkbun.com` porta 993 SSL/TLS;
-`smtp.porkbun.com` porta 587 STARTTLS (se o app reclamar do envio, 465 SSL/TLS); usuário é o
-endereço completo. A senha da caixa fica no app Senhas, no item **mail.porkbun.com**, separado
-do item **porkbun.com** da conta: criar a senha no próprio formulário da Porkbun faria o iPhone
-gravá-la por cima da senha da conta. Para redefinir: Porkbun → coluna EMAIL → Current Accounts
-→ **password**. O Gmail de computador não busca mais caixas de fora (fim do POP, jan/2026); os
-apps sim. Os botões de webmail da Porkbun abrem uma janela que o Safari bloqueia.
-
-**Encaminhamento e caixa não convivem no mesmo endereço**: a Porkbun recusa criar a caixa
-enquanto existir o forward. A troca foi apagar o forward e criar a caixa logo em seguida.
-
-Para testar o recebimento, mande de **outro** endereço: o Gmail esconde a cópia de uma
-mensagem que saiu dele mesmo, e o teste parece falhar sem ter falhado.
-
-**DNS do e-mail e da verificação na Porkbun** (não apague os outros registros):
-
-| Tipo | Host | Valor |
-|---|---|---|
-| MX | (raiz) | `fwd1.porkbun.com` (10) e `fwd2.porkbun.com` (20): servem também à caixa hospedada |
-| TXT | (raiz) | `v=spf1 include:_spf.porkbun.com ~all` |
-| TXT | `default._domainkey` | `v=DKIM1; k=rsa; p=…` (chave pública, criada pela Porkbun) |
-| TXT | `_dmarc` | `v=DMARC1; p=quarantine; rua=…@mxtoolbox.dmarc-report.com; ruf=…@forensics.dmarc-report.com; fo=1` |
-| TXT | (raiz) | `google-site-verification=…`: prova ao Google Search Console que o domínio é seu |
-
-O DKIM não nasce com a caixa: sai do botão **Configure DMARC**, no quadro "DMARC Notice" da
-página de e-mail do domínio, e leva até 10 minutos. O botão reescreveu os três registros de
-uma vez: criou o DKIM, tirou o `include:_spf.google.com` do SPF e trocou o DMARC de `p=none`
-para `p=quarantine`, com os relatórios indo para o serviço da MXToolbox que a Porkbun usa. O
-mesmo quadro tem **Delete DMARC** e **Reset DMARC**: não use.
-
-O SPF é **um registro só**: para autorizar outro serviço, edite este e acrescente o `include`,
-nunca crie um segundo `v=spf1` (dois SPF invalidam os dois). O `include:_spf.porkbun.com`
-sustenta a caixa e não pode sair. Os dois `_acme-challenge` são do certificado HTTPS.
-
-**Google Search Console** (desde 23/10/2026). Propriedade do tipo **Domínio**
-`timasmotion.com`, na conta Google pessoal, verificada pelo TXT `google-site-verification`
-acima. **Não apague esse TXT**: sem ele a verificação cai. Ele convive com o SPF sem
-problema, porque só o `v=spf1` não pode ter dois. Sitemap enviado como URL completa,
-`https://timasmotion.com/sitemap.xml` (em propriedade de domínio o campo não traz o prefixo).
-É lá que aparecem cliques, impressões e buscas que trazem gente ao site. Ao criar página
-nova, depois do `sitemap.xml` atualizado, use a **Inspeção de URL** para pedir a indexação.
-
-E-mails oferecendo "registrar o site nos buscadores" (ex.: `domainsubmit.site`) são golpe
-comum contra domínio novo: não clique e não responda "unsubscribe", marque como spam. O
-cadastro oficial é este, gratuito. Cobrança de verdade do domínio só vem de `porkbun.com`.
-
-**Verificado em 22/10/2026** com o mail-tester.com: SPF, DKIM (`DKIM_VALID_AU`, assinado por
-`timasmotion.com`) e DMARC passaram. A nota foi 6,1/10 por dois motivos fora da configuração:
-corpo de teste vazio (`EMPTY_MESSAGE`) e domínio com menos de 14 dias (`FROM_FMBLA_NEWDOM14`),
-que some com o tempo.
-
-**Outlook, no mesmo dia.** Um e-mail sem corpo do `hello@` para um endereço `@outlook.com`
-foi entregue, mas caiu no **Lixo Eletrônico** ("This message has no content"). O aviso
-"Unverified Sender" **sumiu**: o remetente aparece com as iniciais TM, enquanto um anúncio
-na mesma pasta mostrava a etiqueta "Unverified" e o "?". O Lixo Eletrônico vem do conteúdo
-e da idade do domínio, não da autenticação. Depois de marcado "Não é lixo eletrônico", o
-e-mail seguinte, com texto, entrou direto na Caixa de Entrada (Focused). Nas primeiras semanas, escreva sempre com texto e
-assinatura, e peça aos primeiros contatos que respondam ou salvem o `hello@` nos contatos.
-
-**DMARC em `p=quarantine`.** Está certo assim: o único envio como `@timasmotion.com` é a
-caixa da Porkbun, que sai assinada. A consequência é que **qualquer serviço novo que mande
-e-mail em nome do domínio** (newsletter, formulário do site, Mailchimp, outro provedor) vai
-para o spam até ser autorizado: acrescente o `include` dele no SPF e configure o DKIM dele
-**antes** de usar. Não volte a mandar como `hello@` pelo "Send mail as" do Gmail pessoal:
-com essa política, esses e-mails iriam para o spam.
-
-**Conta da Porkbun.** Ela controla o domínio, o site e o e-mail. A verificação em duas
-etapas por app está ativa desde 21/10/2026, com o código no app Senhas do iPhone. Os códigos
-de backup foram gerados de novo no mesmo dia e os anteriores deixaram de valer; sem o
-celular, é com um deles que se entra. Nunca mande print da tela do QR code nem dos códigos:
-quem tem a chave gera os códigos.
-
-A senha também foi trocada em 21/10/2026 por uma senha forte gerada pelo iPhone, salva no
-app Senhas: a anterior era reutilizada em outro site.
+O contato público é `hello@timasmotion.com`, uma caixa hospedada na Porkbun. Os detalhes
+da caixa, do DNS e das contas ficam fora deste repositório, porque ele é público: estão
+na memória do projeto Timasmotion no Claude. Consulte essas notas antes de mexer no DNS ou
+de mandar e-mail em nome do domínio por outro serviço (newsletter, formulário do site):
+o DMARC está em `p=quarantine`, e serviço não autorizado no SPF e no DKIM cai no spam.
 
 ## Pendências conhecidas
 
